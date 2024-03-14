@@ -1,12 +1,19 @@
+import LoginPage from './Components/Login/login'
+import Register from './Components/Register/Register'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { FormMascota } from "./components/FormUsuarioMascota/FormMascota"
 
 
 const App = () => {
   return (
-    <div className=" h-screen w-screen flex flex-col items-center justify-center">
-      <FormMascota />
-      
-    </div>
+    <>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element= {<LoginPage />} />
+        <Route path="/register" element = {<Register/>}/>
+      </Routes>
+    </BrowserRouter>
+  </>
   )
 }
 
