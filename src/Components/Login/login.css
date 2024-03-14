@@ -105,6 +105,10 @@ body {
 
 }
 
+.form-information-login p {
+    margin-bottom: 20px;
+}
+
 .labelss {
     display: flex;
     width: 300px;
