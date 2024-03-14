@@ -67,10 +67,16 @@ const RegistroEmpresa = () => {
             value={empresa.nombre}
             onChange={handleChange}
             className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.nombre ? "border-red-500" : ""
-            }`}
-          />
-          {errors.nombre && <p className="text-red-500 text-xs italic">{errors.nombre}</p>}
+                errors.nombre ? "border-red-500" : ""
+              }`}
+            />
+            {!errors.nombre && empresa.nombre && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
         </div>
 
         <div className="mb-4">
@@ -84,10 +90,16 @@ const RegistroEmpresa = () => {
             value={empresa.email}
             onChange={handleChange}
             className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.email ? "border-red-500" : ""
-            }`}
-          />
-          {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
+                errors.email ? "border-red-500" : ""
+              }`}
+            />
+            {!errors.email && empresa.email && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
         </div>
 
         <div className="mb-4">
@@ -101,10 +113,16 @@ const RegistroEmpresa = () => {
             value={empresa.telefono}
             onChange={handleChange}
             className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.telefono ? "border-red-500" : ""
-            }`}
-          />
-          {errors.telefono && <p className="text-red-500 text-xs italic">{errors.telefono}</p>}
+                errors.telefono ? "border-red-500" : ""
+              }`}
+            />
+            {!errors.telefono && empresa.telefono && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
         </div>
 
         <div className="mb-4">
@@ -118,10 +136,16 @@ const RegistroEmpresa = () => {
             value={empresa.direccion}
             onChange={handleChange}
             className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.direccion ? "border-red-500" : ""
-            }`}
-          />
-          {errors.direccion && <p className="text-red-500 text-xs italic">{errors.direccion}</p>}
+                errors.direccion ? "border-red-500" : ""
+              }`}
+            />
+            {!errors.direccion && empresa.direccion && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
         </div>
 
         <button
