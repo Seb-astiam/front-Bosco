@@ -3,9 +3,10 @@ import RegisterCompany from './Components/Register/Company/RegisterCompany'
 
 import LoginPage from './Components/Login/login'
 import Register from './Components/Register/Register'
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
+import Home from './pages/Home'
 
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
     <>
     
       <Routes>
+        <Route path="/" element= {<Home />} />
         <Route path="/ProfileHousing" element={<HousingForm/>} />
         <Route path="/RegisterCompany" element={<RegisterCompany/>} />
         <Route path="/login" element= {<LoginPage />} />
