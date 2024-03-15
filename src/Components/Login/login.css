@@ -1,0 +1,169 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: orangered;
+}
+
+.container-login {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+}
+
+.container-form {
+    border: solid thin black;
+    max-width: 900px;
+    height: 400px;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+    transition: all 1s ease;
+    margin: 10px;
+}
+
+.information {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.info-childs {
+    width: 100%;
+    padding: 0 30px;
+
+}
+
+.info-childs h2 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.info-childs p {
+    
+    margin-top: 20px;
+    color: #333
+}
+
+.buttonSignIn {
+    background-color: transparent;
+    outline: none;
+    border: solid 2px grey;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.buttonSignIn:hover {
+    background-color: #333;
+    border: none;
+    color: white; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-information-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position:absolute;
+    width: 700px;
+    height: 420px;
+    background-color: rosybrown;
+    border-radius: 20px;
+    margin: 10px;
+    transition: all 1s ease;
+    
+}
+
+.hide {
+    
+    transform: translateY(-300%) !important;
+
+}
+
+
+.form-information-login h2 {
+    margin-top: 30px;
+    font-size: 2.5rem;
+    color: #333;
+
+}
+
+.labelss {
+    display: flex;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: solid thin black;
+    background-color: white;
+    
+}
+
+
+@media screen and (max-width: 500px) {
+
+    .labelss {
+        font-size: 0.6rem;
+        width: 90%; /* Reducción adicional del tamaño de la fuente para dispositivos pequeños */
+    }
+
+    .form-information-login {
+        width: 90%; /* Reduce aún más el ancho del formulario para pantallas pequeñas */
+    }
+
+    .form-information-login h2 {
+        font-size: 1.8rem; /* Reducción adicional del tamaño de la fuente para dispositivos pequeños */
+    }
+
+    .form-information-login p {
+    font-size: 0.8rem !important
+    }
+
+    ****
+
+    .container-form {
+        max-width: 100%; /* Cambiamos el máximo ancho para que se adapte al ancho del contenedor padre */
+        height: auto; /* Cambiamos la altura a automático para que se ajuste al contenido */
+        flex-direction: column; /* Cambiamos la dirección de flexión para que los elementos se apilen verticalmente en dispositivos pequeños */
+    }
+    
+    .info-childs {
+        padding: 0 20px; /* Reducimos el relleno horizontal para dispositivos pequeños */
+    }
+    
+    .info-childs h2 {
+        font-size: 2rem; /* Reducimos el tamaño de la fuente del encabezado */
+    }
+    
+    .info-childs p {
+        margin-top: 10px; /* Reducimos el margen superior del párrafo */
+    }
+    
+    .buttonSignIn {
+        margin-top: 20px; /* Aumentamos el espacio superior del botón */
+        width: 80%; /* Reducimos el ancho del botón */
+    }
+}
+
