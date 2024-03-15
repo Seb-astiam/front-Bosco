@@ -1,9 +1,10 @@
 import React from "react";
-import { DateSearch } from "../Components/DateSearch/DateSearch";
-import SocialFooter from "../Components/Footer/SocialFooter";
-import { Navbar } from "../Components/NavBar/NavBar";
-import {Card} from "../Components/Card/Card"
-import ContactFooter from "../Components/Footer/ContactFooter";
+import { DateSearch } from "../components/DateSearch/DateSearch";
+import SocialFooter from "../components/Footer/SocialFooter";
+import { Navbar } from "../components/NavBar/NavBar";
+import {Cards} from "../components/Cards/Cards"
+import ContactFooter from "../components/Footer/ContactFooter";
+import { Sponsors } from "../components/Sponsors/Sponsors";
 
 
 
@@ -17,21 +18,19 @@ const Home = () => {
       
       <div className="w-full h-[732.6px] absolute !m-[0] top-[5px] right-[0px] left-[0px]">
       <Navbar/>
+
         <img
-          className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px]"
+          className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px] "
           alt=""
           src="/ellipse-shape.svg"
         />
        
-      </div>
-      
+      </div>   
       
       <div className="w-[880px] flex flex-row items-start justify-start py-7 px-[70px] box-border max-w-full mq1300:pl-[35px] mq1300:pr-[35px] mq1300:box-border">
       
         <div className="flex-1 flex flex-col items-start justify-start gap-[21px_0px] max-w-full">
        
-        
-        
           <div className="w-[539px] h-[151px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px]">
             frase clave
           </div>
@@ -57,7 +56,7 @@ const Home = () => {
         </div> 
           
       </div>
-      <Card/> 
+      <Cards/> 
     </div>
        
 
@@ -151,53 +150,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="self-stretch flex flex-row items-start justify-center pt-0 pb-[95.90000000000008px] pr-5 pl-10 box-border max-w-full shrink-0 text-center text-mini-5 text-midnightblue font-inter">
-        <div className="w-[1290px] flex flex-col items-end justify-start gap-[60px_0px] max-w-full mq900:gap-[30px_0px]">
-          <div className="self-stretch flex flex-row items-start justify-center py-0 px-5">
-            <div className="w-[193.6px] relative leading-[28.13px] flex items-center justify-center shrink-0">
-              Empresas que confian en BOSCO
-            </div>
-          </div>
-          <div className="flex flex-row items-start justify-center gap-[0px_30px] mq1300:flex-wrap">
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex@2x.png"
-            />
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex-1@2x.png"
-            />
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex-2@2x.png"
-            />
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex-3@2x.png"
-            />
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex-4@2x.png"
-            />
-            <img
-              className="h-[30px] w-[190px] relative object-cover min-h-[30px]"
-              loading="lazy"
-              alt=""
-              src="/divdflex@2x.png"
-            />
-          </div>
-        </div>
-      </section>
+      <Sponsors />
       <section className="self-stretch overflow-hidden flex flex-row items-start justify-between py-[120px] px-[315px] box-border relative max-w-full shrink-0 gap-[20px] text-left text-[39.4px] text-white font-inter mq900:p-[78px] mq900:box-border mq1300:pl-[157px] mq1300:pr-[157px] mq1300:box-border mq1650:flex-wrap mq1650:justify-center">
         <img
           className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover"
