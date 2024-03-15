@@ -69,7 +69,7 @@ export const FormMascota = () => {
 
         const sendBack = await axios.post("http://localhost:3001/newMascota", input);
 
-        if (sendBack.status === 200) {
+        if (sendBack.status === 201) {
             console.log('Datos enviados con éxito', input);
             setInput({
                 image: "",
