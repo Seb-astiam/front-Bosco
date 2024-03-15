@@ -1,10 +1,10 @@
-import HousingForm from './Components/Register/ProfileHousing/HousingForm'
-import RegisterCompany from './Components/Register/Company/RegisterCompany'
+import HousingForm from './components/Register/ProfileHousing/HousingForm'
+import RegisterCompany from './components/Register/Company/RegisterCompany'
 
-import LoginPage from './Components/Login/login'
-import Register from './Components/Register/Register'
+import LoginPage from './components/Login/login'
+import Register from './components/Register/Register'
 import { Route, Routes } from "react-router-dom"
-import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
+import { FormMascota } from "./components/FormUsuarioMascota/FormMascota"
 
 import Home from './pages/Home'
 
