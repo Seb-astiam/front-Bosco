@@ -12,8 +12,6 @@ const LoginPage = ()=>{
         }
     };
 
-    console.log("isLogged:", isLoggedIn)
-
     return (
         <div className="container-login">
         <div className= {`container-form ${isLoggedIn? 'hide' : ''}`}>

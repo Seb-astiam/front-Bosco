@@ -1,6 +1,5 @@
 import { useState } from "react"
 import axios from "axios";
-// import { validate, errors } from "./validaciones"
 
 export const FormMascota = () => {
     
