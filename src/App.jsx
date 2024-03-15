@@ -3,7 +3,7 @@ import RegisterCompany from './Components/Register/Company/RegisterCompany'
 
 import LoginPage from './Components/Login/login'
 import Register from './Components/Register/Register'
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
 import Home from './pages/Home'

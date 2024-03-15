@@ -1,9 +1,9 @@
 import React from "react";
-import { DateSearch } from "../components/DateSearch/DateSearch";
-import SocialFooter from "../components/Footer/SocialFooter";
-import { Navbar } from "../components/NavBar/NavBar";
-import {Card} from "../components/Card/Card"
-import ContactFooter from "../components/Footer/ContactFooter";
+import { DateSearch } from "../Components/DateSearch/DateSearch";
+import SocialFooter from "../Components/Footer/SocialFooter";
+import { Navbar } from "../Components/NavBar/NavBar";
+import {Card} from "../Components/Card/Card"
+import ContactFooter from "../Components/Footer/ContactFooter";
 
 
 
