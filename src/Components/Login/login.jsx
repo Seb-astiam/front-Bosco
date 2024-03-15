@@ -1,4 +1,4 @@
-import "../Login/login.css"
+import "./login.css"
 import { useState } from "react";
 
 const LoginPage = ()=>{
