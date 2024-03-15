@@ -20,7 +20,7 @@ const Home = () => {
       <Navbar/>
 
         <img
-          className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px] "
+          className="absolute top-[-1443.1px] left-[-204.3px] w-[2000.2px] h-[2175.7px] "
           alt=""
           src="/ellipse-shape.svg"
         />
@@ -34,6 +34,7 @@ const Home = () => {
           <div className="w-[539px] h-[151px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px]">
             frase clave
           </div>
+          
 
           <div className="self-stretch flex flex-col items-start justify-start gap-[64.2px_0px] max-w-full text-mini-6 mq450:gap-[16px_0px] mq900:gap-[32px_0px]">
             <div className="h-[48.1px] relative leading-[28.13px] flex items-center shrink-0 max-w-full z-[3]">
@@ -151,6 +152,8 @@ const Home = () => {
       </section>
 
       <Sponsors />
+
+
       <section className="self-stretch overflow-hidden flex flex-row items-start justify-between py-[120px] px-[315px] box-border relative max-w-full shrink-0 gap-[20px] text-left text-[39.4px] text-white font-inter mq900:p-[78px] mq900:box-border mq1300:pl-[157px] mq1300:pr-[157px] mq1300:box-border mq1650:flex-wrap mq1650:justify-center">
         <img
           className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover"
@@ -159,12 +162,10 @@ const Home = () => {
         />
         <div className="flex flex-col items-start justify-start pt-[94.80000000000018px] px-0 pb-0 box-border min-w-[408.4px] max-w-full mq450:pt-[62px] mq450:box-border mq1300:min-w-full mq1650:flex-1">
           <div className="flex flex-col items-start justify-start gap-[14px_0px] max-w-full">
-            <b className="w-[344.1px] h-[100px] relative leading-[52px] flex items-start shrink-0 max-w-full z-[1] mq450:text-5xl mq450:leading-[31px] mq900:text-[32px] mq900:leading-[42px]">
-              frase
-            </b>
+           
             <div className="flex flex-col items-start justify-start gap-[64.1px_0px] text-mini-6 mq450:gap-[32px_0px]">
               <div className="h-[76.3px] relative leading-[28.13px] flex items-center shrink-0 z-[1]">
-                <span>
+                <span style={{ marginTop: '-190px' }}>
                   <p className="m-0">
                     Traveling under your own power and at your own pace,
                   </p>
@@ -174,39 +175,34 @@ const Home = () => {
                   <p className="m-0">have more fun!</p>
                 </span>
               </div>
-              <div className="w-[221.9px] rounded-xl bg-white flex flex-row items-start justify-start py-[17px] pr-[35.80000000000001px] pl-9 box-border gap-[0px_9.8px] z-[1] text-center text-mini-5 text-chocolate-100">
-                <div className="flex-1 relative leading-[28px] font-medium">
-                  frase
-                </div>
-               
-              </div>
+             
             </div>
           </div>
         </div>
         <div className="w-[590px] flex flex-row items-start justify-start gap-[0px_30px] min-w-[590px] max-w-full text-center text-[38.9px] text-chocolate-100 mq900:flex-wrap mq1300:min-w-full mq1650:flex-1">
           <div className="flex-1 flex flex-col items-start justify-start gap-[30px_0px] min-w-[182px]">
-            <div className="self-stretch rounded-xl bg-white flex flex-col items-start justify-start pt-10 pb-[35.90000000000009px] pr-[78px] pl-[78.20000000000005px] gap-[20px_0px] z-[1] mq450:pl-5 mq450:pr-5 mq450:box-border">
+          <div className="self-stretch rounded-xl bg-white flex flex-col items-start justify-start pt-10 pb-[35.90000000000009px] pr-[78px] pl-[78.20000000000005px] gap-[20px_0px] z-[1] mq450:pl-5 mq450:pr-5 mq450:box-border mx-auto"> {/* Agregamos mx-auto para centrar */}
               <div className="flex flex-row items-start justify-start py-0 pr-8 pl-[31.799999999999955px]">
-                <img
-                  className="h-[60px] w-[60px] relative overflow-hidden shrink-0"
-                  loading="lazy"
-                  alt=""
-                  src="/1svg.svg"
-                />
-              </div>
-              <div className="self-stretch flex flex-col items-start justify-start">
-                <div className="self-stretch flex flex-row items-start justify-start py-0 pr-[23px] pl-[23.299999999999955px]">
+                 <img
+                     className="h-[60px] w-[60px] relative overflow-hidden shrink-0"
+                      loading="lazy"
+                       alt=""
+                    src="/1svg.svg"
+                   />
+           </div>
+           <div className="self-stretch flex flex-col items-start justify-start items-center justify-center"> {/* Agregamos items-center y justify-center para centrar */}
+               <div className="self-stretch flex flex-row items-start justify-start py-0 pr-[23px] pl-[23.299999999999955px]">
                   <b className="flex-1 relative leading-[56px] mq450:text-4xl mq450:leading-[34px] mq900:text-[31px] mq900:leading-[45px]">
-                    240
+                         240
                   </b>
                 </div>
                 <div className="self-stretch relative text-mini-5 leading-[28.13px] text-midnightblue">
-                  Ciudades
-                </div>
-              </div>
+                 Ciudades
+             </div>
             </div>
-            <div className="self-stretch rounded-xl bg-white flex flex-col items-start justify-start pt-10 pb-[35.90000000000009px] pr-[73.60000000000002px] pl-[73.79999999999995px] gap-[20px_0px] z-[1] text-[37.5px] mq450:pl-5 mq450:pr-5 mq450:box-border">
-              <div className="flex flex-row items-start justify-start py-0 pr-9 pl-[36.200000000000045px]">
+          </div>
+            <div className="self-stretch rounded-xl bg-white flex flex-col items-start justify-start pt-10 pb-[35.90000000000009px] pr-[78px] pl-[78.20000000000005px] gap-[20px_0px] z-[1] mq450:pl-5 mq450:pr-5 mq450:box-border mx-auto"> 
+              <div className="flex flex-row items-center justify-start py-0 pr-8 pl-[31.799999999999955px]">
                 <img
                   className="h-[60px] w-[60px] relative overflow-hidden shrink-0"
                   loading="lazy"
@@ -250,6 +246,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+
       <section className="w-[1862.2px] flex flex-row items-start justify-center pt-0 px-5 pb-[77px] box-border max-w-full shrink-0 text-left text-[29.8px] text-midnightblue font-inter mq450:pb-[50px] mq450:box-border">
         <div className="w-[1290.2px] flex flex-col items-start justify-start gap-[45px_0px] max-w-full mq900:gap-[22px_0px]">
           <div className="self-stretch flex flex-row items-end justify-between gap-[20px] mq450:flex-wrap">
@@ -315,6 +313,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+
       <footer className="self-stretch bg-midnightblue flex flex-col items-start justify-start pt-0 px-0 pb-0 box-border max-w-full shrink-0 text-left text-mini-5 text-white font-inter">
         <SocialFooter />
         <ContactFooter />
