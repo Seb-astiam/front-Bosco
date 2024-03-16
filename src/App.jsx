@@ -1,12 +1,13 @@
-import HousingForm from './components/Register/ProfileHousing/HousingForm'
-import RegisterCompany from './components/Register/Company/RegisterCompany'
-
-import LoginPage from './components/Login/login'
-import Register from './components/Register/Register'
+import HousingForm from './Components/Register/ProfileHousing/HousingForm'
+import RegisterCompany from './Components/Register/Company/RegisterCompany'
+import Detail from './Components/Detail/Detail'
+import LoginPage from './Components/Register/Login/login'
+import Register from './Components/Register/Sign Up/Register'
 import { Route, Routes } from "react-router-dom"
-import { FormMascota } from "./components/FormUsuarioMascota/FormMascota"
+import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
-import Home from './pages/Home'
+import Home from './pages/Home/Home'
+import PrincipalPage from './pages/PrincipalPage/PrincipalPage'
 
 
 const App = () => {
@@ -15,11 +16,13 @@ const App = () => {
     
       <Routes>
         <Route path="/" element= {<Home />} />
+        <Route path="/Principal" element= {<PrincipalPage />} />
         <Route path="/ProfileHousing" element={<HousingForm/>} />
         <Route path="/RegisterCompany" element={<RegisterCompany/>} />
         <Route path="/login" element= {<LoginPage />} />
-        <Route path="/register" element = {<Register/>}/>
+        <Route path="/Register" element = {<Register/>}/>
         <Route path="/formMascota" element = {<FormMascota />}/>
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
    
   </>

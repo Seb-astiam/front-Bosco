@@ -1,10 +1,10 @@
 import React from "react";
-import { DateSearch } from "../components/DateSearch/DateSearch";
-import SocialFooter from "../components/Footer/SocialFooter";
-import { Navbar } from "../components/NavBar/NavBar";
-import {Cards} from "../components/Cards/Cards"
-import ContactFooter from "../components/Footer/ContactFooter";
-import { Sponsors } from "../components/Sponsors/Sponsors";
+import { DateSearch } from "../../Components/DateSearch/DateSearch";
+import SocialFooter from "../../Components/Footer/SocialFooter";
+import { Navbar } from "../../Components/NavBar/NavBar";
+import {Cards} from "../../Components/Cards/Cards"
+import ContactFooter from "../../Components/Footer/ContactFooter";
+import { Sponsors } from "../../Components/Sponsors/Sponsors";
 
 
 
@@ -12,45 +12,36 @@ const Home = () => {
   return (
     <div className="w-full relative bg-white flex flex-col items-start justify-start pt-0 px-0 pb-0 box-border gap-[52px_0px] tracking-[normal] mq900:gap-[26px_0px]"> 
        
-      <div className="flex-1 overflow-hidden flex flex-col items-start justify-start pt-[22px] px-[245px] pb-[126.70000000000005px] box-border relative gap-[143.7px_0px] max-w-full z-[1] text-left text-40xl-5 text-midnightblue font-inter mq900:gap-[36px_0px] mq900:pl-[61px] mq900:pr-[61px] mq900:pb-[53px] mq900:box-border mq1300:gap-[72px_0px] mq1300:pt-5 mq1300:px-[122px] mq1300:pb-[82px] mq1300:box-border">
-      
-      <div className="w-[1320px] h-[296.4px] relative hidden max-w-full z-[0]" />
+      <div className="flex-1 overflow-hidden flex flex-col items-start justify-start pt-[22px] px-[245px] pb-[126.70000000000005px] box-border relative gap-[143.7px_0px] w-full text-left text-40xl-5 text-midnightblue font-inter mq900:gap-[36px_0px] mq900:pl-[61px] mq900:pr-[61px] mq900:pb-[53px] mq900:box-border mq1300:gap-[72px_0px] mq1300:pt-5 mq1300:px-[122px] mq1300:pb-[82px] mq1300:box-border">
       
       <div className="w-full h-[732.6px] absolute !m-[0] top-[5px] right-[0px] left-[0px]">
-      <Navbar/>
-
-        <img
-          className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px] "
-          alt=""
-          src="/ellipse-shape.svg"
-        />
-       
+        <Navbar/>
+          <img
+            className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px] "
+            alt=""
+            src="/ellipse-shape.svg"
+          />
       </div>   
       
       <div className="w-[880px] flex flex-row items-start justify-start py-7 px-[70px] box-border max-w-full mq1300:pl-[35px] mq1300:pr-[35px] mq1300:box-border">
       
         <div className="flex-1 flex flex-col items-start justify-start gap-[21px_0px] max-w-full">
        
-          <div className="w-[539px] h-[151px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px]">
-            frase clave
+          <div className="w-[700px] h-[200px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px]">
+            <h4>Alojamientos seguros para tu amigo peludo</h4>
           </div>
 
           <div className="self-stretch flex flex-col items-start justify-start gap-[64.2px_0px] max-w-full text-mini-6 mq450:gap-[16px_0px] mq900:gap-[32px_0px]">
+
             <div className="h-[48.1px] relative leading-[28.13px] flex items-center shrink-0 max-w-full z-[3]">
-              
               <span>
                 <p className="m-0">
                   textotextotextotextotextotextovv
                 </p>
-                <p className="m-0">anytime, anywhere</p>
               </span>
-             
-            
-
             </div>
            
             <DateSearch />
-            
           </div>
          
         </div> 
