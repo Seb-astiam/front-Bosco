@@ -1,5 +1,6 @@
 import CardsData from "/CardsPrueba.json"
-import { Card } from "../Card/Card.jsx"
+import { Card } from "../Card/Card"
+import { Link } from "react-router-dom";
 
 import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom';
@@ -9,9 +10,18 @@ export const Cards = ({ data }) => {
 
   const location = useLocation()
 
-  console.log(location.pathname)
+  let alojamiento = CardsData.slice(0, 4); // Mostrar cuatro tarjetas
+  const containerRef = React.useRef(null);
 
-    let alojamiento= CardsData.slice(0, 3);
+  // Calcular el ancho de cada tarjeta
+  const calculateCardWidth = () => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.clientWidth;
+      const numCards = alojamiento.length;
+      return `${containerWidth / numCards}px`;
+    }
+    return 'auto';
+  };
 
     if (data && data.length > 3) {
       alojamiento = data;
@@ -37,16 +47,15 @@ export const Cards = ({ data }) => {
 
     return (
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">
-        
         {landing()}
   
-        <div className="flex flex-wrap justify-center"> {/* Contenedor de las tarjetas con disposición horizontal */}
+        <div className="flex justify-center mt-8" style={{ marginTop: '-50px' }}>
           {alojamiento.map((card) => (
-            <div className="flex flex-wrap" key={card.id}> {/* Contenedor para cada tarjeta */}
+            <Link key={card.id} to={`/detail/${card.id}`} className="bg-white rounded-lg border border-gray-300 mx-2">
               <Card card={card} />
-            </div>
+            </Link>
           ))}
         </div>
       </div>
     );
-  };
+  }

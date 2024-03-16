@@ -1,8 +1,8 @@
-import HousingForm from './Components/Register/ProfileHousing/HousingForm'
-import RegisterCompany from './Components/Register/Company/RegisterCompany'
-
-import LoginPage from './Components/Register/Login/login'
-import Register from './Components/Register/Sign Up/Register'
+import HousingForm from './components/Register/ProfileHousing/HousingForm'
+import RegisterCompany from './components/Register/Company/RegisterCompany'
+import Detail from './components/Detail/Detail'
+import LoginPage from './components/Login/login'
+import Register from './components/Register/Register'
 import { Route, Routes } from "react-router-dom"
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/login" element= {<LoginPage />} />
         <Route path="/Register" element = {<Register/>}/>
         <Route path="/formMascota" element = {<FormMascota />}/>
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
    
   </>
