@@ -1,5 +1,4 @@
 import 'boxicons'
-import 'tailwindcss'
 import '../Pruebas/Pruebas.css'
 
 const Pruebas = ()=> {
@@ -10,7 +9,7 @@ const Pruebas = ()=> {
                 <span className='close-error'>&times;</span>
             </label>
             <label className="icon-error">
-                <box-icon name='error'  size={w >= 500 ? '50px' : '30px'}
+                <box-icon name='error'  size= '80px'
                 ></box-icon>
             </label>
             <p>Usuario o contraseña incorrecto. Por favor, ingresalos nuevamente.</p>
