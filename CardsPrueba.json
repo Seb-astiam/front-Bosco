@@ -1,5 +1,6 @@
 [
     {   
+        "id": 1,
         "ubicación": "Mexico",
         "distancia": "3km",
         "fechasDisponibles": "15 mar - 24 mar",
@@ -20,6 +21,7 @@
         
     },
     {   
+        "id": 2,
         "ubicación": "Peru",
         "distancia": "3km",
         "fechasDisponibles": "15 mar - 24 mar",
@@ -40,6 +42,7 @@
 
     },
     {   
+        "id": 3,
         "ubicación": "Colombia",
         "distancia": "3km",
         "fechasDisponibles": "15 mar - 24 mar",
@@ -60,6 +63,7 @@
 
     },
     {   
+        "id": 4,
         "ubicación": "Venezuela",
         "distancia": "3km",
         "fechasDisponibles": "15 mar - 24 mar",
@@ -80,6 +84,7 @@
 
     },
     {   
+        "id": 5,
         "ubicación": "Argentina",
         "distancia": "3km",
         "fechasDisponibles": "15 mar - 24 mar",

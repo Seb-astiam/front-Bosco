@@ -1,23 +1,31 @@
-import { useState } from 'react'
-import './App.css'
-import LoginPage from './Components/Login/login'
-import Register from './Components/Register/Register'
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Pruebas from './Components/Pruebas/Pruebas'
+import HousingForm from './Components/Register/ProfileHousing/HousingForm'
+import RegisterCompany from './Components/Register/Company/RegisterCompany'
+import Detail from './Components/Detail/Detail'
+import LoginPage from './Components/Register/Login/login'
+import Register from './Components/Register/Sign Up/Register'
+import { Route, Routes } from "react-router-dom"
+import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
-function App() {
-  
+import Home from './pages/Home/Home'
+import PrincipalPage from './pages/PrincipalPage/PrincipalPage'
+
+
+const App = () => {
   return (
     <>
-    <BrowserRouter>
+    
       <Routes>
+        <Route path="/" element= {<Home />} />
+        <Route path="/Principal" element= {<PrincipalPage />} />
+        <Route path="/ProfileHousing" element={<HousingForm/>} />
+        <Route path="/RegisterCompany" element={<RegisterCompany/>} />
         <Route path="/login" element= {<LoginPage />} />
-        <Route path="/register" element = {<Register/>}/>
-        <Route path="/pruebas" element = {<Pruebas></Pruebas>}/>
+        <Route path="/Register" element = {<Register/>}/>
+        <Route path="/formMascota" element = {<FormMascota />}/>
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
-    </BrowserRouter>
+   
   </>
   )
 }
-
 export default App
