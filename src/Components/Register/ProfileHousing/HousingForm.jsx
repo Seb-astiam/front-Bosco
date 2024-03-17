@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import servicesData from "./Services.json";
+import Swal from "sweetalert2";
+
 import { ValidateFormdata } from "./validate";
 
 const HousingForm = () => {
+  const email = "hectorgonza@gmail.com";
+  const [servicesA, setServicesA] = useState();
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -21,7 +24,17 @@ const HousingForm = () => {
     // aca renderizo los servicios desde el json mientras no tenga la ruta
     console.log(formData);
   }, [formData]);
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/service/allServices")
+      .then((response) => {
+        setServicesA(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los servicios:", error);
+      });
+  }, []);
+  console.log(servicesA);
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
     const { name, files, type, checked } = e.target;
@@ -54,13 +67,15 @@ const HousingForm = () => {
     setErrors(validationErrors);
   };
 
+  
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;
+    const serviceId = parseInt(value); // Convertimos el valor a número
     setFormData((prevData) => ({
       ...prevData,
       services: checked
-        ? [...prevData.services, value]
-        : prevData.services.filter((service) => service !== value),
+        ? [...prevData.services, serviceId] // Convertimos el ID a cadena
+        : prevData.services.filter((service) => service !== serviceId), // Convertimos el ID a cadena
     }));
   };
 
@@ -79,27 +94,47 @@ const HousingForm = () => {
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "images") {
+        // Si el campo es "images", agregamos cada archivo al FormData
         value.forEach((image) => formDataToSend.append("images", image));
-      } else if (key === "services" || key === "datesAvailable") {
-        formDataToSend.append(key, JSON.stringify(value));
       } else {
+        // Para otros campos del formulario, simplemente los agregamos al FormData
         formDataToSend.append(key, value);
       }
     });
 
     try {
-      const response = await axios.post("URL_DEL_BACKEND", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      // Manejar la respuesta del backend aquí
+      const response = await axios.post(
+        `http://localhost:3001/profileHousing/register?email=${email}`,
+        formDataToSend
+      );
+      if (response.status === 201 && response.data.message === "Datos recibidos correctamente") {
+        // Mostrar SweetAlert de éxito
+        Swal.fire({
+          icon: "success",
+          title: "¡Registro Exitoso!",
+          text: "Los datos del alojamiento han sido registrados correctamente.",
+        });
+        clearFormData()
+      }
+   
       console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
+  const clearFormData = () => {
+    setFormData({
+      title: "",
+      location: "",
+      datesAvailable: "",
+      datesEnd: "",
+      price: "",
+      accommodationType: "",
+      services: [],
+      square: 0,
+      images: [],
+    });
+  };
   return (
     <div className="max-w-lg mx-auto my-8">
       <form
@@ -244,7 +279,7 @@ const HousingForm = () => {
               errors.square ? "border-red-500" : ""
             }`}
           />
-          {!errors.square && formData.square >0 && (
+          {!errors.square && formData.square > 0 && (
             <div className="mr-3 text-green-500">
               <span role="img" aria-label="check">
                 ✔️
@@ -324,49 +359,47 @@ const HousingForm = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Servicios
           </label>
-          <div  className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.services? "border-red-500" : ""
-            }`}>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                name="services"
-                value="aseo"
-                onChange={handleServiceChange}
-                className="form-checkbox h-5 w-5 text-gray-600"
-              />
-              <span className="ml-2 text-gray-700">Aseo</span>
-            </label>
-            <label className="inline-flex items-center ml-4">
-              <input
-                type="checkbox"
-                name="services"
-                value="paseo diario"
-                onChange={handleServiceChange}
-                className="form-checkbox h-5 w-5 text-gray-600"
-              />
-              <span className="ml-2 text-gray-700">Paseo diario</span>
-            </label>
-            <label className="inline-flex items-center ml-4">
-              <input
-                type="checkbox"
-                name="services"
-                value="baño"
-                onChange={handleServiceChange}
-                className="form-checkbox h-5 w-5 text-gray-600"
-              />
-              <span className="ml-2 text-gray-700">Baño</span>
-            </label>
+          <div
+            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.services ? "border-red-500" : ""
+            }`}
+          >
+            <div>
+              {servicesA &&
+                servicesA.map((service) => (
+                  <label
+                    key={service.id}
+                    className="inline-flex items-center ml-4"
+                  >
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service.id} // Usa el tipo de servicio como valor
+                      onChange={handleServiceChange}
+                      className="form-checkbox h-5 w-5 text-gray-600"
+                    />
+                    <span className="ml-2 text-gray-700">{service.type}</span>
+                  </label>
+                ))}
+            </div>
           </div>
+
           <div className="mt-2">
-            {formData.services.map((service, index) => (
-              <span
-                key={index}
-                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              >
-                {service}
-              </span>
-            ))}
+            {formData.services.map((serviceId, index) => {
+              console.log("Selected service formdata:", formData.services);
+              const selectedService = servicesA.find(
+                (service) => service.id === serviceId
+              );
+              console.log("Selected service:", selectedService);
+              return (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+                >
+                  {selectedService ? selectedService.type : ""}
+                </span>
+              );
+            })}
           </div>
           {!errors.services && formData.services && (
             <div className=" mr-3 text-green-500">
