@@ -6,7 +6,7 @@ export const Card = ({card}) => {
   return (
     <div className="w-72 h-[300px] bg-white rounded-xl border border-gainsboro p-2.5 flex flex-col justify-between mt-8"> {/* Ajustamos el margen superior */}
       <img
-        className="h-30 w-full rounded-xl object-cover"
+        className="h-auto w-full rounded-xl object-cover"
         src="/chichiua.jpg"
         alt=""
       />

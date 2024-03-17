@@ -49,7 +49,7 @@ export const Cards = ({ data }) => {
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">
         {landing()}
   
-        <div className="flex justify-center mt-8" style={{ marginTop: '-50px' }}>
+        <div className="flex flex-wrap justify-evenly mt-8" style={{ marginTop: '-50px' }}>
           {alojamiento.map((card) => (
             <Link key={card.id} to={`/detail/${card.id}`} className="bg-white rounded-lg border border-gray-300 mx-2">
               <Card card={card} />
