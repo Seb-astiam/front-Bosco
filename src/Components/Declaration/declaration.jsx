@@ -1,47 +1,43 @@
 export const Declaration = ()=>{
-    const declaraciónText = 
-    
-    `Declaración de Privacidad
-
-        Esta Declaración de Privacidad describe cómo [nombre de la empresa/sitio web] recopila, utiliza y protege la información personal que usted proporciona a través de nuestro sitio web.
-
-        1. Información que recopilamos
-
-        Podemos recopilar la siguiente información personal cuando usted utiliza nuestro sitio web:
-
-        - Nombre
-        - Dirección de correo electrónico
-        - Información de contacto (como número de teléfono)
-
-        2. Cómo utilizamos su información
-
-        Utilizamos la información que recopilamos para los siguientes propósitos:
-
-        - Proporcionarle los productos y servicios que solicita
-        - Comunicarnos con usted sobre su cuenta o transacciones
-        - Enviarle información sobre promociones y eventos especiales
-
-        3. Seguridad de la información
-
-        Nos comprometemos a garantizar que su información esté segura. Hemos implementado medidas de seguridad adecuadas para proteger la información que recopilamos en línea.
-
-        4. Enlaces a otros sitios web
-
-        Nuestro sitio web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que haya utilizado estos enlaces para salir de nuestro sitio, debe tener en cuenta que no tenemos ningún control sobre ese otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que usted proporcione mientras visita dichos sitios y estos no están gobernados por esta declaración de privacidad.
-
-        5. Control de su información personal
-
-        Usted puede optar por restringir la recopilación o el uso de su información personal de las siguientes maneras:
-
-        - Cuando se le pida que complete un formulario en el sitio web, busque la casilla que puede hacer clic para indicar que no desea que la información se utilice por nadie para fines de marketing directo
-        - Si previamente ha aceptado que utilicemos su información personal con fines de marketing directo, puede cambiar de opinión en cualquier momento escribiéndonos o enviándonos un correo electrónico a [dirección de correo electrónico]
-
-        Esta Declaración de Privacidad está sujeta a cambios sin previo aviso. Se recomienda revisar periódicamente esta declaración para estar al tanto de cualquier actualización.
-        `
+   
     return (
         <div>
-            <h3>Declaración de Privacidad ejemplo</h3>
-            <p>{declaraciónText}</p>
+             <h1 className='font-custom font-extrabold'>Declaración de Privacidad</h1>
+    <p className="font-custom">Su privacidad es importante para nosotros. Es política de nuestra empresa respetar su privacidad con respecto a cualquier información que podamos recopilar de usted en nuestro sitio web y otros sitios asociados.</p>
+    
+    <h2 className='font-custom font-extrabold'>Información que recopilamos</h2>
+    <p className="font-custom">Recopilamos información cuando se registra en nuestro sitio, se suscribe a nuestro boletín informativo o completa un formulario. La información recopilada incluye su nombre, dirección de correo electrónico y número de teléfono.</p>
+    
+    <h2 className='font-custom font-extrabold'>Uso de la información</h2>
+    <p className="font-custom">La información que recopilamos de usted puede ser utilizada para:</p>
+    <ul>
+        <li className="font-custom">Personalizar su experiencia y responder a sus necesidades individuales.</li>
+        <li className="font-custom">Proporcionar un contenido publicitario personalizado.</li>
+        <li className="font-custom">Mejorar nuestro sitio web.</li>
+        <li className="font-custom">Mejorar nuestro servicio al cliente y responder a sus solicitudes de servicio al cliente.</li>
+    </ul>
+    
+    <h2 className='font-custom font-extrabold'>Protección de la información</h2>
+    <p className="font-custom">Implementamos una variedad de medidas de seguridad para mantener la seguridad de su información personal cuando ingresa, envía o accede a su información personal.</p>
+    
+    <h2 className='font-custom font-extrabold'>Cookies</h2>
+    <p className="font-custom">Utilizamos cookies para almacenar información sobre las preferencias del visitante y registrar información sobre qué páginas accede o visita. Si lo desea, puede desactivar las cookies a través de las opciones de su navegador.</p>
+    
+    <h2 className='font-custom font-extrabold'>Divulgación a terceros</h2>
+    <p className="font-custom">No vendemos, intercambiamos ni transferimos de ninguna otra manera su información de identificación personal a terceros. Esto no incluye a terceros de confianza que nos asisten en la operación de nuestro sitio web o en la prestación de servicios, siempre que estas partes acuerden mantener esta información confidencial.</p>
+    
+    <h2 className='font-custom font-extrabold'>Consentimiento</h2>
+    <p className="font-custom">Al utilizar nuestro sitio web, usted acepta nuestra política de privacidad y acepta sus términos y condiciones.</p>
+    
+    <h2 className='font-custom font-extrabold'>Actualizaciones</h2>
+    <p className="font-custom">Nuestra política de privacidad puede cambiar de vez en cuando y todas las actualizaciones se publicarán en esta página.</p>
+    
+    <h2 className='font-custom font-extrabold'>Contacto</h2>
+    <p className="font-custom">Si tiene alguna pregunta sobre esta política de privacidad, puede ponerse en contacto con nosotros utilizando la información a continuación:</p>
+    <ul>
+        <li className="font-custom">Correo electrónico: info@example.com</li>
+        <li className="font-custom" >Teléfono: +123456789</li>
+    </ul>
         </div>
     )
 }
