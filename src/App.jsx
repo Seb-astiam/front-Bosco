@@ -2,12 +2,14 @@ import HousingForm from './Components/Register/ProfileHousing/HousingForm'
 import RegisterCompany from './Components/Register/Company/RegisterCompany'
 import Detail from './Components/Detail/Detail'
 import LoginPage from './Components/Register/Login/login'
-import { Register }from './Components/Register/Sign Up/Register'
+import { Register }from './Components/Register/Sign Up/Register.jsx'
 import { Route, Routes } from "react-router-dom"
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 
 import Home from './pages/Home/Home'
 import PrincipalPage from './pages/PrincipalPage/PrincipalPage'
+import { Terms } from './Components/Terms/Terms'
+import { Declaration } from './Components/Declaration/declaration'
 
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
         <Route path="/Register" element = {<Register/>}/>
         <Route path="/formMascota" element = {<FormMascota />}/>
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/terms" element ={ <Terms></Terms>}/>
+        <Route path="/declaration" element = {<Declaration></Declaration>}/>
       </Routes>
    
   </>
