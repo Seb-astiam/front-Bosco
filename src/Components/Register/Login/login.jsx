@@ -110,16 +110,13 @@ const isFormValid = email && password && isEmailValid && isPasswordValid;
                         <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
                     </div>
                     <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]" >
-
                         <h2 className='font-custom font-extrabold'>Bienvenido</h2>
                         <p className="font-custom font-semibold text-center">Para poder unirte a nuestra comunidad por favor inicia sesión con tus datos. </p>
                         <button className="font-bold font-custom outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleLogin} >Inicia Sesión</button>
                         <p className="font-custom"> Si no tienes una cuenta, <a href="/register" className="text-blue-500 hover:underline">regístrate aquí</a>
                         </p>
-
                     </div>
                 </div>
-
                 <div className= {` ${isLoggedIn ? '' : '-translate-y-[300%]'} flex absolute h-[90%] w-[80%] `} >
                     <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px]">
                         <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
@@ -165,7 +162,6 @@ const isFormValid = email && password && isEmailValid && isPasswordValid;
                     </label>
                     <p className="font-custom font-semibold text-center mx-10" >Usuario o contraseña incorrecto. Por favor, ingresalos nuevamente.</p>
                     <button  className="font-bold font-custom outline-none w-[125px] rounded-2xl py-[3%] my-[8%] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleIsNotUser}>Volver</button>
-                
                     </div>
                 </div>
         </div>
