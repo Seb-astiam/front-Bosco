@@ -2,7 +2,7 @@ import HousingForm from './Components/Register/ProfileHousing/HousingForm'
 import RegisterCompany from './Components/Register/Company/RegisterCompany'
 import Detail from './Components/Detail/Detail'
 import LoginPage from './Components/Register/Login/login'
-import Register from './Components/Register/Sign Up/Register'
+import { Register }from './Components/Register/Sign Up/Register'
 import { Route, Routes } from "react-router-dom"
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota"
 

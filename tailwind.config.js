@@ -3,7 +3,15 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      boxShadow: {
+        'custom-shadow': '1px 1px 2px #717171'
+      },
       colors: {
+        naranjaForm: "#FEB156",
+        whiteseñales: '#eee',
+        verdelimon: '#c7e755',
+        cantaloupe: '#fda172',
+        olive: '#8b8e58',
         white: "#fff",
         midnightblue: "#05073c",
         gray: {
@@ -26,6 +34,7 @@ module.exports = {
       spacing: {},
       fontFamily: {
         inter: "Inter",
+        custom: ["Inter", "sans-serif"]
       },
       borderRadius: {
         "21xl": "40px",
