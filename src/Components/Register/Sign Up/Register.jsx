@@ -1,75 +1,238 @@
-import bosco from "../../../../public/bosco.jpeg"
+import "../Sign Up/register.css"
+import 'boxicons'
+import React, { useEffect, useState } from "react";
+import { isValidUsername } from "../../Validations/validUserName";
+import { isValidEmail } from "../../Validations/validEmail";
+import { isValidPassword } from "../../Validations/validPassword";
+import { isValidPasswordConfirmation } from "../../Validations/validPasswordConfirmation";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+
 
 export const Register = () => {
 
-    return (
-    <div className="flex items-center justify-center w-full h-[100vh] bg-slate-200">
+    const navigate = useNavigate();
 
-        <div className="w-96 h-[670px] flex items-center justify-center">
-            <img src={bosco} alt="bosco" className="h-[670px] rounded-tl-[10px] rounded-bl-[10px]"/>
-        </div>
+        const [input, setInput] = useState({
+            name: "",
+	        email: "", 
+	        password: "", 
+            passwordConfirmation: ""
 
-        <div className="flex flex-col items-center justify-center bg-naranjaForm w-[400px] h-[670px] rounded-tr-[10px] rounded-br-[10px]">
-            <div className="py-3 flex flex-col items-center justify-center">
-                <h2 className="text-black text-2xl font-custom font-extrabold">Crea tu cuenta</h2>
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAcFJREFUSEvV1UuoT1EUBvDfHXiFDExNJEVEDLwiQ24yFMoAI0OUMpABSQqZGl0Tr+7g3iRGSmFgpAghJSZIEQnldZbOrd129v+/u3WLXadTZ317fWt9e+3vDJjgNTDB+f0TBMuxASuxhj9FPcZTXMVoLxV6dTAZJ7C3j4y3sQWvu3AlgoUYbp5FlWcUhRysJZiK+5jfseEJvmMeAhfrInbgZy3BaexLwN9wDGfxtv0+qUl4GNHpVvwodZpLtB43E/AnLMPzSqn+guUEF7A9Qe3G0HiTx76c4C5WtAk/YlaWfFozrtf7EB7FjTFMTvAOs9tgjN+6LNkMhGy91gGcLBG8wpw2eAdrx0EQA3KmRHAFm9vgF0zHr4SkS6LoeHGC2dZM1+USQeh3KAHvwrk+kpzC/gQzFy9KBBF8lFyiD1iKlwWSJYizmtnGH2bddLppXPnjScL3TUU7EfKNrfCpPTiSTVqM+KW0mC4vilt6r8OHguhZMyExSWEVU7KurmFT3mnJ7BY00ow01cS7Zt3CID7XEgQuZAip0gPM939FeFf4Uqcf1fzRwos2YjVWtbf/QfuzOY83vVqsIaiRqIj5/wl+A2MwRxkhHnjuAAAAAElFTkSuQmCC"
-                className="rounded-full p-3 cursor-pointer mx-3 border border-solid border-b-2 border-t-0 border-gray-500 shadow-md transition duration-300 ease-in-out hover:bg-gray-900 hover:text-white hover:border-transparent"
-                />
+        });
+
+        const [inputError, setInputError] = useState({
+
+            name: { valid: false, error: '' },
+            email: { valid: false, error: '' },
+            password: { valid: false, error: '' },
+            passwordConfirmation: { valid: false, error: '' }
+        
+        });
+
+    const handleChange = async(e) => {
+  
+        const { name, value } = e.target;
     
-                <p className="text-black mt-3 font-custom font-bold">O usa tu email para registrarte!</p>
-            </div>
+            // Validar el nombre en tiempo real solo para el input de name
 
-            <form className="mt-4 flex flex-col items-center justify-center">
+            if (name === 'name') {
+                const { valid, error } = isValidUsername(value);
+                setInputError(inputError => ({
+                    ...inputError, name: { valid, error }
+                }));
+                setInput(prevInput => ({
+                    ...prevInput, [name]: value
+                }));
+            }
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZxJREFUSEu11L1vjWEYx/HPSecmmgpCajHUaOofIF5K01EbU/8CidCkpoYNIQzduyojUukLo9UmBgtB21RIGQnPldxtTh7nPveTU+da7/v6fa/3lj5bq8/6mgImq0Bu4kQK6D3m8bwUYBPAHG5nhGZxvxukBDiPF9hAgFaS2DncwRGcwXoOUgKsJoFpPK6JTGEJy7jYK+AbDlRlGMTPmsgwtvEZx3oFbOIQDuJrBhB/olQdrVSiqPlZRDmeZEoUPbrQK6C9yTEx0ZOBBL2Lw/ttcgR2DSEWwu32u+pLQB/uZ0x3fUdxHTGev/Ayzf+7/7FoJY2u792aHOMZUY/hVJqmdrEtvMHrlM2PTqQcIKZiMTWxSQaxCzNYq3/uBJjAs/TxKW4hjtv3mnNkGMcv3sMnLAKLsd2zOmAIb1PkcWtuNAkf91I5v+BkNXk7u351wFU8wCucbige30InljIO35Vq8xdygDhol0rLkwGPp8P3CJdzgA8YQZSqXvNSQkfxCR9xPAf4kx5KNyoH+8e/V6FSNtkpauzY9GPfM/gL5dBHGcZ57nQAAAAASUVORK5CYII="/>
-                    <input className="w-full p-2 rounded-2xl text-midnightblue border-none" placeholder="usuario"></input> 
-                </label>
+          if (name === 'email') {
+            const { valid, error } = await isValidEmail(value);
+            setInputError(inputError => ({
+                ...inputError, email: { valid, error }
+            }));
+            setInput(prevInput => ({
+                ...prevInput, [name]: value
+            }));
+        }
+        
+    
+          if (name === 'password') {
+            const { valid, error } = isValidPassword(value);
+            setInputError(inputError => ({
+                ...inputError, password: { valid, error }
+            }));
+            setInput(prevInput => ({
+                ...prevInput, [name]: value
+            }));
+        }
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAUlJREFUSEvd1T8ohWEUx/GPJIPBZJBSMmCwW2xGpbBSNmVSBhbJRCmTsilWfxaZbBYzA5OQMpgMBsmfe/S8um73ute93eWe5an3vM/5nt/vvM/zNqlzNNW5vsYCjGEN/TXadoUFnESdfIse0FVj8Wz7DXoLAZ8pO4DrKkGhPhT81M5XkAFeMI3Df0LGsYu2coCs7gYW8V4G1JxmF77nx3fzxRTMYButOMMEnkpAOnCAYbxiFjvlFAR0EMfoxiNC/nkBZCjZ2Il7jOaauURmdUkFmap27GMEb5jHVoLMYRMtOMVkLv+cchUDMgtXsJw276V1Kq2RW83rOh7/C5C5EipCTaiKiG6j6+i+MKoCRJEeHOXUfKSZ3JYYfNWASo9FAwPu0ndfqRV/vRfziZn9OslxXa+jr0bCRe5ULxW7rmusW3x7Y/0y62LRF2qEQhkl8rgIAAAAAElFTkSuQmCC"/>
-                    <input className="w-full p-2 rounded-2xl text-midnightblue border-none" placeholder="correo electrónico"></input>
-                </label>
+        if (name === 'passwordConfirmation') {
+            const { valid, error } = isValidPasswordConfirmation(input.password, value);
+            setInputError(inputError => ({
+                ...inputError, passwordConfirmation: { valid, error }
+            }));
+            setInput(prevInput => ({
+                ...prevInput, [name]: value
+            }));
+        }
+    }
+    /***********************************/
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPtJREFUSEvt1TFKA0EYxfFfvEKwEEEIFqb1Cjams5HcQbASG7FRTKFYWMU7WNkFEvAKFjZ2oiBW4g2CGphAXHbzZVeCFplqmG/m/Wceb2Zq5txqc9Y3K2AXe9hKG7pDF7fRBmcBXOKwQOgEp9MgEaCNmyRwhuvU38dx6m9jUASJAPfYxAGuMiIjQAd9tKoChlj69nsZ7xmRFbzhA/WqgM+0sOikUT1MUSQQ1f8GsINzNKOMZ+qPKc69yfE8b1+xWlJ8PP0J6xEg9LUAnrsu7wQLwA9XFhZNBur/pOgFaxUv2jMa0UUbPRUX2CgJecARwqeipO706dGP9mvYFyImMRnCUhKsAAAAAElFTkSuQmCC"/>
-                    <input className="w-full p-2 rounded-2xl text-midnightblue border-none" placeholder="contraseña"></input>
-                </label>
+    const [showPassword, setShowPassword] = useState(false);
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPtJREFUSEvt1TFKA0EYxfFfvEKwEEEIFqb1Cjams5HcQbASG7FRTKFYWMU7WNkFEvAKFjZ2oiBW4g2CGphAXHbzZVeCFplqmG/m/Wceb2Zq5txqc9Y3K2AXe9hKG7pDF7fRBmcBXOKwQOgEp9MgEaCNmyRwhuvU38dx6m9jUASJAPfYxAGuMiIjQAd9tKoChlj69nsZ7xmRFbzhA/WqgM+0sOikUT1MUSQQ1f8GsINzNKOMZ+qPKc69yfE8b1+xWlJ8PP0J6xEg9LUAnrsu7wQLwA9XFhZNBur/pOgFaxUv2jMa0UUbPRUX2CgJecARwqeipO706dGP9mvYFyImMRnCUhKsAAAAAElFTkSuQmCC"/>
-                    <input className="w-full p-2 rounded-2xl text-midnightblue border-none" placeholder="repetir contraseña"></input>
-                </label>
+    const handlePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAStJREFUSEvt1bEuBFEUBuBvCxqFghfQSRQaPV5A7yEIQUEUErolROMVvAUajUolGm+gUKgkmLu5I9fsHbOb7G4UO9XMmf/+/znn3vufliE/rSHzG6nAE2ZxjCt81FQ3gQ3s00nwHBd4z+HTCr4SwAsOcY0yHrDrOMFchewVZ7isCuUE7rAcCR6xg0m0sRDjKSZ9f4u4n4pyAiG2UhAdJUJlwoEsxG8rlVXxz0X182FRnUBJGBbexI/VSFz+S1uXw3e4mwQCJkfUc3wsUG1zV+vGLfqfLer3Qv2JTzf5AUuJ1/RiCU0W8usmT2GrcMO9woKnG0wtmOBuxJxiMYPvsooymyC0GV10pmLL/dh4rUAqFCraxmecA70MogPcYy13xAY+okc6kweefSD8Bs7DYhnkyIRIAAAAAElFTkSuQmCC"/>
-                    <select className="border-none w-full rounded-3xl outline-none flex items-center p-2">
-                    <option value="" disabled selected>Provincia</option>
-                    </select>
-                </label> 
+    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
-                <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md  bg-white">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAlxJREFUSEu11cmrj1EYB/DPNacMkTlEhDIryZRhIUNio4iSIRIbFuIPYIMSJSFFkmkhkY0pQ4kimYWMmZUkM+epc3Vd9zeEe3bv2znP93yH5zkVanlV1HJ95QB0wnRMQL98oUs4gt14XOySxQCaYicmFynwA3sxBx9q2lcIoDHOozc+YTPW414u0hVLMR8N8t4R+FIdpBDADszCI4zDjQIs+uJoukA7rMOycgD64Aq+Jp0HI/Rui62p2JBc4GzSfh5eYiRO4TO64GlVkJoYbMBibMSSXLwSpOrZYNcfb7ALMxLISqwuBXAH3bL+17LRM3Ew+bEiH16bdB+fvVmYGIxOTI7jdGb0C6MmBmFqGFcX35ORT9AebfCiisl3U3oeojNaJLavM5uWpRi8RXM0wfuc8w7oWCXz0RsP8nf8j73vEGcDrCiDixiUmqhH0vV2uuF2zM4SLUejxHBVbrxt2exeuI4LORhFAbbkQ2FwGN0KV9G6WgSjg8PkkCbiuSbJuCnJuKgUgzE4hsvp1gPy5vCgMqbhyxkswHPUwc2UpO4YhnOlAML4+9m8KVmaYuMmEhYj5RZ6ltNosWca9uAZovFeFUAI80O+CMUkHC4XIPadwKjcpWPxrdrhhlmOgSkUhwoNxWLTNMZDNFrELtISgy2mZ6x62Jd8CgmjF8LsiOgfq9R7MDSxOIn6iAE4N8c03oGQJEZ0GBuBqHGVAohDU9PY2J/TEo9MvBPD8xifmBNXMATlAMTh8OAAmuVKYX48RNFYRVe5AFEkujWS9TFr/9tY/heJSl3yvzH4K6CfFgx2GUKNzOIAAAAASUVORK5CYII="/>
-                    <select className="border-none w-full rounded-3xl outline-none flex items-center p-2">
-                    <option value="" disabled selected>Localidad</option>
-                    </select>
-                </label>
+    const handlePasswordConfirmationVisibility = () => {
+        setShowPasswordConfirmation(!showPasswordConfirmation);
+    }
 
-                <label className="flex items-center h-auto">
-                    <input className="w-[5%]" type="checkbox" />
-                    <p className="text-sm">Acepto los Términos y condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.</p>
-                </label>
+    /*************************************************************** */
 
-                <label className="flex items-center h-12">
-                    <input className="w-[5%]" type="checkbox"  />
-                    <p className="text-sm">Quiero recibir notificaciones</p>
-                </label>
+    const [termsChecked, setTermsChecked] = useState(false);
+    const [formValid, setFormValid] = useState(false);
 
-                <button className="font-bold font-custom bg-black outline-none  rounded-2xl m-2 px-5 py-3 text-white cursor-pointer transition duration-300 ease-in-out hover:bg-transparent hover:text-black hover:shadow-md"
-                >Registrarme </button>
+    useEffect(() => {
+        // Verificar si todos los campos son válidos y el checkbox está marcado
+        const isValid = Object.values(inputError).every(field => field.valid) && termsChecked;
+        setFormValid(isValid);
+    }, [inputError, termsChecked]);
 
-            </form>
+
+    const handleCheckboxChange = () => {
+        setTermsChecked(!termsChecked);
+    }
+
+    /************************************************ */
+
+
+    /******************************** */
+    const [verificationSuccessful, setVerificationSuccessful]= useState(false)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        // Verificar si hay algún campo con valid: false
+        const isValid = Object.values(inputError).every(field => field.valid);
+      
+        if (!isValid) {
+          // Mostrar mensaje de error
+          window.alert('Por favor, complete todos los campos correctamente antes de enviar.');
+          return;
+        }
+      
+        try {
+          const responseBack = await axios.post("http://localhost:3001/user", input, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+      
+          });
+
+          //! acá debería verificar el correo!
+          setVerificationSuccessful(true)
+          //navigate("/principal")
+          //window.alert('usuario creado correctamente!');
+          
+        } catch (error) {
+          window.alert('Error al crear usuario')
+        }
+      };
+      /************************** */
+
+      const handleClose = () => {
+        // Realizar la redirección al presionar el botón de cierre
+        navigate('/');
+      };
+
+    return (
+
+        <div className="register-container">
+        <div className={`form-information ${verificationSuccessful? 'hide1' : ''}`}>
+                <div className= "form-information-childs">
+                    <h2>Crear una cuenta</h2>
+                    <div className="icons">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAcFJREFUSEvV1UuoT1EUBvDfHXiFDExNJEVEDLwiQ24yFMoAI0OUMpABSQqZGl0Tr+7g3iRGSmFgpAghJSZIEQnldZbOrd129v+/u3WLXadTZ317fWt9e+3vDJjgNTDB+f0TBMuxASuxhj9FPcZTXMVoLxV6dTAZJ7C3j4y3sQWvu3AlgoUYbp5FlWcUhRysJZiK+5jfseEJvmMeAhfrInbgZy3BaexLwN9wDGfxtv0+qUl4GNHpVvwodZpLtB43E/AnLMPzSqn+guUEF7A9Qe3G0HiTx76c4C5WtAk/YlaWfFozrtf7EB7FjTFMTvAOs9tgjN+6LNkMhGy91gGcLBG8wpw2eAdrx0EQA3KmRHAFm9vgF0zHr4SkS6LoeHGC2dZM1+USQeh3KAHvwrk+kpzC/gQzFy9KBBF8lFyiD1iKlwWSJYizmtnGH2bddLppXPnjScL3TUU7EfKNrfCpPTiSTVqM+KW0mC4vilt6r8OHguhZMyExSWEVU7KurmFT3mnJ7BY00ow01cS7Zt3CID7XEgQuZAip0gPM939FeFf4Uqcf1fzRwos2YjVWtbf/QfuzOY83vVqsIaiRqIj5/wl+A2MwRxkhHnjuAAAAAElFTkSuQmCC"/>
+                    <p className="parrafo">o usa tu email para registrarte</p>
+                    </div>
+                    <form className="form-register" onSubmit={handleSubmit}>
+                        <div className="name-container">
+                        <label className="labels">
+                            <box-icon name='user' ></box-icon>
+                            <input name= "name" className="inputt" value={input.name}  onChange={handleChange} placeholder="usuario"></input> 
+                        </label>
+                        </div>
+                        <p className="errors">{inputError.name.error}</p>
+                        <div className="email-container">
+                        <label className="labels">
+                            <box-icon name='envelope'></box-icon>
+                            <input name= "email" className="inputt" value={input.email}  onChange={handleChange} placeholder="correo electrónico"></input>
+                        </label>
+                        </div>
+                        <p className="errors">{inputError.email.error}</p>
+                        <div className="password-container">
+                        <label className="labels">
+                            <box-icon name='lock-alt' ></box-icon>
+                            <input 
+                            name= "password" 
+                            className="inputt" 
+                            value={input.password}
+                            onChange={handleChange} 
+                            placeholder="contraseña"
+                            type={showPassword ? 'text' : 'password'}
+                            >
+                            </input>
+                        </label>
+                        <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordVisibility} size= '30px'/>
+                        </div>
+                        <p className="errors">{inputError.password.error}</p>
+                        <div className="passwordConfirmation-container">
+                        <label className="labels password">
+                            <box-icon name='lock-alt' ></box-icon>
+                            <input 
+                            name = "passwordConfirmation" 
+                            className="inputt password" 
+                            value={input.passwordConfirmation}  
+                            onChange={handleChange} 
+                            placeholder="repetir contraseña"
+                            type={showPasswordConfirmation ? 'text' : 'password'}
+                            >
+                            </input>
+                        </label>
+                        <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordConfirmationVisibility} size= '30px' />
+                        </div>
+                        <p className="errors">{inputError.passwordConfirmation.error}</p>
+                        <label className="check">
+                            <input className="check-input" type="checkbox" checked= {termsChecked} onChange={handleCheckboxChange}/>
+                            <p className= "texto"> Acepto los <a href="/terms" className="text-blue-500 hover:underline">Términos y condiciones</a> y autorizo el uso de mis datos de acuerdo a la <a href="/declaration" className="text-blue-500 hover:underline">Declaración de Privacidad.</a>
+                             </p>
+                        </label>
+                        <label className="check">
+                            <input className="check-input" type="checkbox"  />
+                            <p className= "texto">Quiero recibir notificaciones</p>
+                        </label>
+                        <button className={`register-button ${formValid ? 'enabled' : 'disabled'}`} disabled={!formValid}> Registrarme </button>
+
+                    </form>
+                    
+                </div>
+                <div className= {`email-verification ${verificationSuccessful? '' : 'hide1'}`}>
+                        <label className='verification'>Verificá tu email
+                            <span className='close-verification' onClick={handleClose}>&times;</span>
+                        </label>
+                        <label className="icon-email">
+                            <box-icon name='check-shield' size='80px'></box-icon>
+                        </label>
+                        <h2>Hola {input.name}! </h2>
+                        <p className='text-verification'>Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
+                        <h3> {input.email} </h3>
+                        <a className="verification-button" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
+                    </div>
         </div>
-    </div>
+        </div>       
     )
 }
+
