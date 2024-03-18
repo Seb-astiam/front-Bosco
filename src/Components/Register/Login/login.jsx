@@ -1,5 +1,6 @@
 import "./login.css"
 import { useState } from "react";
+import bosco from "../../../../public/bosco.jpeg"
 
 const LoginPage = ()=>{
 
@@ -14,20 +15,25 @@ const LoginPage = ()=>{
 
     return (
         <div className="container-login">
-        <div className= {`container-form ${isLoggedIn? 'hide' : ''}`}>
-            <div className="information">
-                <div className="info-childs">
-                    <h2>Bienvenido</h2>
-                    <p>Para poder unirte a nuestra comunidad por favor inicia sesión con tus datos. </p>
-                    <button className="buttonSignIn" onClick= {handleLogin} >Inicia Sesión</button>
-                    <p> Si no tienes una cuenta, <a href="/register" className="text-blue-500 hover:underline">regístrate aquí</a>
-                    </p>
+
+            <div className= {`flex ${isLoggedIn? 'hide' : ''}`}>
+
+                <div className="h-[450px] rounded-bl-[15px] rounded-tl-[15px]">
+                    <img src={bosco} alt="bosco" className="rounded-bl-[15px] rounded-tl-[15px]" />
                 </div>
-            </div> 
-        </div>
-        <div className= {`form-information-login ${isLoggedIn ? '' : 'hide'}`}>
-            <h2>Hola de nuevo!</h2>
-            <p>Nos alegra volver a verte, por favor inicia sesión:</p>
+
+                <div className="flex flex-col p-[70px] items-center justify-center bg-naranjaForm w-[350px] rounded-br-[15px] rounded-tr-[15px] h-[454px]">
+                    <h2 className="font-custom font-extrabold">Bienvenido</h2>
+                    <p className="font-custom font-semibold">Para poder unirte a nuestra comunidad por favor inicia sesión con tus datos. </p>
+                    <button className="font-bold font-custom bg-black outline-none  rounded-2xl m-2 px-5 py-3 text-white cursor-pointer transition duration-300 ease-in-out hover:bg-transparent hover:text-black hover:shadow-md" onClick= {handleLogin} >Inicia Sesión</button>
+                    <p className="font-custom"> Si no tienes una cuenta, <a href="/register" className="text-blue-500 hover:underline font-custom">regístrate aquí</a>
+                    </p>
+                </div> 
+            </div>
+
+            <div className= {`form-information-login ${isLoggedIn ? '' : 'hide'}`}>
+                <h2>Hola de nuevo!</h2>
+                <p>Nos alegra volver a verte, por favor inicia sesión:</p>
                 <form className="form-login">
 
                     <label className="labelss">
@@ -42,8 +48,8 @@ const LoginPage = ()=>{
 
                     <button className="register-button"> Iniciar </button>
                 </form>
+            </div>
         </div>
-    </div>
     
     )
 // después validar número de teléfono e email!! 

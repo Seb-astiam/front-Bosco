@@ -1,8 +1,13 @@
+import { NavLink } from "react-router-dom"
 
 export const Nav = () => {
     return (
         <div className="text-white ">
-            Soy Nav
+            <NavLink to="/ProfileHousing">
+                <button>
+                    Create Housing
+                </button>
+            </NavLink>
         </div>
     )
 }

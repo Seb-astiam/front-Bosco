@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  allAlojamientos: []
+  allAlojamientos: [],
+  AllLocation: []
 };
 
 const boscoSlice = createSlice({
@@ -10,10 +11,13 @@ const boscoSlice = createSlice({
   reducers: {
     getAllAlojamientos (state, action) {
         state.allAlojamientos = action.payload;
+    },
+    getAllLocation (state, action) {
+      state.AllLocation = action.payload
     }
   },
 });
 
-export const { getAllAlojamientos } = boscoSlice.actions;
+export const { getAllAlojamientos, getAllLocation } = boscoSlice.actions;
 
 export default boscoSlice.reducer;
