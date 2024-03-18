@@ -1,4 +1,3 @@
-import "../Sign Up/register.css"
 import 'boxicons'
 import React, { useEffect, useState } from "react";
 import { isValidUsername } from "../../Validations/validUserName";

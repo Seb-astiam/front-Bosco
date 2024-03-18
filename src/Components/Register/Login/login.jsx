@@ -1,4 +1,3 @@
-import "../Login/login.css"
 import { useState } from "react";
 import 'boxicons'
 import React from "react";
