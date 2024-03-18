@@ -4,15 +4,17 @@ import Swal from "sweetalert2";
 
 import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
+import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
 
 const HousingForm = () => {
 
+  useServices();
   useLocationProvincias();
   const provincias = useSelector((state) => state.storage.AllLocation);
+  const servicesA = useSelector((state) => state.storage.AllService)
 
   const email = "sebas@mail.com";
-  const [servicesA, setServicesA] = useState();
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -30,17 +32,7 @@ const HousingForm = () => {
     // aca renderizo los servicios desde el json mientras no tenga la ruta
     console.log(formData);
   }, [formData]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/service/allServices")
-      .then((response) => {
-        setServicesA(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los servicios:", error);
-      });
-  }, []);
-  console.log(servicesA);
+
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
     const { name, files, type, checked } = e.target;
@@ -144,35 +136,21 @@ const HousingForm = () => {
 
   return (
   <div className="max-w-lg mx-auto my-8">
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      encType="multipart/form-data"
-    >
+    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" encType="multipart/form-data">
+
       <h2 className="text-lg font-bold mb-4">Registrar Alojamiento</h2>
       <div className="mb-4">
-        <label
-          htmlFor="title"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
+        <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">
           Nombre del Alojamiento
         </label>
+
         <div className="relative">
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.title ? "border-red-500" : ""
-            }`}
+          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} 
+          className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.title ? "border-red-500" : "" }`}
           />
           {!errors.title && formData.title && (
             <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
+              <span role="img" aria-label="check"> ✔️ </span>
             </div>
           )}
         </div>
@@ -182,21 +160,11 @@ const HousingForm = () => {
       </div>
 
       <div className="mb-4 relative">
-        <label
-          htmlFor="location"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
+        <label htmlFor="location" className="block text-gray-700 text-sm font-bold mb-2">
           Ubicación
         </label>
-        <select
-          name="location"
-          id="location"
-          onChange={handleChange}
-          value={formData.location}
-          className={`appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.location ? "border-red-500" : ""
-          }`}
-        >
+        <select name="location" id="location" onChange={handleChange} value={formData.location}
+          className={`appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""}`}>
           <option value="">Escoge la Ubicación</option>
           {provincias.map((provincia) => {
             return (
@@ -206,7 +174,6 @@ const HousingForm = () => {
             );
           })}
         </select>
-
         {!errors.location && formData.location && (
           <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
             <span role="img" aria-label="check">
@@ -222,21 +189,11 @@ const HousingForm = () => {
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="datesAvailable"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
+        <label htmlFor="datesAvailable" className="block text-gray-700 text-sm font-bold mb-2">
           Fechas Inicio
         </label>
-        <input
-          type="date"
-          name="datesAvailable"
-          id="datesAvailable"
-          onChange={handleChange}
-          value={formData.datesAvailable}
-          className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.datesAvailable ? "border-red-500" : ""
-          }`}
+        <input type="date" name="datesAvailable" id="datesAvailable" onChange={handleChange} value={formData.datesAvailable}
+          className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""}`}
         />
         {!errors.datesAvailable && formData.datesAvailable && (
           <div className=" mr-3 text-green-500">
@@ -249,27 +206,15 @@ const HousingForm = () => {
           <p className="text-red-500 text-xs italic">{errors.datesAvailable}</p>
         )}
 
-        <label
-          htmlFor="datesEnd"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
+        <label htmlFor="datesEnd" className="block text-gray-700 text-sm font-bold mb-2">
           Fecha Fin
         </label>
-        <input
-          type="date"
-          name="datesEnd"
-          id="datesEnd"
-          onChange={handleChange}
-          value={formData.datesEnd}
-          className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.datesEnd ? "border-red-500" : ""
-          }`}
+        <input type="date" name="datesEnd" id="datesEnd" onChange={handleChange} value={formData.datesEnd}
+          className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""}`}
         />
         {!errors.datesEnd && formData.datesEnd && (
           <div className=" mr-3 text-green-500">
-            <span role="img" aria-label="check">
-              ✔️
-            </span>
+            <span role="img" aria-label="check"> ✔️ </span>
           </div>
         )}
         {errors.datesEnd && (
