@@ -16,7 +16,7 @@ const LoginPage = ()=>{
     return (
         <div className="container-login">
 
-            <div className= {`flex ${isLoggedIn? 'hide' : ''}`}>
+            <div className= {`flex transition-all duration-1000 ease ${isLoggedIn? 'hide' : ''}`}>
 
                 <div className="h-[450px] rounded-bl-[15px] rounded-tl-[15px]">
                     <img src={bosco} alt="bosco" className="rounded-bl-[15px] rounded-tl-[15px]" />
@@ -31,19 +31,19 @@ const LoginPage = ()=>{
                 </div> 
             </div>
 
-            <div className= {`form-information-login ${isLoggedIn ? '' : 'hide'}`}>
-                <h2>Hola de nuevo!</h2>
-                <p>Nos alegra volver a verte, por favor inicia sesión:</p>
-                <form className="form-login">
+            <div className= {`flex items-center justify-center flex-col absolute w-[700px] h-[420px] bg-naranjaForm rounded-2xl m-[10] transition-all duration-1000 ease ${isLoggedIn ? '' : 'hide'}`}>
+                <h2 className="font-custom font-extrabold">Hola de nuevo!</h2>
+                <p className="font-custom font-semibold">Nos alegra volver a verte, por favor inicia sesión:</p>
 
-                    <label className="labelss">
+                <form className="form-login">
+                    <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md w-[300px] bg-white">
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAUlJREFUSEvd1T8ohWEUx/GPJIPBZJBSMmCwW2xGpbBSNmVSBhbJRCmTsilWfxaZbBYzA5OQMpgMBsmfe/S8um73ute93eWe5an3vM/5nt/vvM/zNqlzNNW5vsYCjGEN/TXadoUFnESdfIse0FVj8Wz7DXoLAZ8pO4DrKkGhPhT81M5XkAFeMI3Df0LGsYu2coCs7gYW8V4G1JxmF77nx3fzxRTMYButOMMEnkpAOnCAYbxiFjvlFAR0EMfoxiNC/nkBZCjZ2Il7jOaauURmdUkFmap27GMEb5jHVoLMYRMtOMVkLv+cchUDMgtXsJw276V1Kq2RW83rOh7/C5C5EipCTaiKiG6j6+i+MKoCRJEeHOXUfKSZ3JYYfNWASo9FAwPu0ndfqRV/vRfziZn9OslxXa+jr0bCRe5ULxW7rmusW3x7Y/0y62LRF2qEQhkl8rgIAAAAAElFTkSuQmCC"/>
-                        <input className="inputt" placeholder="correo electrónico" name=""></input>
+                        <input className="w-full h-7" placeholder="correo electrónico" name=""></input>
                     </label>
 
-                    <label className="labelss">
+                    <label className="flex items-center mb-4 mx-[5%] rounded-[10px] px-5 shadow-md w-[300px] bg-white">
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPtJREFUSEvt1TFKA0EYxfFfvEKwEEEIFqb1Cjams5HcQbASG7FRTKFYWMU7WNkFEvAKFjZ2oiBW4g2CGphAXHbzZVeCFplqmG/m/Wceb2Zq5txqc9Y3K2AXe9hKG7pDF7fRBmcBXOKwQOgEp9MgEaCNmyRwhuvU38dx6m9jUASJAPfYxAGuMiIjQAd9tKoChlj69nsZ7xmRFbzhA/WqgM+0sOikUT1MUSQQ1f8GsINzNKOMZ+qPKc69yfE8b1+xWlJ8PP0J6xEg9LUAnrsu7wQLwA9XFhZNBur/pOgFaxUv2jMa0UUbPRUX2CgJecARwqeipO706dGP9mvYFyImMRnCUhKsAAAAAElFTkSuQmCC"/>
-                        <input className="inputt" placeholder="contraseña"></input>
+                        <input className="w-full h-7" type="password" placeholder="contraseña"></input>
                     </label>
 
                     <button className="register-button"> Iniciar </button>
