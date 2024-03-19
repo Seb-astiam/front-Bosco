@@ -1,23 +1,19 @@
-import { Filtros } from "./Filtro"
-import { Nav } from "./Nav"
-import { useAlojamientoPrincipal } from "../../Hooks/useAlojamientoPrincipal"
-import { CardsPrincipal } from "./Cards y Card/CardsPrincipal"
+import { Filtros } from "./Filtro";
+import { Nav } from "./Nav";
+import { useAlojamientoPrincipal } from "../../Hooks/useAlojamientoPrincipal";
+import { CardsPrincipal } from "./Cards y Card/CardsPrincipal";
 
 const PrincipalPage = () => {
-    useAlojamientoPrincipal();
+  useAlojamientoPrincipal();
 
-    return (
-        <div className="flex flex-col">
-            <div className="bg-black h-[100px]"> 
-                <Nav />
-            </div>
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-start w-full h-[100vh] ">
+        <Filtros />
+        <CardsPrincipal />
+      </div>
+    </div>
+  );
+};
 
-            <div className="flex items-start w-full h-[100vh] ">
-                <Filtros />
-                <CardsPrincipal />
-            </div>
-        </div>
-    )
-}
-
-export default PrincipalPage
+export default PrincipalPage;
