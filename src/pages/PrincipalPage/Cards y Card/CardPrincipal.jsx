@@ -39,13 +39,13 @@ export const CardPrincipal = ({alojamiento}) => {
                 <p className="font-custom text-[12px] font-medium text-black text-xs bg-olive rounded-2xl px-2 py-[2px] flex items-center justify-center shadow">
                     {accommodationType}
                 </p> 
-                    {Services.map((service, index) => {
+                    {/* {Services.map((service, index) => {
                         return (
                         <p key={service.id}
                             className={`shadow font-custom text-[12px] font-medium text-black text-xs rounded-2xl px-2 py-[2px] flex items-center justify-center ${
                             index === Services.length - 1 ? ' bg-cantaloupe' : 'bg-whiteseñales'
                             }`} > {service.type} </p> );
-                    })}
+                    })} */}
             </div>
 
             <div className="flex justify-evenly w-[250px]">
