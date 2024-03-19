@@ -30,11 +30,10 @@ export const Filtros = () => {
     const services = useSelector((state) => state.storage.AllService);
 
     const handleChange = async (e) => {
-        // setFilter({ ...filter, [e.target.name]: e.target.value });
         let query = "?";
 
         for (const [key, value] of Object.entries({
-            ...filter,
+            ...setFilter,
             [e.target.name]: e.target.value,
           })) {
             if (value) query += `${key}=${value}&`;
@@ -66,7 +65,7 @@ export const Filtros = () => {
             <select onChange={handleChange} name="location">
                 <option>Escoge una provincia</option>
                 {provincias.map((provincia) => {
-                    return <option value={provincia.nombre} key={provincia.id} name="location">{provincia.nombre}</option>
+                    return <option value={provincia.nombre} key={provincia.id}>{provincia.nombre}</option>
                 })}
 
             </select>

@@ -96,6 +96,13 @@ module.exports = {
         raw: "screen and (max-width: 450px)",
       },
     },
+    transform: {
+      'hide': 'translateY(-300%)',
+      
+    },
+    zIndex: {
+      '10': 10,
+    },
   },
   corePlugins: {
     preflight: false,
