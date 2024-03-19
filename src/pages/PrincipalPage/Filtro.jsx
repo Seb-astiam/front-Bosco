@@ -69,7 +69,7 @@ export const Filtros = () => {
   }, [Alojamiento]);
 
   return (
-    <div className="w-[400px] bg-whiteseñales  shadow-lg h-screen p-2 font-custom font-bold pt-8">
+    <div className="w-[400px] bg-whiteseñales  shadow-lg h-[100vh] p-2 font-custom font-bold pt-8">
       {show && (
         <div>
           <h1 className="font-custom font-extrabold text-center">Filtros</h1>
