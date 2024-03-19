@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   allAlojamientos: [],
   AllLocation: [],
-  AllService: []
+  AllService: [],
+  email: ''
 };
 
 const boscoSlice = createSlice({
@@ -12,6 +13,7 @@ const boscoSlice = createSlice({
   reducers: {
     getAllAlojamientos (state, action) {
         state.allAlojamientos = action.payload;
+        console.log(state.allAlojamientos)
     },
     getAllLocation (state, action) {
       state.AllLocation = action.payload
@@ -19,9 +21,12 @@ const boscoSlice = createSlice({
     getAllService (state, action) {
       state.AllService = action.payload
     },
+    getAllUser (state, action) {
+      state.email = action.payload
+    },
   },
 });
 
-export const { getAllAlojamientos, getAllLocation, getAllService } = boscoSlice.actions;
+export const { getAllAlojamientos, getAllLocation, getAllService, getAllUser } = boscoSlice.actions;
 
 export default boscoSlice.reducer;
