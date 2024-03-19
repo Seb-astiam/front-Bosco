@@ -234,17 +234,17 @@ export const Register = () => {
                     
             </div>
             <div className={`${verificationSuccessful? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
-                            <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[85%] w-[50%] text-xl bg-[#eee] max-w-[450px]`}>
-                                <label className='bg-[#d14d12] w-[88%] h-[15%] px-[6%] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Verificá tu email
-                                    <span onClick={handleClose}>&times;</span>
+                            <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
+                                <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Verificá tu email
+                                    <span className= "cursor-pointer" onClick={handleClose}>&times;</span>
                                 </label>
-                                <label className="flex justify-center py-[4%]">
+                                <label className="flex justify-center py-[15px]">
                                     <box-icon name='check-shield' size='80px'></box-icon>
                                 </label>
                                 <h2 className="font-custom font-extrabold my-0">Hola {input.name}! </h2>
-                                <p className='font-custom font-semibold text-center mx-10'>Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
+                                <p className='font-custom font-semibold text-center mx-10 text-[15px]'>Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
                                 <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
-                                <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[3%] my-[8%] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
+                                <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
                             </div>
                         </div>
         </div>       
