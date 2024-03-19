@@ -27,7 +27,7 @@ const Home = () => {
       
         <div className="flex-1 flex flex-col items-start justify-start gap-[21px_0px] max-w-full">
        
-          <div className="w-[700px] h-[200px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px]">
+          <div className="w-[700px] h-[200px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px] mt-10">
             <h4>Alojamientos seguros para tu amigo peludo</h4>
           </div>
 
@@ -35,8 +35,8 @@ const Home = () => {
 
             <div className="h-[48.1px] relative leading-[28.13px] flex items-center shrink-0 max-w-full z-[3]">
               <span>
-                <p className="m-0">
-                  textotextotextotextotextotextovv
+                <p className="m-0 text-[20px]">
+                ¿Necesitas un lugar seguro y acogedor para dejar a tu perro mientras estás fuera? En nuestro sitio, te ofrecemos la solución perfecta. Explora nuestra amplia selección de alojamientos para mascotas y encuentra el lugar ideal para tu amigo peludo.
                 </p>
               </span>
             </div>
@@ -51,55 +51,33 @@ const Home = () => {
     </div>
        
 
-      <section className="w-[1889.2px] flex flex-row items-start justify-center pt-0 px-5 pb-[95.70000000000005px] box-border max-w-full shrink-0 text-left text-[29.3px] text-midnightblue font-inter mq450:pb-[62px] mq450:box-border">
+      <section className=" flex flex-row items-start justify-center pt-0 px-5 pb-[95.70000000000005px] box-border max-w-full shrink-0 text-left text-[29.3px] text-midnightblue font-inter mq450:pb-[62px] mq450:box-border w-[100%]">
         <div className="w-[1231.2px] flex flex-col items-start justify-start gap-[40px_0px] max-w-full mq900:gap-[20px_0px]">
           <b className="w-[267.3px] relative leading-[45px] flex items-center mq450:text-4xl mq450:leading-[36px]">
             Por que BOSCO
           </b>
-          <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0.5 pl-0 gap-[0px_73px] text-mid-7 mq450:gap-[0px_18px] mq900:gap-[0px_36px] mq1300:flex-wrap">
-            <div className="flex-1 flex flex-col items-start justify-start gap-[30px_0px] min-w-[167px]">
-              <img
-                className="w-[60px] h-[60px] relative overflow-hidden shrink-0"
-                loading="lazy"
-                alt=""
-                src="/ticketsvg.svg"
-              />
-              <div className="self-stretch h-[117.3px] flex flex-col items-start justify-start gap-[14px_0px]">
-                <div className="relative leading-[27px] font-medium">
-                  TITULO
-                </div>
-                <div className="flex-1 relative text-mini-9 leading-[28.13px] flex items-center">
-                  <span>
-                    <p className="m-0">textotextotextotextotexto</p>
-                    <p className="m-0">textotextotextotextotexto</p>
-                    <p className="m-0">textotextotextotextotexto</p>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex-1 flex flex-col items-start justify-start gap-[30px_0px] min-w-[167px]">
+          <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0.5 pl-0 gap-[0px_5%] text-mid-7 mq450:gap-[0px_5%] mq900:gap-[0px_5%px] mq1300:flex-wrap">
+            
+            <div className=" flex flex-col items-start justify-start gap-[30px_0px] min-w-[167px] w-[30%]">
               <img
                 className="w-[60px] h-[60px] relative overflow-hidden shrink-0"
                 loading="lazy"
                 alt=""
                 src="/hotairballoonsvg.svg"
               />
-              <div className="self-stretch h-[117.3px] flex flex-col items-start justify-start gap-[14px_0px]">
-                <div className="relative leading-[27px] font-medium">
-                TITULO
+              <div className="self-stretch h-[117.3px] flex flex-col items-start justify-start gap-[14px_0px] ">
+                <div className="relative leading-[27px] font-medium ">
+                ¡Tu viaje sin preocupaciones comienza aquí!
                 </div>
-                <div className="flex-1 relative text-mini-6 leading-[28.13px] flex items-center">
+                <div className="relative text-mini-6 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0">textotextotextotextotexto</p>
-                    <p className="m-0">
-                    textotextotextotextotextotextovv
-                    </p>
-                    <p className="m-0">textotextotextotexto</p>
+                    <p className="m-0"> Únete a nosotros y descubre cómo hacer que cada viaje sea una experiencia inolvidable tanto para ti como para tu compañero de cuatro patas.</p>
+                    
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex-[0.9202] flex flex-col items-start justify-start py-0 pr-[20.5px] pl-0 box-border gap-[30px_0px] min-w-[167px] text-lg mq450:flex-1">
+            <div className="flex flex-col items-start justify-start gap-[30px_0px] min-w-[167px] w-[30%]">
               <img
                 className="w-[60px] h-[60px] relative overflow-hidden shrink-0"
                 loading="lazy"
@@ -108,31 +86,31 @@ const Home = () => {
               />
               <div className="self-stretch h-[89.1px] flex flex-col items-start justify-start gap-[14px_0px]">
                 <h2 className="m-0 relative text-inherit leading-[27px] font-medium font-inherit">
-                TITULO
+                ¡Experiencia de lujo para tu mascota!
                 </h2>
-                <div className="flex-1 relative text-mini-6 leading-[28.13px] flex items-center">
+                <div className=" relative text-mini-6 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0">textotextotextotextotexto</p>
-                    <p className="m-0">textotextotextotextotexto</p>
+                    <p className="m-0">Garantizamos un servicio de alta calidad y exclusivo para las mascotas, destacando la importancia que se le da al bienestar y la comodidad de los animales.</p>
+                    
                   </span>
                 </div>
               </div>
             </div>
-            <div className="h-[179.1px] flex flex-col items-start justify-start gap-[30px_0px] text-[17.9px]">
+            <div className="h-[179.1px] flex flex-col items-start justify-start gap-[30px_0px] text-[17.9px] w-[30%]">
               <img
                 className="w-[60px] h-[60px] relative overflow-hidden shrink-0"
                 loading="lazy"
                 alt=""
                 src="/medalsvg.svg"
               />
-              <div className="flex-1 flex flex-col items-start justify-start gap-[14px_0px]">
+              <div className=" flex flex-col items-start justify-start gap-[14px_0px]">
                 <div className="relative leading-[27px] font-medium">
-                TITULO
+                ¡Excelencia validada por nuestros clientes! 
                 </div>
-                <div className="flex-1 relative text-mini-5 leading-[28.13px] flex items-center">
+                <div className=" relative text-mini-5 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0">textotextotextotextotexto</p>
-                    <p className="m-0">textotextotextotextotexto</p>
+                    <p className="m-0">Cada alojamiento y cuidador es minuciosamente evaluado por nuestros clientes, garantizando calidad para tu perro. Confía en nuestras reseñas para la mejor atención a tu mascota.</p>
+                    
                   </span>
                 </div>
               </div>
@@ -150,24 +128,20 @@ const Home = () => {
         />
         <div className="flex flex-col items-start justify-start pt-[94.80000000000018px] px-0 pb-0 box-border min-w-[408.4px] max-w-full mq450:pt-[62px] mq450:box-border mq1300:min-w-full mq1650:flex-1">
           <div className="flex flex-col items-start justify-start gap-[14px_0px] max-w-full">
-            <b className="w-[344.1px] h-[100px] relative leading-[52px] flex items-start shrink-0 max-w-full z-[1] mq450:text-5xl mq450:leading-[31px] mq900:text-[32px] mq900:leading-[42px]">
-              frase
+            <b className="w-[80%] h-[100px] relative leading-[52px] flex items-start shrink-0 max-w-full z-[1] mq450:text-5xl mq450:leading-[31px] mq900:text-[32px] mq900:leading-[42px] mb-10">
+            ¡Expandiendo nuestras huellas de amor y cuidado a lo largo y ancho!
             </b>
             <div className="flex flex-col items-start justify-start gap-[64.1px_0px] text-mini-6 mq450:gap-[32px_0px]">
               <div className="h-[76.3px] relative leading-[28.13px] flex items-center shrink-0 z-[1]">
                 <span>
-                  <p className="m-0">
-                    Traveling under your own power and at your own pace,
+                  <p className="m-0 text-[20px]">
+                  En nuestra creciente comunidad, abarcamos una red de ciudades ofreciendo servicios de hospedaje para mascotas. Con un creciente número de alojamientos y una comunidad de usuarios cada vez más feliz, estamos comprometidos en brindar una experiencia excepcional a todas las mascotas y sus dueños en cada rincón del mundo.
                   </p>
-                  <p className="m-0">
-                    you'll connect more meaningfully with your destination and
-                  </p>
-                  <p className="m-0">have more fun!</p>
                 </span>
               </div>
               <div className="w-[221.9px] rounded-xl bg-white flex flex-row items-start justify-start py-[17px] pr-[35.80000000000001px] pl-9 box-border gap-[0px_9.8px] z-[1] text-center text-mini-5 text-chocolate-100">
                 <div className="flex-1 relative leading-[28px] font-medium">
-                  frase
+                  Nuestra red de apoyo
                 </div>
                
               </div>
@@ -245,7 +219,7 @@ const Home = () => {
         <div className="w-[1290.2px] flex flex-col items-start justify-start gap-[45px_0px] max-w-full mq900:gap-[22px_0px]">
           <div className="self-stretch flex flex-row items-end justify-between gap-[20px] mq450:flex-wrap">
             <b className="relative leading-[45px] mq450:text-5xl mq450:leading-[36px]">
-              Special Offers
+              Ofertas especiales
             </b>
             <div className="flex flex-row items-start justify-start gap-[0px_9.8px] text-mini-3">
               <div className="relative leading-[28.13px]">Mas ofertas</div>
@@ -264,14 +238,14 @@ const Home = () => {
                 alt=""
                 src="/image@2x.png"
               />
-              <b className="relative leading-[20.8px] inline-block max-w-[20%] z-[1]">
-                Enjoy Upto
+              <b className="relative leading-[30.8px] inline-block max-w-[50%] z-[1]">
+                Disfruta de hasta un
               </b>
               <b className="relative text-[23.8px] leading-[31.2px] capitalize inline-block max-w-[27%] z-[1] mq450:text-lgi mq450:leading-[25px]">
                 60 % OFF
               </b>
               <b className="relative text-base-6 leading-[20.8px] inline-block max-w-[30%] z-[1]">
-                on Your Booking
+                en tu reserva
               </b>
             </div>
             <div className="h-[200px] flex flex-col items-start justify-start pt-[75.90000000000009px] px-[30px] pb-[36.10000000000037px] box-border relative gap-[5px_0px] max-w-full text-base">
@@ -281,13 +255,13 @@ const Home = () => {
                 alt=""
                 src="/image-1@2x.png"
               />
-              <h2 className="m-0 relative text-inherit leading-[20.8px] font-bold font-inherit inline-block max-w-[27%] z-[1]">
-                80% Discount
+              <h2 className="m-0 relative text-inherit leading-[20.8px] font-bold font-inherit inline-block max-w-[50%] z-[1]">
+                80% de descuento
               </h2>
-              <b className="flex-1 relative text-[23.3px] leading-[31.2px] capitalize flex items-center max-w-[41%] z-[1] mq450:text-lgi mq450:leading-[25px]">
+              <b className="flex-1 relative text-[23.3px] leading-[31.2px] flex items-center max-w-[70%] z-[1] mq450:text-lgi mq450:leading-[25px]">
                 <span>
-                  <p className="m-0">Are You Ready</p>
-                  <p className="m-0">To Turkey Tour</p>
+                  <p className="m-0">en tu primera reserva</p>
+                  <p className="m-0">Estas listo para viajar?</p>
                 </span>
               </b>
             </div>
@@ -298,9 +272,9 @@ const Home = () => {
                 alt=""
                 src="/image-2@2x.png"
               />
-              <b className="relative leading-[31.2px] capitalize z-[1] mq450:text-lgi mq450:leading-[25px]">
-                <p className="m-0">Discover the wow</p>
-                <p className="m-0">of europe</p>
+              <b className="relative leading-[31.2px]  z-[1] mq450:text-lgi mq450:leading-[25px]">
+                <p className="m-0">Descubre la tranquilidad</p>
+                <p className="m-0">viajando</p>
               </b>
             </div>
           </div>

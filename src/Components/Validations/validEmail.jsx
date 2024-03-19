@@ -20,6 +20,7 @@ export const isValidEmail = async (email) => {
         const response = await axios.get('http://localhost:3001/user');
         const users = response.data;
 
+
         // Verificar si el email ya existe en la base de datos
         const emailExist = users.find(user => user.email === email);
         if (emailExist) {
