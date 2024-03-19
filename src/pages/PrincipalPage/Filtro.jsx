@@ -67,16 +67,16 @@ export const Filtros = () => {
 
     useEffect(() => {
         setShow(true)
-    }, [Alojamiento.length])
+    }, [Alojamiento])
 
     
 
     return (
-        <div className="w-[400px] bg-orange-600 h-[100vh] ">
+        <div className="w-[400px] bg-naranjaForm h-[100vh] ">
 
             {show && <div>
                 <select onChange={handleChange} name="location">
-                    <option value="">Escoge una provincia</option>
+                    <option value="">Ubicación</option>
                     {provincias.map((provincia) => {
                         return <option value={provincia.nombre} key={provincia.id}>{provincia.nombre}</option>
                     })}
