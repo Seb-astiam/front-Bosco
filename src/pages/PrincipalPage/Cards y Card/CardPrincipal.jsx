@@ -16,7 +16,7 @@ export const CardPrincipal = ({alojamiento}) => {
       };
 
     return (
-        <div className='flex flex-col items-center  h-[420px] w-[260px] mt-2 bg-white rounded-[15px] shadow'>  
+        <div className='flex flex-col items-center  h-[420px] w-[260px] mt-2 bg-white rounded-[15px] shadow  hover:scale-105'>  
             <div className="relative mt-3" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 {hover && (
                     <button onClick={() => changeImage("anterior")}
