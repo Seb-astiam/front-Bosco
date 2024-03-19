@@ -16,14 +16,6 @@ const LoginPage = ()=>{
         }
     };
 
-    // const [isWelcome, setIsWelcome] = useState(true);
-
-    // const handleIsWelcome = () => {
-    //     if(isWelcome) {
-    //         setIsWelcome(false)
-    //     }
-    // }
-
     const [isNotUser, setIsNotUser] = useState(false);
 
     const handleIsNotUser = () => {
@@ -31,8 +23,6 @@ const LoginPage = ()=>{
             setIsNotUser(false);
         }
     }
-
-   
 
     //********************************************************************************
 
@@ -76,11 +66,9 @@ const LoginPage = ()=>{
     /****************************** */
 
     const isEmailValid = /^\S+@\S+\.\S+$/.test(email); // Verifica el formato de email
-const isPasswordValid = password.length >= 8; // Verifica la longitud de la contraseña
+    const isPasswordValid = password.length >= 8; // Verifica la longitud de la contraseña
 
-const isFormValid = email && password && isEmailValid && isPasswordValid;
-
-
+    const isFormValid = email && password && isEmailValid && isPasswordValid;
 
 
     /********************************* */
@@ -100,7 +88,6 @@ const isFormValid = email && password && isEmailValid && isPasswordValid;
        
        /******************************************** */ 
        const navigate = useNavigate();
-    
 
     return (
         <div className=" w-screen h-screen flex justify-center items-center absolute" >
@@ -151,16 +138,16 @@ const isFormValid = email && password && isEmailValid && isPasswordValid;
                     </form> 
                 </div>
                 <div className={`${isNotUser? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
-                    < div className= {`${isNotUser ? '' : '-translate-y-[500%]' }  flex flex-col items-center rounded-[20px] absolute h-[73%] w-[50%] text-xl bg-[#eee] max-w-[400px]`}>
+                    < div className= {`${isNotUser ? '' : '-translate-y-[500%]' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px]`}>
             
-                    <label className='bg-[#d14d12] w-[88%] h-[13%] px-[6%] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
                         <span className= "cursor-pointer" onClick={handleIsNotUser}>&times;</span>
                     </label>
-                    <label className=" flex justify-center py-[8%]">
+                    <label className=" flex justify-center py-[30px]">
                         <box-icon name='error' size='100px'></box-icon>
                     </label>
                     <p className="font-custom font-semibold text-center mx-10" >Usuario o contraseña incorrecto. Por favor, ingresalos nuevamente.</p>
-                    <button  className="font-bold font-custom outline-none w-[125px] rounded-2xl py-[3%] my-[8%] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleIsNotUser}>Volver</button>
+                    <button  className="font-bold font-custom outline-none w-[125px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleIsNotUser}>Volver</button>
                     </div>
                 </div>
         </div>

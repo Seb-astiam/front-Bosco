@@ -8,14 +8,14 @@ const SocialFooter = () => {
             </h1>
             <div className="flex flex-col items-start justify-start pt-0 px-0 pb-[9.699999999999818px] box-border max-w-full text-lgi-7">
               <div className="h-[26px] relative leading-[37.5px] font-medium flex items-center shrink-0">
-                Speak to our expert 3438402502
+                Habla con un experto 3438402502
               </div>
             </div>
           </div>
           <div className="w-[232.2px] flex flex-col items-start justify-start pt-[4.099999999999909px] px-0 pb-0 box-border text-base-2">
             <div className="self-stretch flex flex-row items-start justify-start gap-[0px_22.3px]">
               <div className="relative leading-[31.88px] font-medium">
-                Follow Us
+                Seguinos
               </div>
               <div className="h-[23.4px] flex-1 flex flex-col items-start justify-start pt-[8.400000000000091px] px-0 pb-0 box-border text-mini">
                 <div className="self-stretch flex-1 flex flex-row items-start justify-between gap-[20px]">
