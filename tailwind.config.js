@@ -4,26 +4,26 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'custom-shadow': '1px 1px 2px #717171'
+        "custom-shadow": "1px 1px 2px #717171",
       },
       colors: {
         naranjaForm: "#FEB156",
-        whiteseñales: '#eee',
-        verdelimon: '#c7e755',
-        cantaloupe: '#fda172',
-        olive: '#8b8e58',
+        whiteseñales: "#eee",
+        verdelimon: "#c7e755",
+        cantaloupe: "#fda172",
+        olive: "#8b8e58",
         white: "#fff",
         midnightblue: "#05073c",
         gray: {
-          "100": "#757575",
-          "200": "rgba(16, 16, 16, 0.3)",
-          "300": "rgba(255, 255, 255, 0.15)",
+          100: "#757575",
+          200: "rgba(16, 16, 16, 0.3)",
+          300: "rgba(255, 255, 255, 0.15)",
         },
         gainsboro: "#e7e6e6",
         chocolate: {
-          "100": "#eb662b",
-          "200": "#d14d12",
-          "300": "rgba(235, 102, 43, 0.15)",
+          100: "#eb662b",
+          200: "#d14d12",
+          300: "rgba(235, 102, 43, 0.15)",
         },
         black: "#000",
         sandybrown: "#e2ad64",
@@ -34,7 +34,7 @@ module.exports = {
       spacing: {},
       fontFamily: {
         inter: "Inter",
-        custom: ["Inter", "sans-serif"]
+        custom: ["Inter", "sans-serif"],
       },
       borderRadius: {
         "21xl": "40px",
@@ -97,16 +97,14 @@ module.exports = {
       },
     },
     transform: {
-      'hide': 'translateY(-300%)',
-      
+      hide: "translateY(-300%)",
     },
+
     zIndex: {
-      '10': 10,
+      10: 10,
     },
   },
   corePlugins: {
     preflight: false,
   },
 };
-
-
