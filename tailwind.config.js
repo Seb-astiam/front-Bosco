@@ -7,6 +7,17 @@ module.exports = {
         'custom-shadow': '1px 1px 2px #717171'
       },
       colors: {
+        white: "#fff",
+        "light-grey": "#d4d4d4",
+        "dark-grey": "#404040",
+        black: "#000",
+        darkorange: "#eb7b15",
+        lavenderblush: "rgba(241, 229, 229, 0.22)",
+        silver: "#bfbfbf",
+        indianred: "#cc5050",
+        lavender: "#e3e5fa",
+        slategray: "#6f768d",
+        mediumpurple: "#818af9",
         naranjaForm: "#FEB156",
         whiteseñales: '#eee',
         verdelimon: '#c7e755',
@@ -34,7 +45,11 @@ module.exports = {
       spacing: {},
       fontFamily: {
         inter: "Inter",
-        custom: ["Inter", "sans-serif"]
+        custom: ["Inter", "sans-serif"],
+        manrope: "Manrope",
+        bevan: "Bevan",
+        inherit: "inherit",
+        roboto: "Roboto",
       },
       borderRadius: {
         "21xl": "40px",
