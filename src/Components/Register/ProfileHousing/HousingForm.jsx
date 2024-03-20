@@ -146,41 +146,37 @@ const HousingForm = () => {
     <div className="max-w-lg mx-auto my-8 ">
       <form
         onSubmit={handleSubmit}
-        className="bg-naranjaForm shadow-md rounded-[20px] pt-6 flex flex-col items-center flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%] "
+        className="bg-naranjaForm shadow-md rounded-[20px] flex flex-col px-[10%] rounded-br-[20px] rounded-tr-[20px] w-[100%] "
         encType="multipart/form-data"
       >
         <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
 
-        <div className="mb-4">
-          <div>
-            <label
-              htmlFor="title"
-              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-            >
-              <box-icon name="home"></box-icon>
-              <div className="relative">
-                <input
-                  placeholder="Nombre Alojamiento"
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  className={`w-[225px] outline-none ${errors.title ? "border-red-500" : ""
-                    }`}
-                />
-                {!errors.title && formData.title && (
-                  <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
-                    <span role="img" aria-label="check">
-                      {" "}
-                      ✔️{" "}
-                    </span>
-                  </div>
-                )}
+        <div className="mb-4 relative">
+          <label
+            htmlFor="title"
+            className="flex flex-grow px-[10px] py-[5px] bg-[white] rounded-[20px]"
+          >
+            <box-icon name="home" title="Nombre del alojamiento"></box-icon>
+            <input
+              placeholder="Nombre del alojamiento"
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className={`w-[80%] ${errors.title ? "border-red-500" : ""
+                }`}
+            />
+            {!errors.title && formData.title && (
+              <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  {" "}
+                  ✔️{" "}
+                </span>
               </div>
-            </label>
+            )}
+          </label>
 
-          </div>
 
           {errors.title && (
             <span className="text-red-500 text-sm">{errors.title}</span>
@@ -192,14 +188,14 @@ const HousingForm = () => {
             htmlFor="location"
             className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            <box-icon name="home"></box-icon>
+            <box-icon name="map" title="Ubicación"></box-icon>
 
             <select
               name="location"
               id="location"
               onChange={handleChange}
               value={formData.location}
-              className={`outline-none appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""
+              className={`border-none appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""
                 }`}
             >
               <option value="">Ubicación</option>
@@ -229,9 +225,14 @@ const HousingForm = () => {
         <div className="mb-4">
           <label
             htmlFor="datesAvailable"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
+            className="flex items-center relative px-[10px] bg-[white] rounded-[20px]"
           >
-            Fecha de inicio
+            <box-icon name="calendar-alt" title="Fecha de inicio"></box-icon>
+
+            {/* <p className="m-[0px] w-[180px]">
+
+              Fecha de inicio
+            </p> */}
             <input
               placeholder="Fecha inicio"
               type="date"
@@ -240,13 +241,13 @@ const HousingForm = () => {
               onChange={handleChange}
               value={formData.datesAvailable}
               max={formData.datesEnd}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""
+              className={`appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""
                 }`}
             />
           </label>
           {!errors.datesAvailable && formData.datesAvailable && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
+            <div className="cursor-default mr-3 text-green-500">
+              <span role="img" aria-label="check" title="Todo correcto">
                 ✔️
               </span>
             </div>
@@ -265,7 +266,12 @@ const HousingForm = () => {
             htmlFor="datesEnd"
             className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Fecha Fin
+            <box-icon name="calendar-x" title="Fecha Fin"></box-icon>
+
+            {/* <p className="m-[0px] w-[180px]">
+
+              Fecha Fin
+            </p> */}
             <input
               type="date"
               name="datesEnd"
@@ -273,7 +279,7 @@ const HousingForm = () => {
               onChange={handleChange}
               value={formData.datesEnd}
               min={formData.datesAvailable}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""
+              className={`appearance-none border-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""
                 }`}
             />
           </label>
@@ -295,7 +301,11 @@ const HousingForm = () => {
             htmlFor="square"
             className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Cantidad de plazas
+            <box-icon type='solid' title="Cantidad de plazas" name='cat'></box-icon>
+
+            {/* <p className="m-[0px] w-[180px]">
+              Cantidad de plazas
+            </p> */}
             <input
               placeholder="Cantidad de plazas"
               type="number"
@@ -303,7 +313,7 @@ const HousingForm = () => {
               id="square"
               onChange={handleChange}
               value={formData.square}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.square ? "border-red-500" : ""
+              className={`appearance-none border-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.square ? "border-red-500" : ""
                 }`}
             />
           </label>
@@ -324,14 +334,19 @@ const HousingForm = () => {
             htmlFor="price"
             className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Precio/hora
+            <box-icon name="money" title="Precio/Hora"></box-icon>
+
+            {/* <p className="m-[0px] w-[180px]">
+
+              Precio/hora
+            </p> */}
             <input
               type="number"
               name="price"
               id="price"
               onChange={handleChange}
               value={formData.price}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-red-500" : ""
+              className={`appearance-none border-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-red-500" : ""
                 }`}
             />
           </label>
@@ -351,17 +366,22 @@ const HousingForm = () => {
           <label
             htmlFor="accommodationType"
             className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Tipo de Alojamiento
+          >             
+           <box-icon name='building-house' title="Tipo de alojamiento"></box-icon>
+
+            {/* <p className="m-[0px] w-[180px]">
+              Tipo de Alojamiento
+            </p> */}
+
             <select
               name="accommodationType"
               id="accommodationType"
               onChange={handleChange}
               value={formData.accommodationType}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.accommodationType ? "border-red-500" : ""
+              className={`appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.accommodationType ? "border-red-500" : ""
                 }`}
             >
-              <option value="">Seleccionar Tipo de Alojamiento</option>
+              <option value="">Seleccionar tipo de alojamiento</option>
               <option value="Cabaña">Cabaña</option>
               <option value="Hotel">Hotel</option>
               <option value="Casa Rural">Casa Rural</option>
@@ -386,7 +406,7 @@ const HousingForm = () => {
             Servicios
           </label>
           <div
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.services ? "border-red-500" : ""
+            className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.services ? "border-red-500" : ""
               }`}
           >
             <div>
@@ -426,7 +446,7 @@ const HousingForm = () => {
               );
             })}
           </div>
-          {!errors.services && formData.services && (
+          {!errors.services && formData.services.length > 0 && (
             <div className=" mr-3 text-green-500">
               <span role="img" aria-label="check">
                 ✔️
@@ -493,7 +513,8 @@ const HousingForm = () => {
             <p className="text-red-500 text-xs italic">{errors.images}</p>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="">
+        </div>
           <button
             type="submit"
             className="font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white shadow-md"
@@ -501,7 +522,6 @@ const HousingForm = () => {
           >
             Enviar
           </button>
-        </div>
       </form>
     </div>
   );
