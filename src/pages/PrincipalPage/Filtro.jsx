@@ -62,7 +62,7 @@ export const Filtros = () => {
 
   const [filter, setFilter] = useState(initialState);
 
-  const URL = "http://localhost:3001/profileHousing/filtered";
+  const URL = "https://back-bosco.up.railway.app/profileHousing/filtered";
 
   const handleProvinceSelection = async (selectedProvince) => {
     

@@ -126,7 +126,7 @@ export const Register = () => {
         }
       
         try {
-          const responseBack = await axios.post("http://localhost:3001/user", input, {
+          const responseBack = await axios.post("https://back-bosco.up.railway.app/user", input, {
             headers: {
               'Content-Type': 'application/json',
             },
