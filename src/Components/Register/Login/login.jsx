@@ -31,7 +31,7 @@ const LoginPage = ()=>{
   
     const handleVerification = async() => {
         try {
-            const response = await axios.post('http://localhost:3001/login', { email, password })
+            const response = await axios.post('https://back-bosco.up.railway.app/login', { email, password })
             const verification = response.data
 
             if (response.status === 200) {

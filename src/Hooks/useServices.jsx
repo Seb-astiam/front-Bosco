@@ -10,7 +10,7 @@ export const useServices = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const responseBack = await axios.get("http://localhost:3001/service/allServices");
+                const responseBack = await axios.get("https://back-bosco.up.railway.app/service/allServices");
                 dispatch(getAllService(responseBack.data));
             } 
             catch (error) {
