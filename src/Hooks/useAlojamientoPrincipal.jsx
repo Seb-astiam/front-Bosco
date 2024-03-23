@@ -10,7 +10,7 @@ export const useAlojamientoPrincipal = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const responseBack = await axios.get("http://localhost:3001/profileHousing/allHousingslocation");
+                const responseBack = await axios.get("/profileHousing/allHousingslocation");
                 dispatch(getAllAlojamientos(responseBack.data));
             } 
             catch (error) {

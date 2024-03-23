@@ -107,7 +107,7 @@ const HousingForm = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3001/profileHousing/register?email=${email}`,
+        `/profileHousing/register?email=${email}`,
         formDataToSend
       );
       if (

@@ -10,7 +10,7 @@ export const useLocationProvincias = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const responseBack = await axios.get("http://localhost:3001/location/provinces");
+                const responseBack = await axios.get("/location/provinces");
                 dispatch(getAllLocation(responseBack.data));
             } 
             catch (error) {

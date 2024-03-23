@@ -1,15 +1,15 @@
-import HousingForm from "./Components/Register/ProfileHousing/HousingForm";
-import RegisterCompany from "./Components/Register/Company/RegisterCompany";
-import Detail from "./Components/Detail/Detail";
-import LoginPage from "./Components/Register/Login/login";
+import HousingForm from "./Components/Register/ProfileHousing/HousingForm.jsx";
+import RegisterCompany from "./Components/Register/Company/RegisterCompany.jsx";
+import Detail from "./Components/Detail/Detail.jsx";
+import LoginPage from "./Components/Register/Login/login.jsx";
 import { Register } from "./Components/Register/Sign Up/Register.jsx";
 import { Route, Routes } from "react-router-dom";
-import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota";
+import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota.jsx";
 
 import Home from "./pages/Home/Home";
 import PrincipalPage from "./pages/PrincipalPage/PrincipalPage";
-import { Terms } from "./Components/Terms/Terms";
-import { Declaration } from "./Components/Declaration/declaration";
+import { Terms } from "./Components/Terms/Terms.jsx";
+import { Declaration } from "./Components/Declaration/declaration.jsx";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
 
