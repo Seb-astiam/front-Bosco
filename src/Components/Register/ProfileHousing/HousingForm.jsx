@@ -13,6 +13,7 @@ const HousingForm = () => {
   const provincias = useSelector((state) => state.storage.AllLocation);
   const servicesA = useSelector((state) => state.storage.AllService);
 
+
   const email = "Dario@mail.com";
 
   const [selected, setSelected] = useState(
@@ -20,6 +21,7 @@ const HousingForm = () => {
       precioHora: false
     }
   )
+
 
   const [formData, setFormData] = useState({
     title: "",
