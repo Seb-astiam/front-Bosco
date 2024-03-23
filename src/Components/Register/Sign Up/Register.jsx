@@ -7,6 +7,7 @@ import { isValidPasswordConfirmation } from "../../Validations/validPasswordConf
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import bosco from "../../../assets/bosco-logo.jpeg"
+import { useGoogleLogin } from "@react-oauth/google";
 
 
 export const Register = () => {
@@ -110,7 +111,7 @@ export const Register = () => {
 
     /******************************** */
     const [verificationSuccessful, setVerificationSuccessful]= useState(false)
-    console.log('verifiaction', verificationSuccessful)
+    console.log('verification', verificationSuccessful)
     const handleSubmit = async (e) => {
         e.preventDefault();
       
@@ -146,6 +147,83 @@ export const Register = () => {
         navigate('/');
       };
 
+      /**************************************** */
+      //!AUTENTICACIÓN
+
+      const [user, setUser] = useState([]);
+  // guarda entre otras cosas que no sirven, una propiedad access_token 
+  // que sirve para acceder a los datos del usuario
+
+  const [profile, setProfile] = useState([]);
+  // guarda los siguientes detalles:
+  // id, email, verified_email (boolean), name, family_name, given_name, locale, picture
+  
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {setUser(codeResponse)
+    },
+    onError: (error) => console.log("Login Failed:", error)
+  });
+  console.log("profile", profile)
+ useEffect(() => {
+  const fetchData = async () => {
+    if (user) {
+      try {
+        // Obtener datos del perfil de Google
+        // const profileResponse = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+        //   headers: {
+        //     Authorization: `Bearer ${user.access_token}`,
+        //     Accept: "application/json",
+        //   },
+
+        const token = user.access_token
+        console.log("token", token)
+        const profileResponse = await axios.post("http://localhost:3001/auth/google-register",{token},
+            {
+              headers: {
+                Authorization: `Bearer ${user.access_token}`,
+                Accept: "application/json",
+              },
+            }
+          );
+        // Establecer perfil con los datos obtenidos
+        setProfile(profileResponse.data);
+        
+        
+
+        // Enviar perfil al backend
+        // const responseBack = await axios.post("http://localhost:3001/user", profileResponse.data, {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
+
+        // Redirigir al usuario a la página principal
+        //navigate('/principal');
+      } catch (error) {
+        console.log(error);
+        console.log(error.response.data)
+      }
+    }
+  };
+
+  // Llamar a la función asíncrona fetchData
+  fetchData();
+}, [user]);
+
+// FB.api(
+//   '/me',
+//   'GET',
+//   {"fields":"id,name,email"},
+//   function(response) {
+//       // Insert your code here
+//   }
+// );
+
+
+//GET
+//get https://graph.facebook.com/ v19.0 /me?fields=id,name,email
+
+
     return (
 
         <div className=" w-screen h-screen flex justify-center items-center">
@@ -158,9 +236,17 @@ export const Register = () => {
                 <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
                     <h2 className='font-custom font-extrabold ' >Crear una cuenta</h2>
                             <div className="flex flex-col  items-center">
-                            <label className='rounded-[50%] p-[15px] cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                            <box-icon size='30px' type='logo' name='google' ></box-icon>
-                            </label> 
+                            <div className='flex'>
+                            <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
+                            <box-icon size='30px' type='logo' name='google' onClick={login}></box-icon>
+                            </div> 
+                            <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
+                            <box-icon size='30px' type='logo' name='facebook'></box-icon>
+                            </div> 
+                            <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
+                            <box-icon size='30px' type='logo' name='github'></box-icon>
+                            </div>
+                            </div>
                             <p className="font-custom">o usa tu email para registrarte</p>
                             </div>
 
@@ -225,7 +311,7 @@ export const Register = () => {
                             <p className= "font-custom text-[12px] my-[0px]">Quiero recibir notificaciones</p>
                         </label>
                         <button 
-                        className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${formValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`}>
+                        className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${formValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`} disabled={!formValid}>
                         Registrarme </button>
 
                     </form>
