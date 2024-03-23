@@ -7,7 +7,7 @@ export const FormMascota = () => {
         image: "",
         name: "",
         type: "",
-        age: 1,
+        age: 1,  
         raze: "",
         aggressiveness: false,
         genre: "",
