@@ -66,7 +66,7 @@ export const FormMascota = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const sendBack = await axios.post("https://back-bosco.up.railway.app/newMascota", input);
+        const sendBack = await axios.post("/newMascota", input);
 
         if (sendBack.status === 201) {
             console.log('Datos enviados con éxito', input);

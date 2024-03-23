@@ -10,7 +10,7 @@ export const useAlojamientoPrincipal = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const responseBack = await axios.get("https://back-bosco.up.railway.app/profileHousing/allHousingslocation");
+                const responseBack = await axios.get("/profileHousing/allHousingslocation");
                 dispatch(getAllAlojamientos(responseBack.data));
             } 
             catch (error) {

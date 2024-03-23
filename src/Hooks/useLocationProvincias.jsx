@@ -10,7 +10,7 @@ export const useLocationProvincias = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const responseBack = await axios.get("https://back-bosco.up.railway.app/location/provinces");
+                const responseBack = await axios.get("/location/provinces");
                 dispatch(getAllLocation(responseBack.data));
             } 
             catch (error) {

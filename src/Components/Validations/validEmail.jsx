@@ -17,7 +17,7 @@ export const isValidEmail = async (email) => {
         }
 
         // Obtener todos los usuarios de la base de datos
-        const response = await axios.get('https://back-bosco.up.railway.app//user');
+        const response = await axios.get('/user');
         const users = response.data;
 
 

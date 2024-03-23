@@ -107,7 +107,7 @@ const HousingForm = () => {
 
     try {
       const response = await axios.post(
-        `https://back-bosco.up.railway.app/profileHousing/register?email=${email}`,
+        `/profileHousing/register?email=${email}`,
         formDataToSend
       );
       if (

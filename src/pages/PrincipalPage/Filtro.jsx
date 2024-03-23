@@ -26,7 +26,7 @@ export const Filtros = () => {
 
   const [filter, setFilter] = useState(initialState);
 
-  const URL = "https://back-bosco.up.railway.app/profileHousing/filtered";
+  const URL = "/profileHousing/filtered";
 
   const provincias = useSelector((state) => state.storage.AllLocation);
   const services = useSelector((state) => state.storage.AllService);
