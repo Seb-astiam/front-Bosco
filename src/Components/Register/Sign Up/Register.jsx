@@ -134,6 +134,11 @@ export const Register = () => {
 
           //! acá debería verificar el correo!
           setVerificationSuccessful(true)
+          // Obtén los datos del usuario registrado
+          const userData = responseBack.data;
+
+          // Guarda la información del usuario en el localStorage
+          localStorage.setItem("user", JSON.stringify(userData));
 
           
         } catch (error) {
@@ -147,81 +152,73 @@ export const Register = () => {
         navigate('/');
       };
 
+      const handleCloseRegister = () => {
+        if(setIsAccountPrevRegister) {
+        setIsAccountPrevRegister(false) 
+        } else {
+            setIsAccountPrevRegister(true)
+        }
+      }
+
       /**************************************** */
       //!AUTENTICACIÓN
 
-      const [user, setUser] = useState([]);
+    const [accessToken, setAcessToken] = useState([]);
   // guarda entre otras cosas que no sirven, una propiedad access_token 
   // que sirve para acceder a los datos del usuario
 
-  const [profile, setProfile] = useState([]);
-  // guarda los siguientes detalles:
-  // id, email, verified_email (boolean), name, family_name, given_name, locale, picture
+  const [isAccountPrevRegister, setIsAccountPrevRegister] = useState(false)
   
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => {setUser(codeResponse)
+  const register = useGoogleLogin({
+    onSuccess: (codeResponse) => {setAcessToken(codeResponse)
     },
     onError: (error) => console.log("Login Failed:", error)
   });
-  console.log("profile", profile)
- useEffect(() => {
-  const fetchData = async () => {
-    if (user) {
-      try {
-        // Obtener datos del perfil de Google
-        // const profileResponse = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-        //   headers: {
-        //     Authorization: `Bearer ${user.access_token}`,
-        //     Accept: "application/json",
-        //   },
 
-        const token = user.access_token
-        console.log("token", token)
-        const profileResponse = await axios.post("http://localhost:3001/auth/google-register",{token},
-            {
-              headers: {
-                Authorization: `Bearer ${user.access_token}`,
-                Accept: "application/json",
-              },
+
+  useEffect(() => {
+    const fetchData = async () => {
+        // Verifica si accessToken está definido y no es un arreglo vacío
+        if (accessToken && accessToken.access_token) {
+            try {
+                const token = accessToken.access_token;
+                console.log("token", token);
+                
+                // Realiza la solicitud al servidor para registrar al usuario
+                const userResponse = await axios.post("http://localhost:3001/auth/google-register", { token },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken.access_token}`,
+                            Accept: "application/json",
+                        },
+                    }
+                );
+
+                // Obtén los datos del usuario registrado
+                const userData = userResponse.data;
+
+                // Guarda la información del usuario en el localStorage
+                localStorage.setItem("user", JSON.stringify(userData));
+
+                // Redirige al usuario a la página principal
+                navigate('/principal');
+                
+            } catch (error) {
+                // Maneja cualquier error que ocurra durante la solicitud
+                if (error.response && error.response.status === 400) {
+                    setIsAccountPrevRegister(true);
+                } else {
+                    console.error("Error during registration:", error);
+                }
             }
-          );
-        // Establecer perfil con los datos obtenidos
-        setProfile(profileResponse.data);
-        
-        
+        }
+    };
 
-        // Enviar perfil al backend
-        // const responseBack = await axios.post("http://localhost:3001/user", profileResponse.data, {
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        // });
-
-        // Redirigir al usuario a la página principal
-        //navigate('/principal');
-      } catch (error) {
-        console.log(error);
-        console.log(error.response.data)
-      }
+    // Llama a fetchData solo cuando accessToken cambie y esté definido
+    if (accessToken && accessToken.access_token) {
+        fetchData();
     }
-  };
-
-  // Llamar a la función asíncrona fetchData
-  fetchData();
-}, [user]);
-
-// FB.api(
-//   '/me',
-//   'GET',
-//   {"fields":"id,name,email"},
-//   function(response) {
-//       // Insert your code here
-//   }
-// );
-
-
-//GET
-//get https://graph.facebook.com/ v19.0 /me?fields=id,name,email
+}, [accessToken]);
 
 
     return (
@@ -238,7 +235,7 @@ export const Register = () => {
                             <div className="flex flex-col  items-center">
                             <div className='flex'>
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                            <box-icon size='30px' type='logo' name='google' onClick={login}></box-icon>
+                            <box-icon size='30px' type='logo' name='google' onClick={register}></box-icon>
                             </div> 
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
                             <box-icon size='30px' type='logo' name='facebook'></box-icon>
@@ -331,6 +328,20 @@ export const Register = () => {
                                 <p className='font-custom font-semibold text-center mx-10 text-[15px]'>Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
                                 <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
                                 <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
+                            </div>
+                        </div>
+                        <div className={`${isAccountPrevRegister? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
+                            <div className= {`${isAccountPrevRegister? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
+                                <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
+                                    <span className= "cursor-pointer" onClick={handleCloseRegister}>&times;</span>
+                                </label>
+                                <label className="flex justify-center py-[15px]">
+                                    <box-icon name='error' size='100px'></box-icon>
+                                </label>
+                                <h2 className="font-custom font-extrabold my-0">Email ya registrado </h2>
+                                <p className='font-custom font-semibold text-center mx-10 text-[15px]'>El email ingresado ya está en uso, por favor inicia sesión o intenta con otra cuenta. </p>
+                                <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
+                                <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="/login"  style={{ textDecoration: 'none' }} >Iniciar sesión</a>
                             </div>
                         </div>
         </div>       
