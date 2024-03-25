@@ -1,12 +1,14 @@
 import { useState } from "react";
-import 'boxicons'
+import  'boxicons'
 import React from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import bosco from "../../../assets/bosco-logo.jpeg"
 
-const LoginPage = ()=>{
 
+import { useDispatch } from "react-redux";
+const LoginPage = ()=>{
+    
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -35,6 +37,9 @@ const LoginPage = ()=>{
             const verification = response.data
 
             if (response.status === 200) {
+
+                // despachar el email
+           //     dispacth(getAllUser(email(email)));
                     // por favar agregar algo más para avisar que es exitoso y redirigir!
                     navigate("/principal")
                     // window.alert("inicio de sesión exitoso");

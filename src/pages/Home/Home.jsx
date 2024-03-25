@@ -2,54 +2,48 @@ import React from "react";
 import { DateSearch } from "../../Components/DateSearch/DateSearch";
 import SocialFooter from "../../Components/Footer/SocialFooter";
 import { Navbar } from "../../Components/NavBar/NavBar";
-import {Cards} from "../../Components/Cards/Cards"
+import { Cards } from "../../Components/Cards/Cards";
 import ContactFooter from "../../Components/Footer/ContactFooter";
 import { Sponsors } from "../../Components/Sponsors/Sponsors";
 
-
-
 const Home = () => {
   return (
-    <div className="w-full relative bg-white flex flex-col items-start justify-start pt-0 px-0 pb-0 box-border gap-[52px_0px] tracking-[normal] mq900:gap-[26px_0px]"> 
-       
+    <div className="w-full relative bg-white flex flex-col items-start justify-start pt-0 px-0 pb-0 box-border gap-[52px_0px] tracking-[normal] mq900:gap-[26px_0px]">
       <div className="flex-1 overflow-hidden flex flex-col items-start justify-start pt-[22px] px-[245px] pb-[126.70000000000005px] box-border relative gap-[143.7px_0px] w-full text-left text-40xl-5 text-midnightblue font-inter mq900:gap-[36px_0px] mq900:pl-[61px] mq900:pr-[61px] mq900:pb-[53px] mq900:box-border mq1300:gap-[72px_0px] mq1300:pt-5 mq1300:px-[122px] mq1300:pb-[82px] mq1300:box-border">
-      
-      <div className="w-full h-[732.6px] absolute !m-[0] top-[5px] right-[0px] left-[0px]">
-        <Navbar/>
+        <div className="w-full h-[732.6px] absolute !m-[0] top-[5px] right-[0px] left-[0px]">
+          <Navbar />
           <img
             className="absolute top-[-1443.1px] left-[-204.3px] w-[2327.2px] h-[2175.7px] "
             alt=""
             src="/ellipse-shape.svg"
           />
-      </div>   
-      
-      <div className="w-[880px] flex flex-row items-start justify-start py-7 px-[70px] box-border max-w-full mq1300:pl-[35px] mq1300:pr-[35px] mq1300:box-border">
-      
-        <div className="flex-1 flex flex-col items-start justify-start gap-[21px_0px] max-w-full">
-       
-          <div className="w-[700px] h-[200px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px] mt-10">
-            <h4>Alojamientos seguros para tu amigo peludo</h4>
-          </div>
+        </div>
 
-          <div className="self-stretch flex flex-col items-start justify-start gap-[64.2px_0px] max-w-full text-mini-6 mq450:gap-[16px_0px] mq900:gap-[32px_0px]">
-
-            <div className="h-[48.1px] relative leading-[28.13px] flex items-center shrink-0 max-w-full z-[3]">
-              <span>
-                <p className="m-0 text-[20px]">
-                ¿Necesitas un lugar seguro y acogedor para dejar a tu perro mientras estás fuera? En nuestro sitio, te ofrecemos la solución perfecta. Explora nuestra amplia selección de alojamientos para mascotas y encuentra el lugar ideal para tu amigo peludo.
-                </p>
-              </span>
+        <div className="w-[880px] flex flex-row items-start justify-start py-7 px-[70px] box-border max-w-full mq1300:pl-[35px] mq1300:pr-[35px] mq1300:box-border">
+          <div className="flex-1 flex flex-col items-start justify-start gap-[21px_0px] max-w-full">
+            <div className="w-[700px] h-[200px] relative leading-[80px] font-semibold flex items-center shrink-0 max-w-full z-[3] mq450:text-17xl mq450:leading-[43px] mq900:text-29xl mq900:leading-[58px] mt-10">
+              <h4>Alojamientos seguros para tu amigo peludo</h4>
             </div>
-           
-            <DateSearch />
+
+            <div className="self-stretch flex flex-col items-start justify-start gap-[64.2px_0px] max-w-full text-mini-6 mq450:gap-[16px_0px] mq900:gap-[32px_0px]">
+              <div className="h-[48.1px] relative leading-[28.13px] flex items-center shrink-0 max-w-full z-[3]">
+                <span>
+                  <p className="m-0 text-[20px]">
+                    ¿Necesitas un lugar seguro y acogedor para dejar a tu perro
+                    mientras estás fuera? En nuestro sitio, te ofrecemos la
+                    solución perfecta. Explora nuestra amplia selección de
+                    alojamientos para mascotas y encuentra el lugar ideal para
+                    tu amigo peludo.
+                  </p>
+                </span>
+              </div>
+
+              <DateSearch />
+            </div>
           </div>
-         
-        </div> 
-          
+        </div>
+        <Cards />
       </div>
-      <Cards/> 
-    </div>
-       
 
       <section className=" flex flex-row items-start justify-center pt-0 px-5 pb-[95.70000000000005px] box-border max-w-full shrink-0 text-left text-[29.3px] text-midnightblue font-inter mq450:pb-[62px] mq450:box-border w-[100%]">
         <div className="w-[1231.2px] flex flex-col items-start justify-start gap-[40px_0px] max-w-full mq900:gap-[20px_0px]">
@@ -57,7 +51,6 @@ const Home = () => {
             Por que BOSCO
           </b>
           <div className="self-stretch flex flex-row items-start justify-start py-0 pr-0.5 pl-0 gap-[0px_5%] text-mid-7 mq450:gap-[0px_5%] mq900:gap-[0px_5%px] mq1300:flex-wrap">
-            
             <div className=" flex flex-col items-start justify-start gap-[30px_0px] min-w-[167px] w-[30%]">
               <img
                 className="w-[60px] h-[60px] relative overflow-hidden shrink-0"
@@ -67,12 +60,16 @@ const Home = () => {
               />
               <div className="self-stretch h-[117.3px] flex flex-col items-start justify-start gap-[14px_0px] ">
                 <div className="relative leading-[27px] font-medium ">
-                ¡Tu viaje sin preocupaciones comienza aquí!
+                  ¡Tu viaje sin preocupaciones comienza aquí!
                 </div>
                 <div className="relative text-mini-6 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0"> Únete a nosotros y descubre cómo hacer que cada viaje sea una experiencia inolvidable tanto para ti como para tu compañero de cuatro patas.</p>
-                    
+                    <p className="m-0">
+                      {" "}
+                      Únete a nosotros y descubre cómo hacer que cada viaje sea
+                      una experiencia inolvidable tanto para ti como para tu
+                      compañero de cuatro patas.
+                    </p>
                   </span>
                 </div>
               </div>
@@ -86,12 +83,15 @@ const Home = () => {
               />
               <div className="self-stretch h-[89.1px] flex flex-col items-start justify-start gap-[14px_0px]">
                 <h2 className="m-0 relative text-inherit leading-[27px] font-medium font-inherit">
-                ¡Experiencia de lujo para tu mascota!
+                  ¡Experiencia de lujo para tu mascota!
                 </h2>
                 <div className=" relative text-mini-6 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0">Garantizamos un servicio de alta calidad y exclusivo para las mascotas, destacando la importancia que se le da al bienestar y la comodidad de los animales.</p>
-                    
+                    <p className="m-0">
+                      Garantizamos un servicio de alta calidad y exclusivo para
+                      las mascotas, destacando la importancia que se le da al
+                      bienestar y la comodidad de los animales.
+                    </p>
                   </span>
                 </div>
               </div>
@@ -105,12 +105,16 @@ const Home = () => {
               />
               <div className=" flex flex-col items-start justify-start gap-[14px_0px]">
                 <div className="relative leading-[27px] font-medium">
-                ¡Excelencia validada por nuestros clientes! 
+                  ¡Excelencia validada por nuestros clientes!
                 </div>
                 <div className=" relative text-mini-5 leading-[28.13px] flex items-center">
                   <span>
-                    <p className="m-0">Cada alojamiento y cuidador es minuciosamente evaluado por nuestros clientes, garantizando calidad para tu perro. Confía en nuestras reseñas para la mejor atención a tu mascota.</p>
-                    
+                    <p className="m-0">
+                      Cada alojamiento y cuidador es minuciosamente evaluado por
+                      nuestros clientes, garantizando calidad para tu perro.
+                      Confía en nuestras reseñas para la mejor atención a tu
+                      mascota.
+                    </p>
                   </span>
                 </div>
               </div>
@@ -128,14 +132,20 @@ const Home = () => {
         />
         <div className="flex flex-col items-start justify-start pt-[94.80000000000018px] px-0 pb-0 box-border min-w-[408.4px] max-w-full mq450:pt-[62px] mq450:box-border mq1300:min-w-full mq1650:flex-1">
           <div className="flex flex-col items-start justify-start gap-[14px_0px] max-w-full">
-            <b className="w-[80%] h-[100px] relative leading-[52px] flex items-start shrink-0 max-w-full z-[1] mq450:text-5xl mq450:leading-[31px] mq900:text-[32px] mq900:leading-[42px] mb-10">
-            ¡Expandiendo nuestras huellas de amor y cuidado a lo largo y ancho!
+            <b className="w-[80%] h-[100px] relative leading-[52px] shrink-0 max-w-full z-[1] mq450:text-5xl mq450:leading-[31px] mq900:text-[32px] mq900:leading-[42px] mb-20">
+              ¡Expandiendo nuestras huellas de amor y cuidado a lo largo y
+              ancho!
             </b>
             <div className="flex flex-col items-start justify-start gap-[64.1px_0px] text-mini-6 mq450:gap-[32px_0px]">
               <div className="h-[76.3px] relative leading-[28.13px] flex items-center shrink-0 z-[1]">
                 <span>
                   <p className="m-0 text-[20px]">
-                  En nuestra creciente comunidad, abarcamos una red de ciudades ofreciendo servicios de hospedaje para mascotas. Con un creciente número de alojamientos y una comunidad de usuarios cada vez más feliz, estamos comprometidos en brindar una experiencia excepcional a todas las mascotas y sus dueños en cada rincón del mundo.
+                    En nuestra creciente comunidad, abarcamos una red de
+                    ciudades ofreciendo servicios de hospedaje para mascotas.
+                    Con un creciente número de alojamientos y una comunidad de
+                    usuarios cada vez más feliz, estamos comprometidos en
+                    brindar una experiencia excepcional a todas las mascotas y
+                    sus dueños en cada rincón del mundo.
                   </p>
                 </span>
               </div>
@@ -143,7 +153,6 @@ const Home = () => {
                 <div className="flex-1 relative leading-[28px] font-medium">
                   Nuestra red de apoyo
                 </div>
-               
               </div>
             </div>
           </div>
@@ -283,7 +292,7 @@ const Home = () => {
       <footer className="self-stretch bg-midnightblue flex flex-col items-start justify-start pt-0 px-0 pb-0 box-border max-w-full shrink-0 text-left text-mini-5 text-white font-inter">
         <SocialFooter />
         <ContactFooter />
-        
+
         <div className="self-stretch flex flex-row items-start justify-between pt-[23.09999999999991px] pb-[22px] pr-[310px] pl-[315px] gap-[20px] border-t-[1px] border-solid border-gray-300 mq900:pl-[78px] mq900:pr-[77px] mq900:box-border mq1300:flex-wrap mq1300:pl-[157px] mq1300:pr-[155px] mq1300:box-border">
           <div className="flex flex-col items-start justify-start pt-[1.900000000000091px] px-0 pb-0">
             <div className="h-5 relative leading-[28.13px] flex items-center shrink-0">

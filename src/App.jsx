@@ -12,7 +12,7 @@ import { Terms } from "./Components/Terms/Terms";
 import { Declaration } from "./Components/Declaration/declaration";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
-
+import TestNotification from "./TestNotification"
 const App = () => {
   const { pathname } = useLocation();
 
@@ -21,6 +21,7 @@ const App = () => {
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/Notification" element={<TestNotification  />} />
         <Route path="/Principal" element={<PrincipalPage />} />
         <Route path="/ProfileHousing" element={<HousingForm />} />
         <Route path="/RegisterCompany" element={<RegisterCompany />} />

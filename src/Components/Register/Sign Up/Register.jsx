@@ -7,10 +7,11 @@ import { isValidPasswordConfirmation } from "../../Validations/validPasswordConf
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import bosco from "../../../assets/bosco-logo.jpeg"
-
+import { useDispatch } from 'react-redux';
+import { getAllUser } from "../../../Redux/boscoSlice";
 
 export const Register = () => {
-
+    const dispacth = useDispatch()
     const navigate = useNavigate();
 
         const [input, setInput] = useState({
@@ -128,12 +129,12 @@ export const Register = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-      
+            
           });
 
           //! acá debería verificar el correo!
           setVerificationSuccessful(true)
-
+          //dispacth(getAllUser(email(email)));
           
         } catch (error) {
           window.alert('Error al crear usuario')

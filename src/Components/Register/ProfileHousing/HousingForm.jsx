@@ -5,15 +5,14 @@ import Swal from "sweetalert2";
 import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import { useServices } from "../../../Hooks/useServices";
-import { useSelector } from "react-redux";
-
+import { useSelector} from "react-redux";
 const HousingForm = () => {
   useServices();
   useLocationProvincias();
   const provincias = useSelector((state) => state.storage.AllLocation);
   const servicesA = useSelector((state) => state.storage.AllService);
 
-  const email = "Dario@mail.com";
+  const email = "Hectortrivia@gmail.com";
   const [formData, setFormData] = useState({
     title: "",
     location: "",

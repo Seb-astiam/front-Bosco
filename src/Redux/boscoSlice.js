@@ -4,7 +4,7 @@ const initialState = {
   allAlojamientos: [],
   AllLocation: [],
   AllService: [],
-  email: ''
+  email: []
 };
 
 const boscoSlice = createSlice({
