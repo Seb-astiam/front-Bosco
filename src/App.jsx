@@ -12,7 +12,6 @@ import { Terms } from "./Components/Terms/Terms";
 import { Declaration } from "./Components/Declaration/declaration";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
-import FacebookLoginButton from "./probandoFirebase.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -31,7 +30,6 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/terms" element={<Terms></Terms>} />
         <Route path="/declaration" element={<Declaration></Declaration>} />
-        <Route path="/prueba" element = {<FacebookLoginButton></FacebookLoginButton>}/>
       </Routes>
     </>
   );

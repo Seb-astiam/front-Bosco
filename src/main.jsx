@@ -7,14 +7,12 @@ import { Provider } from 'react-redux';
 import store from './Redux/store.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-
-const clientId= "712837324982-fmpfrevk484j3ef7ee0jc7a2it17njcf.apps.googleusercontent.com"
-//esto iría en .env
-  //clientId={process.env.clientID}>
+const CLIENT_ID= "712837324982-fmpfrevk484j3ef7ee0jc7a2it17njcf.apps.googleusercontent.com"
+// NO SUPE HACER EL .ENV, VA A IR EN LA PROX ACTUALIZACIÓN JAJA NO ME ROBEN LOS DATOS
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <GoogleOAuthProvider clientId={clientId}>
+    <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Provider store={store}>
         <App />
       </Provider>
