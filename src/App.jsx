@@ -12,6 +12,7 @@ import { Terms } from "./Components/Terms/Terms.jsx";
 import { Declaration } from "./Components/Declaration/declaration.jsx";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
+import { Profile } from "./Components/Profile/Profile.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/RegisterCompany" element={<RegisterCompany />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/Profile/:id/*" element={<Profile />} />
         <Route path="/formMascota" element={<FormMascota />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/terms" element={<Terms></Terms>} />
