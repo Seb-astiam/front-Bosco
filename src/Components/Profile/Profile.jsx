@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { FormProfile } from "./FormProfile/FormProfile";
+import { MyPets } from "./MyPets/MyPets";
+import { MyHousing } from "./MyHousing/MyHousing";
 
 export const Profile = () => {
     return (
@@ -8,18 +10,24 @@ export const Profile = () => {
         className="flex  gap-2"
         >
             <div
-            className=" p-[5px] m-[5px] gap-2 h-[350px]  shadow-md bg-slate-100"
+            className=" p-[5px] m-[5px] gap-2 h-[450px] w-[200px]  shadow-md bg-slate-100"
             >
 
-            <Link to={"perfil"}>
-                <p>
+            <Link to={"perfil"} className="flex-1 relative leading-[20px] no-underline">
+                <p className="font-bold shadow-md m-[5px] hover:bg-slate-300">
                     Perfil
                 </p>
             </Link>
 
-            <Link to={"alojamientos"}>
-                <p>
+            <Link to={"alojamientos"} className="flex-1 relative leading-[20px] no-underline">
+            <p className="font-bold shadow-md m-[5px] hover:bg-slate-300">
+
                     Alojamienos
+                </p>
+            </Link>
+            <Link to={"mascotas"} className="flex-1 relative leading-[20px] no-underline">
+            <p className="font-bold shadow-md m-[5px] hover:bg-slate-300">
+                    Mis mascotas
                 </p>
             </Link>
 
@@ -33,7 +41,12 @@ export const Profile = () => {
                     } />
                     <Route path='alojamientos' element={
                         <div>
-                            hola alojamiento
+                            <MyHousing/>
+                        </div> 
+                    } />
+                    <Route path='mascotas' element={
+                        <div>
+                            <MyPets/>
                         </div> 
                     } />
                 </Routes>

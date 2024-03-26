@@ -36,14 +36,16 @@ export const Navbar = () => {
           </nav>
 
           <div className="w-[164.6px] flex flex-row items-start justify-start gap-[0px_29.8px] mq900:hidden">
-            <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
+          
+            {/* <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
               <NavLink
+              -Cambiar id hardcodeado-
                 to="/Profile/ff8f1f16-0594-4b07-b5fc-c846fe86d8c3"
                 className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
               >
                 Perfil
               </NavLink>
-            </button>
+            </button> */}
 
             <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
               <NavLink
