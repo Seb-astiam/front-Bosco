@@ -185,13 +185,7 @@ export const Register = () => {
                 console.log("token", token);
                 
                 // Realiza la solicitud al servidor para registrar al usuario
-                const userResponse = await axios.post("http://localhost:3001/auth/google-register", { token },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken.access_token}`,
-                            Accept: "application/json",
-                        },
-                    }
+                const userResponse = await axios.post("http://localhost:3001/auth/google-register", { token }
                 );
 
                 // Obtén los datos del usuario registrado
