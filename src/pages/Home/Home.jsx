@@ -134,12 +134,12 @@ const Home = () => {
             <div className="flex flex-col items-start justify-start gap-[64.1px_0px] text-mini-6 mq450:gap-[32px_0px]">
               <div className="h-[76.3px] relative leading-[28.13px] flex items-center shrink-0 z-[1]">
                 <span>
-                  <p className="m-0 text-[20px]">
+                  <p className="mt-[95px] text-[20px]">
                   En nuestra creciente comunidad, abarcamos una red de ciudades ofreciendo servicios de hospedaje para mascotas. Con un creciente número de alojamientos y una comunidad de usuarios cada vez más feliz, estamos comprometidos en brindar una experiencia excepcional a todas las mascotas y sus dueños en cada rincón del mundo.
                   </p>
                 </span>
               </div>
-              <div className="w-[221.9px] rounded-xl bg-white flex flex-row items-start justify-start py-[17px] pr-[35.80000000000001px] pl-9 box-border gap-[0px_9.8px] z-[1] text-center text-mini-5 text-chocolate-100">
+              <div className="w-[221.9px] rounded-xl bg-white flex flex-row items-start justify-start py-[17px] pr-[35.80000000000001px] mt-[30px] pl-9 box-border gap-[0px_9.8px] z-[1] text-center text-mini-5 text-chocolate-100">
                 <div className="flex-1 relative leading-[28px] font-medium">
                   Nuestra red de apoyo
                 </div>
