@@ -13,7 +13,7 @@ const HousingForm = () => {
   const provincias = useSelector((state) => state.storage.AllLocation);
   const servicesA = useSelector((state) => state.storage.AllService);
 
-  const email = "Dario@mail.com";
+  const email = "bosco@gmail.com";
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -143,41 +143,45 @@ const HousingForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-8">
+    <div className="max-w-lg mx-auto my-8 ">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-naranjaForm shadow-md rounded-[20px] pt-6 flex flex-col items-center flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%] "
         encType="multipart/form-data"
       >
-        <h2 className="text-lg font-bold mb-4">Registrar Alojamiento</h2>
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Nombre del Alojamiento
-          </label>
+        <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
 
-          <div className="relative">
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.title ? "border-red-500" : ""
-              }`}
-            />
-            {!errors.title && formData.title && (
-              <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
-                <span role="img" aria-label="check">
-                  {" "}
-                  ✔️{" "}
-                </span>
+        <div className="mb-4">
+          <div>
+            <label
+              htmlFor="title"
+              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
+            >
+              <box-icon name="home"></box-icon>
+              <div className="relative">
+                <input
+                  placeholder="Nombre Alojamiento"
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className={`w-[225px] outline-none ${errors.title ? "border-red-500" : ""
+                    }`}
+                />
+                {!errors.title && formData.title && (
+                  <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
+                    <span role="img" aria-label="check">
+                      {" "}
+                      ✔️{" "}
+                    </span>
+                  </div>
+                )}
               </div>
-            )}
+            </label>
+
           </div>
+
           {errors.title && (
             <span className="text-red-500 text-sm">{errors.title}</span>
           )}
@@ -186,28 +190,28 @@ const HousingForm = () => {
         <div className="mb-4 relative">
           <label
             htmlFor="location"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Ubicación
+            <box-icon name="home"></box-icon>
+
+            <select
+              name="location"
+              id="location"
+              onChange={handleChange}
+              value={formData.location}
+              className={`outline-none appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""
+                }`}
+            >
+              <option value="">Ubicación</option>
+              {provincias.map((provincia) => {
+                return (
+                  <option value={provincia.nombre} key={provincia.id}>
+                    {provincia.nombre}
+                  </option>
+                );
+              })}
+            </select>
           </label>
-          <select
-            name="location"
-            id="location"
-            onChange={handleChange}
-            value={formData.location}
-            className={`appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.location ? "border-red-500" : ""
-            }`}
-          >
-            <option value="">Escoge la Ubicación</option>
-            {provincias.map((provincia) => {
-              return (
-                <option value={provincia.nombre} key={provincia.id}>
-                  {provincia.nombre}
-                </option>
-              );
-            })}
-          </select>
           {!errors.location && formData.location && (
             <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -225,21 +229,21 @@ const HousingForm = () => {
         <div className="mb-4">
           <label
             htmlFor="datesAvailable"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Fechas Inicio
+            Fecha de inicio
+            <input
+              placeholder="Fecha inicio"
+              type="date"
+              name="datesAvailable"
+              id="datesAvailable"
+              onChange={handleChange}
+              value={formData.datesAvailable}
+              max={formData.datesEnd}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""
+                }`}
+            />
           </label>
-          <input
-            type="date"
-            name="datesAvailable"
-            id="datesAvailable"
-            onChange={handleChange}
-            value={formData.datesAvailable}
-            max={formData.datesEnd}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.datesAvailable ? "border-red-500" : ""
-            }`}
-          />
           {!errors.datesAvailable && formData.datesAvailable && (
             <div className=" mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -252,24 +256,27 @@ const HousingForm = () => {
               {errors.datesAvailable}
             </p>
           )}
+        </div>
+        <div className="mb-4">
+
+
 
           <label
             htmlFor="datesEnd"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
             Fecha Fin
+            <input
+              type="date"
+              name="datesEnd"
+              id="datesEnd"
+              onChange={handleChange}
+              value={formData.datesEnd}
+              min={formData.datesAvailable}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""
+                }`}
+            />
           </label>
-          <input
-            type="date"
-            name="datesEnd"
-            id="datesEnd"
-            onChange={handleChange}
-            value={formData.datesEnd}
-            min={formData.datesAvailable}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.datesEnd ? "border-red-500" : ""
-            }`}
-          />
           {!errors.datesEnd && formData.datesEnd && (
             <div className=" mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -286,20 +293,20 @@ const HousingForm = () => {
         <div className="mb-4">
           <label
             htmlFor="square"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
-            Cantidad de Plazas
+            Cantidad de plazas
+            <input
+              placeholder="Cantidad de plazas"
+              type="number"
+              name="square"
+              id="square"
+              onChange={handleChange}
+              value={formData.square}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.square ? "border-red-500" : ""
+                }`}
+            />
           </label>
-          <input
-            type="number"
-            name="square"
-            id="square"
-            onChange={handleChange}
-            value={formData.square}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.square ? "border-red-500" : ""
-            }`}
-          />
           {!errors.square && formData.square > 0 && (
             <div className="mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -315,20 +322,19 @@ const HousingForm = () => {
         <div className="mb-4">
           <label
             htmlFor="price"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
             Precio/hora
+            <input
+              type="number"
+              name="price"
+              id="price"
+              onChange={handleChange}
+              value={formData.price}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-red-500" : ""
+                }`}
+            />
           </label>
-          <input
-            type="number"
-            name="price"
-            id="price"
-            onChange={handleChange}
-            value={formData.price}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.price ? "border-red-500" : ""
-            }`}
-          />
           {!errors.price && formData.price && (
             <div className=" mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -344,24 +350,23 @@ const HousingForm = () => {
         <div className="mb-4">
           <label
             htmlFor="accommodationType"
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
           >
             Tipo de Alojamiento
+            <select
+              name="accommodationType"
+              id="accommodationType"
+              onChange={handleChange}
+              value={formData.accommodationType}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.accommodationType ? "border-red-500" : ""
+                }`}
+            >
+              <option value="">Seleccionar Tipo de Alojamiento</option>
+              <option value="Cabaña">Cabaña</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Casa Rural">Casa Rural</option>
+            </select>
           </label>
-          <select
-            name="accommodationType"
-            id="accommodationType"
-            onChange={handleChange}
-            value={formData.accommodationType}
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.accommodationType ? "border-red-500" : ""
-            }`}
-          >
-            <option value="">Seleccionar Tipo de Alojamiento</option>
-            <option value="Cabaña">Cabaña</option>
-            <option value="Hotel">Hotel</option>
-            <option value="Casa Rural">Casa Rural</option>
-          </select>
           {!errors.accommodationType && formData.accommodationType && (
             <div className=" mr-3 text-green-500">
               <span role="img" aria-label="check">
@@ -381,9 +386,8 @@ const HousingForm = () => {
             Servicios
           </label>
           <div
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.services ? "border-red-500" : ""
-            }`}
+            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.services ? "border-red-500" : ""
+              }`}
           >
             <div>
               {servicesA &&
@@ -492,7 +496,7 @@ const HousingForm = () => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-[#0f7ccf] disabled:bg-[#afcbe1] hover:bg-[#093f68] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
+            className="font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white shadow-md"
             disabled={disableSubmit}
           >
             Enviar

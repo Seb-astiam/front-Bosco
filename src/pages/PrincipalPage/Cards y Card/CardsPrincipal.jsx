@@ -33,7 +33,7 @@ export const CardsPrincipal = () => {
 
 
     return (
-        <div className="flex flex-col gap-1 justify-evenly w-full h-full bg-lime-100">
+        <div className="flex flex-col gap-1 justify-evenly w-full h-screen bg-white">
 
             <div className="flex h-[5%] w-full justify-center items-center">
                 <button onClick={prevPage} disabled={numberPage === 1} className="btn-cards">PREV</button>
