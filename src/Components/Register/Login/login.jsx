@@ -99,60 +99,134 @@ const LoginPage = ()=>{
        }
        console.log("haveAccount", haveAccount)
 
-       const [accessToken, setAcessToken] = useState([]);
+       const [accessToken, setAccessToken] = useState([]);
        // guarda entre otras cosas que no sirven, una propiedad access_token 
        // que sirve para acceder a los datos del usuario
        
-       const login = useGoogleLogin({
-         onSuccess: (codeResponse) => {setAcessToken(codeResponse)
-         },
-         onError: (error) => console.log("Login Failed:", error)
-       });
+       const handleClickGoogleLogin = async () => {
+        const login = useGoogleLogin({
+            onSuccess: (codeResponse) => {
+                setAccessToken(codeResponse);
+            },
+            onError: (error) => console.log("Login Failed:", error)
+        });
      
-     
-       useEffect(() => {
+          // Lógica de inicio de sesión solo si login es exitoso y hay un token de acceso
+          if (login && accessToken) {
+            try {
+                const token = accessToken.access_token;
+                console.log("token", token);
+
+                // Comprueba si el inicio de sesión se ha ejecutado con éxito
+                if (token) {
+                    const userResponse = await axios.post("http://localhost:3001/auth/google-login", { token },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${accessToken.access_token}`,
+                                Accept: "application/json",
+                            },
+                        }
+                    );
+
+                    // Establece el usuario con los datos obtenidos
+                    const userData = userResponse.data;
+
+                    // Guardar la información del usuario en el localStorage
+                    localStorage.setItem("user", JSON.stringify(userData));
+
+                    // Navega al siguiente destino después del inicio de sesión exitoso
+                    navigate('/principal');
+                } else {
+                    // Si el inicio de sesión no se ejecutó con éxito, maneja el error
+                    // Puedes establecer un estado o mostrar un mensaje de error
+                    console.log("Login failed");
+                }
+            } catch (error) {
+                // Maneja el error en caso de que ocurra alguna excepción durante la solicitud
+                console.error("Error durante la solicitud:", error);
+            }
+        }
+    };
+
+
+    //******************************************************* */
+
+    const appId = import.meta.env.VITE_APP_ID
+
+    const [tokenFB, setTokenFB] = useState(null)
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+        // Inicializar el SDK de Facebook
+        window.fbAsyncInit = function() {
+            window.FB.init({
+                appId            : appId,
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v13.0'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/es_ES/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    }, []);
+
+    const handleFacebookLogin = () => {
+        window.FB.login((response) => {
+            if (response.status === 'connected') {
+                setTokenFB(response.authResponse.accessToken);
+                setUserId(response.authResponse.userID)
+            } else {
+                console.log("Inicio de sesión de Facebook fallido");
+            }
+        }, { scope: 'public_profile,email' });
+    };
+
+    useEffect(() => {
         const fetchData = async () => {
-            if (accessToken) {
+            if (tokenFB) {
                 try {
-                    const token = accessToken.access_token;
-                    console.log("token", token);
+                    const token = tokenFB
+                    console.log("tokenFB", token);
+                    console.log("userIDFB", userId)
                     
-                    // Comprueba si login se ha ejecutado con éxito
                     if (token) {
-                        const userResponse = await axios.post("http://localhost:3001/auth/google-login", { token },
+                        const userResponse = await axios.post(
+                            "http://localhost:3001/auth/facebook-login",
+                            { token, userId },
                             {
                                 headers: {
-                                    Authorization: `Bearer ${accessToken.access_token}`,
+                                    Authorization: `Bearer ${tokenFB}`,
                                     Accept: "application/json",
                                 },
                             }
                         );
     
-                        // Establecer usuario con los datos obtenidos
                         const userData = userResponse.data;
+                        console.log("userData", userData)
     
-                        // Guardar la información del usuario en el localStorage
                         localStorage.setItem("user", JSON.stringify(userData));
     
                         navigate('/principal');
                     } else {
-                        // Si login no se ejecutó con éxito, maneja el error
-                        // Puedes establecer un estado o mostrar un mensaje de error
-                        console.log("Login failed");
+                        console.log("Inicio de sesión fallido");
                     }
                 } catch (error) {
-                    // Maneja el error en caso de que ocurra alguna excepción durante la solicitud
-
-                    setHaveAccount(false)
+                    console.error("Error durante la solicitud:", error);
+                    setHaveAccount(false);
                 }
             }
         };
     
-        // Llama a la función fetchData solo cuando accessToken cambie y login se haya ejecutado
-        if (login && accessToken) {
+        if (tokenFB) {
             fetchData();
         }
-    }, [accessToken, login]);
+    }, [tokenFB]);
     
 
     return (
@@ -179,10 +253,10 @@ const LoginPage = ()=>{
                         <p className="font-custom font-semibold text-center">Nos alegra volver a verte, por favor inicia sesión:</p>
                             <div className="flex flex-row  items-center">
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                                <box-icon size='30px' type='logo' name='google' onClick={login}></box-icon>
+                                <box-icon size='30px' type='logo' name='google' onClick={handleClickGoogleLogin}></box-icon>
                             </div> 
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                                <box-icon size='30px' type='logo' name='facebook'></box-icon>
+                                <box-icon size='30px' type='logo' name='facebook' onClick={handleFacebookLogin} ></box-icon>
                             </div> 
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
                                 <box-icon size='30px' type='logo' name='github'></box-icon>

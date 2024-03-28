@@ -214,6 +214,85 @@ export const Register = () => {
     }
 }, [accessToken]);
 
+/****************************************************/
+
+const appId = import.meta.env.VITE_APP_ID
+
+    const [tokenFB, setTokenFB] = useState(null)
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+        // Inicializar el SDK de Facebook
+        window.fbAsyncInit = function() {
+            window.FB.init({
+                appId            : appId,
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v13.0'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/es_ES/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    }, []);
+
+    const handleFacebookRegister = () => {
+        window.FB.login((response) => {
+            if (response.status === 'connected') {
+                setTokenFB(response.authResponse.accessToken);
+                setUserId(response.authResponse.userID)
+            } else {
+                console.log("Inicio de sesión de Facebook fallido");
+            }
+        }, { scope: 'public_profile,email' });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (tokenFB) {
+                try {
+                    const token = tokenFB
+                    console.log("tokenFB", token);
+                    console.log("userIDFB", userId)
+                    
+                    if (token) {
+                        const userResponse = await axios.post(
+                            "http://localhost:3001/auth/facebook-register",
+                            { token, userId },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${tokenFB}`,
+                                    Accept: "application/json",
+                                },
+                            }
+                        );
+    
+                        const userData = userResponse.data;
+                        console.log("userData", userData)
+    
+                        localStorage.setItem("user", JSON.stringify(userData));
+    
+                        navigate('/principal');
+                    } else {
+                        console.log("Inicio de sesión fallido");
+                    }
+                } catch (error) {
+                    console.error("Error durante la solicitud:", error);
+                    setIsAccountPrevRegister(true);
+                }
+            }
+        };
+    
+        if (tokenFB) {
+            fetchData();
+        }
+    }, [tokenFB]);
+
 
     return (
 
@@ -232,7 +311,7 @@ export const Register = () => {
                             <box-icon size='30px' type='logo' name='google' onClick={register}></box-icon>
                             </div> 
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                            <box-icon size='30px' type='logo' name='facebook'></box-icon>
+                            <box-icon size='30px' type='logo' name='facebook' onClick={handleFacebookRegister}></box-icon>
                             </div> 
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
                             <box-icon size='30px' type='logo' name='github'></box-icon>
