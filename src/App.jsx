@@ -12,6 +12,7 @@ import { Terms } from "./Components/Terms/Terms";
 import { Declaration } from "./Components/Declaration/declaration";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
+import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/terms" element={<Terms></Terms>} />
         <Route path="/declaration" element={<Declaration></Declaration>} />
+        <Route path="/activate-account" element={<ActivateAccount />} />
       </Routes>
     </>
   );
