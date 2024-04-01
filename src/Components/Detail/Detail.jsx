@@ -17,14 +17,15 @@ const Detail = () => {
     datesAvailable,
     datesEnd,
     images,
-    location,
+    provinces,
+    cities,
     price,
     square,
     title,
     Services,
   } = card;
 
-  const [activeImg, setActiveImage] = useState(images[0]);
+
   const [amount, setAmount] = useState(1);
 
   const handleAmountChange = (increment) => {
@@ -33,41 +34,53 @@ const Detail = () => {
     }
   };
 
+
+  const [activeImg, setActiveImage] = useState(images[0]);
+  const secondaryImages = images.filter(image => image !== activeImg);
+
+  const handleImageClick = (image) => {
+    // Establecer la nueva imagen como activa
+    setActiveImage(image);
+  };
+
   return (
-    <div className="flex flex-col lg:flex-row gap-16 lg:items-start rounded-xl py-5 w-full  justify-center bg-lime-100">
-      <div className="flex flex-col gap-6 lg:w-2/4 py-6 items-center bg-white shadow">
-        <img
-          src={activeImg}
-          alt=""
-          className="w-[50%] h-[400px] bg-cover rounded-xl"
-        />
-        <div className="flex flex-row justify-between h-24 gap-6 ">
-          {Object.values(images).map((image, index) => (
+    <div className="flex flex-col lg:flex-row gap-16 lg:items-center rounded-xl py-5 w-full justify-center bg-white">
+      <div className="flex flex-row justify-center items-center h-[525px] px-[20px]">
+        <div className="flex w-full lg:w-[60%] gap-6 py-6 mr-[20px]">
+          <img
+            src={activeImg}
+            alt=""
+            className="w-full h-[500px] bg-cover rounded-tl-xl rounded-bl-xl"
+          />
+        </div>
+        <div className="flex flex-col w-[40%] gap-6 py-6">
+          {secondaryImages.map((image, index) => (
             <img
               key={index}
               src={image}
               alt=""
-              className="w-24 h-24 rounded-md cursor-pointer"
-              onClick={() => setActiveImage(image)}
-            />
-          ))}
+              className={`w-full h-[235px] object-cover cursor-pointer ${
+                index === 0 ? 'rounded-tr-xl' : index === 1 ? 'rounded-br-xl' : ''
+              }`}
+              onClick={() => handleImageClick(image)}
+             />
+            ))}
         </div>
       </div>
+      <div className="flex flex-row justify-center items-start px-[20px]">
       {/* ABOUT */}
-      <div className="flex flex-col gap-5 lg:w-2/4 w-full justify-center items-center">
-        <div className="flex gap-10 items-end justify-center w-auto px-5 rounded-xl bg-white shadow">
-          <h1 className="text-violet-600 font-bold font-mono">
-            {accommodationType}
-          </h1>
-          <h1 className="text-3xl font-bold font-mono pb-3">{title}</h1>
+      <div className="flex flex-col lg:w-2/4 w-full justify-start items-start px-[20px] ">
+        <div className="flex flex-col items-start justify-start w-[60%]">
+          <h1 className="font-custom font-bold m-0">{title}</h1>
+          <h2 className="font-bold font-custom m-0 text-gray-700">{accommodationType}, en {cities}, {provinces}</h2>
         </div>
 
-        <div className="flex items-center justify-center w-[50%] gap-2 ">
+        <div className="flex items-center justify-center gap-2 ">
           {Services.map((service) => {
             return (
               <p
                 key={service.id}
-                className={`shadow w-[50%] font-custom text-[20px] font-semibold text-black rounded px-2 py-[2px] flex items-center justify-center bg-olive }`}
+                className={`shadow w-[50%] font-custom text-[20px] font-semibold text-gray-700 rounded-[50px] p-3 flex items-center justify-center bg-cantaloupe }`}
               >
                 {" "}
                 {service.type}{" "}
@@ -75,19 +88,41 @@ const Detail = () => {
             );
           })}
         </div>
+        <div className="font-custom">
+        En nuestro refugio para perros, nos dedicamos a proporcionar un entorno seguro y acogedor donde los perros puedan sentirse como en casa mientras están lejos de sus familias. Contamos con amplias instalaciones diseñadas para promover su bienestar físico y emocional, incluyendo áreas de juego al aire libre y zonas de descanso tranquilo.
 
-        <div className="mt-[-20px] flex flex-col items-center justify-center bg-white p-6 rounded shadow">
-          <p className="text-3xl font-bold">Plazas disponibles</p>
-          <h1 className="text-black  items-center pb-4">{square}</h1>
-        </div>
-        <div className="flex items-center justify-center w-full">
-          <h1 className="text-2xl font-semibold text-lime-700 ">$ {price}</h1>
+        Nuestro spa canino ofrece tratamientos relajantes y cuidados personalizados, mientras que nuestras comidas caseras y nutritivas garantizan una dieta equilibrada para cada perro. Además, ofrecemos una variedad de actividades y juegos para mantenerlos activos y comprometidos durante su estancia.
+
+        En nuestro refugio, cada perro recibe atención individualizada y amorosa, brindándoles el cuidado y la compañía que necesitan para sentirse felices y seguros.
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-12">
+        </div>
+
+        <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
+          <p className="text-3xl font-custom">{price},00 ARS /noche </p>
+
+        <div className="flex flex-col">
+        
+        <div className="flex flex-row">
+          <label htmlFor="datesAvailable" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-tl-[20px]">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de inicio </a>
+              <input
+                type="date"
+                className="outline-none" />
+          </label>
+          <label htmlFor="datesEnd" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white]  rounded-tr-[20px]">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de fin </a>
+            <input
+              type="date"
+              className="outline-none"/>
+             </label>
+        </div>
+
+        <div className="flex flex-row items-center justify-start gap-12 px-[15px] py-[10px]  bg-[white] rounded-bl-[20px] rounded-br-[20px]">
+          <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Plazas </a>
           <div className="flex flex-row items-center">
             <button
-              className="bg-orange-500 py-2 px-5 rounded-lg text-white text-3xl"
+              className="bg-gray-200 py-0 px-2 rounded-[20px] text-white text-3xl cursor-pointer"
               onClick={() => handleAmountChange(-1)}
               disabled={amount === 1}
             >
@@ -95,21 +130,21 @@ const Detail = () => {
             </button>
             <span className="py-4 px-6 rounded-lg">{amount}</span>
             <button
-              className="bg-gray-200 py-2 px-4 rounded-lg text-violet-800 text-3xl"
+              className="bg-orange-500 py-0 px-2 rounded-[20px] text-white text-3xl cursor-pointer"
               onClick={() => handleAmountChange(1)}
             >
               +
             </button>
           </div>
-          <button className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full">
-            Add to Cart
-          </button>
+          </div>  
+
         </div>
 
-        <div className="flex items-center justify-center">
-          <button className="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl">
-            SOLICITAR
+        <div className="flex items-center justify-center mt-[20px]">
+          <button className="bg-orange-500  py-2 px-5 rounded-[20px] text-white text-3xl font-custom font-bold cursor-pointer">
+            Reservar
           </button>
+        </div>
         </div>
       </div>
     </div>

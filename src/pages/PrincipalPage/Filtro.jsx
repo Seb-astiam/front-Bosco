@@ -30,7 +30,7 @@ export const Filtros = () => {
     provinces: "",
     cities: "",
     serviceId: "",
-    square: 1,
+    square: "",
     minPrice: "",
     maxPrice: "",
     startDate: "",
@@ -41,7 +41,6 @@ export const Filtros = () => {
 
   const [filter, setFilter] = useState(initialState);
   console.log("filter", filter)
- 
 
   const URL = "http://localhost:3001/profileHousing/filtered";
 
@@ -55,10 +54,12 @@ export const Filtros = () => {
 
     for (const [key, value] of Object.entries(changeFilter)) {
       if (value) query += `${key}=${value}&`;
+    
     }
-
+console.log("Query", query)
     try {
       const { data } = await axios.get(URL + query);
+
       dispatch(getAllAlojamientos(data));
     } catch (error) {
       console.log(error);
@@ -110,8 +111,8 @@ export const Filtros = () => {
               onChange={handleChange}
               className=" bg-transparent text-[#8b8e58] focus:outline-none">
               <option value="" className="">Más relevantes</option>
-              <option value="DESC">Menor precio</option>
-              <option value="ASC">Mayor precio</option>
+              <option value="ASC">Menor precio</option>
+              <option value="DESC">Mayor precio</option>
             </select>
           </div>
           <div className="flex flex-col p-4 font-semibold  border-gray-200 shadow-md border-b">
