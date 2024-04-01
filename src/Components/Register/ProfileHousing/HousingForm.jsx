@@ -6,17 +6,21 @@ import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
+import useCities from "../../../Hooks/useCities";
+import bosco from "../../../assets/bosco-logo.jpeg"
 
 const HousingForm = () => {
   useServices();
   useLocationProvincias();
-  const provincias = useSelector((state) => state.storage.AllLocation);
-  const servicesA = useSelector((state) => state.storage.AllService);
+  useCities()
+  const provincias = useSelector((state) => state.storage.AllProvinces);
+  const services = useSelector((state) => state.storage.AllService);
 
-  const email = "bosco@gmail.com";
+  const email = "aru.brea28@gmail.com";
   const [formData, setFormData] = useState({
     title: "",
-    location: "",
+    provinces: "",
+    cities:"",
     datesAvailable: "",
     datesEnd: "",
     price: "",
@@ -26,12 +30,6 @@ const HousingForm = () => {
     images: [],
   });
   //para poder ver si se estaba actualizando el estado correctamente.
-
-  useEffect(() => {
-    // aca renderizo los servicios desde el json mientras no tenga la ruta
-    console.log(formData);
-  }, [formData]);
-
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);
   // const errorMessages = Object.values(errors);
@@ -65,11 +63,17 @@ const HousingForm = () => {
       ...formData,
       [name]: newValue, // Actualiza el valor cambiado en el objeto formData
     });
+    console.log("validationErrors", validationErrors)
 
     setErrors(validationErrors);
+    
     const errorMessages = Object.values(errors);
+    
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
+  
+  console.log("errors:", errors)
+  console.log("DisabledSubmit", disableSubmit)
 
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;
@@ -106,10 +110,13 @@ const HousingForm = () => {
     });
 
     try {
+      
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
         formDataToSend
+    
       );
+      
       if (
         response.status === 201 &&
         response.data.message === "Datos recibidos correctamente"
@@ -123,7 +130,7 @@ const HousingForm = () => {
         clearFormData();
       }
 
-      console.log(response);
+      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -131,7 +138,8 @@ const HousingForm = () => {
   const clearFormData = () => {
     setFormData({
       title: "",
-      location: "",
+      provinces: "",
+      cities: "",
       datesAvailable: "",
       datesEnd: "",
       price: "",
@@ -142,130 +150,87 @@ const HousingForm = () => {
     });
   };
 
-  return (
-    <div className="max-w-lg mx-auto my-8 ">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-naranjaForm shadow-md rounded-[20px] pt-6 flex flex-col items-center flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%] "
-        encType="multipart/form-data"
-      >
-        <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
 
-        <div className="mb-4">
-          <div>
-            <label
-              htmlFor="title"
-              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-            >
-              <box-icon name="home"></box-icon>
-              <div className="relative">
+  /****************************** */
+    // Obtener las ciudades según la provincia seleccionada
+    const selectedProvince = formData.provinces
+    const cities = useCities(selectedProvince ? selectedProvince : null);
+
+  return (
+    <div className="flex justify-center items-center h-[800px] w-[100%] my-[50px]">
+      <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] ">
+        <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
+      </div>
+      <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
+        <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%]" encType="multipart/form-data">
+        <div>
+            <label htmlFor="title" className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+              <box-icon name='home-heart'></box-icon>
                 <input
-                  placeholder="Nombre Alojamiento"
+                  placeholder="Nombre del alojamiento"
                   type="text"
                   id="title"
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  className={`w-[225px] outline-none ${errors.title ? "border-red-500" : ""
-                    }`}
-                />
-                {!errors.title && formData.title && (
-                  <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
-                    <span role="img" aria-label="check">
-                      {" "}
-                      ✔️{" "}
-                    </span>
-                  </div>
-                )}
-              </div>
+                  className="w-[225px] outline-none" />
             </label>
-
-          </div>
-
-          {errors.title && (
-            <span className="text-red-500 text-sm">{errors.title}</span>
-          )}
         </div>
-
-        <div className="mb-4 relative">
-          <label
-            htmlFor="location"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            <box-icon name="home"></box-icon>
-
-            <select
-              name="location"
-              id="location"
-              onChange={handleChange}
-              value={formData.location}
-              className={`outline-none appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""
-                }`}
-            >
-              <option value="">Ubicación</option>
-              {provincias.map((provincia) => {
-                return (
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.title}</p>
+        <div>
+          <label htmlFor="provinces" className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+            <box-icon name='map-alt'></box-icon>
+              <select
+                name="provinces"
+                id="provinces"
+                onChange={handleChange}
+                value={formData.provinces}
+                className="w-[225px] outline-none">
+                <option value="" disabled selected>Selecciona una provincia</option>
+                {provincias.map((provincia) => (
                   <option value={provincia.nombre} key={provincia.id}>
                     {provincia.nombre}
                   </option>
-                );
-              })}
-            </select>
+                ))}
+              </select>
           </label>
-          {!errors.location && formData.location && (
-            <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-          {errors.location && (
-            <span className="text-red-500 text-sm italic">
-              {errors.location}
-            </span>
-          )}
         </div>
+          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.provinces}</p>
+        <div>
+          <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+            <box-icon name='map' ></box-icon>
+              <select
+                id="cities"
+                value={formData.cities}
+                onChange={handleChange}
+                name="cities"
+                className="w-[225px] outline-none">
+                  <option value="" disabled selected>Selecciona una localidad</option>
+                    {cities.map((localidad) => (
+                  <option value={localidad.name} key={localidad.id}>
+                    {localidad.name}
+                  </option>
+                 ))}
+              </select>
+            </label>
+        </div>
+          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.cities}</p>
 
-        <div className="mb-4">
-          <label
-            htmlFor="datesAvailable"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Fecha de inicio
-            <input
-              placeholder="Fecha inicio"
-              type="date"
-              name="datesAvailable"
-              id="datesAvailable"
-              onChange={handleChange}
-              value={formData.datesAvailable}
-              max={formData.datesEnd}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""
-                }`}
-            />
+        <div className="flex flex-row">
+          <label htmlFor="datesAvailable" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] rounded-tl-[20px]">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de inicio </a>
+              <input
+                type="date"
+                name="datesAvailable"
+                id="datesAvailable"
+                onChange={handleChange}
+                value={formData.datesAvailable}
+                max={formData.datesEnd}
+                className="outline-none" />
           </label>
-          {!errors.datesAvailable && formData.datesAvailable && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-          {errors.datesAvailable && (
-            <p className="text-red-500 text-xs italic">
-              {errors.datesAvailable}
-            </p>
-          )}
-        </div>
-        <div className="mb-4">
-
-
-
-          <label
-            htmlFor="datesEnd"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Fecha Fin
+          <label htmlFor="datesEnd" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] rounded-tr-[20px]">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de fin </a>
             <input
               type="date"
               name="datesEnd"
@@ -273,192 +238,98 @@ const HousingForm = () => {
               onChange={handleChange}
               value={formData.datesEnd}
               min={formData.datesAvailable}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""
-                }`}
-            />
-          </label>
-          {!errors.datesEnd && formData.datesEnd && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                {" "}
-                ✔️{" "}
-              </span>
-            </div>
-          )}
-          {errors.datesEnd && (
-            <p className="text-red-500 text-xs italic">{errors.datesEnd}</p>
-          )}
+              className="outline-none"/>
+             </label>
         </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="square"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Cantidad de plazas
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.datesAvailable}</p>
+        <div className="flex flex-row justify-between  gap-4">
+          <label htmlFor="square" className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "> Plazas
             <input
               placeholder="Cantidad de plazas"
               type="number"
               name="square"
               id="square"
+              min= "1"
+              max="20"
+              step="1"
               onChange={handleChange}
               value={formData.square}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.square ? "border-red-500" : ""
-                }`}
+              className="w-[40px] outline-none ml-2"
             />
           </label>
-          {!errors.square && formData.square > 0 && (
-            <div className="mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-          {errors.square && (
-            <p className="text-red-500 text-xs italic">{errors.square}</p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="price"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Precio/hora
+          <label htmlFor="price" className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "> $/hora
             <input
               type="number"
               name="price"
               id="price"
+              min="1000"
+              max="99000"
+              step="1000"
               onChange={handleChange}
               value={formData.price}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-red-500" : ""
-                }`}
-            />
+              className="w-[55px] outline-none ml-2"/>
           </label>
-          {!errors.price && formData.price && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-          {errors.price && (
-            <p className="text-red-500 text-xs italic">{errors.price}</p>
-          )}
         </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="accommodationType"
-            className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
-          >
-            Tipo de Alojamiento
+        <div className="flex flex-row">
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.square}</p>
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.price}</p>
+        </div>
+        <div>
+          <label htmlFor="accommodationType" className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+            <box-icon name='building-house'></box-icon>
             <select
               name="accommodationType"
               id="accommodationType"
               onChange={handleChange}
               value={formData.accommodationType}
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.accommodationType ? "border-red-500" : ""
-                }`}
-            >
-              <option value="">Seleccionar Tipo de Alojamiento</option>
+              className="w-[225px] outline-none">
+              <option value="" disabled selected>Selecciona un tipo de alojamiento</option>
               <option value="Cabaña">Cabaña</option>
               <option value="Hotel">Hotel</option>
               <option value="Casa Rural">Casa Rural</option>
             </select>
           </label>
-          {!errors.accommodationType && formData.accommodationType && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-          {errors.accommodationType && (
-            <p className="text-red-500 text-xs italic">
-              {errors.accommodationType}
-            </p>
-          )}
         </div>
+          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.square}</p>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Servicios
-          </label>
-          <div
-            className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.services ? "border-red-500" : ""
-              }`}
-          >
-            <div>
-              {servicesA &&
-                servicesA.map((service) => (
-                  <label
-                    key={service.id}
-                    className="inline-flex items-center ml-4"
-                  >
+        <div className="bg-[white] rounded-[20px] py-2">
+          <label className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500">Selecciona los servicios:</label>
+            <div className="flex w-[270px] flex-wrap gap-2 justify-center">
+              {services &&
+                services.map((service) => (
+                  <label key={service.id} className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] ${formData.services.includes(service.id) ? "bg-[#e7e6e6] border-none" : ""
+                }`}>
                     <input
                       type="checkbox"
                       name="services"
                       value={service.id}
                       onChange={handleServiceChange}
-                      className="form-checkbox h-5 w-5 text-gray-600"
-                    />
-                    <span className="ml-2 text-gray-700">{service.type}</span>
+                      className="form-checkbox h-3 w-3 text-gray-600 "/>
+                        <span className="ml-2 text-gray-700 ">{service.type}</span>
                   </label>
                 ))}
             </div>
           </div>
-
-          <div className="mt-2">
-            {formData.services.map((serviceId, index) => {
-              console.log("Selected service formdata:", formData.services);
-              const selectedService = servicesA.find(
-                (service) => service.id === serviceId
-              );
-              console.log("Selected service:", selectedService);
-              return (
-                <span
-                  key={index}
-                  className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-                >
-                  {selectedService ? selectedService.type : ""}
-                </span>
-              );
-            })}
-          </div>
-          {!errors.services && formData.services && (
-            <div className=" mr-3 text-green-500">
-              <span role="img" aria-label="check">
-                ✔️
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="images"
-            className="block text-gray-700 text-sm font-bold mb-2"
-          >
-            Imágenes (mínimo 3)
-          </label>
+          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.services}</p>
+          
+         
+        <div className="bg-[white] rounded-[20px] py-3">
+          <label htmlFor="images" className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500">Imágenes</label>
           <input
             type="file"
             accept="image/*"
             name="images"
             id="images"
             onChange={handleChange}
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="ml-2 text-gray-700"
             multiple
           />
           {formData.images.length > 0 && (
-            <div className="mb-4">
-              <p className="text-gray-700 text-sm font-bold mb-2">
-                Previsualización de Imágenes:
-              </p>
-              <div className="flex">
+            <div className="">
+              <p className="flex items-center px-3 font-custom font-semibold text-[12px] text-gray-500">Previsualización de imágenes:</p>
+              <div className="flex justify-center">
                 {formData.images.map((image, index) => (
-                  <div key={index} className="flex items-center mr-2">
+                  <div key={index} className="flex items-center justify-beetwen gap-1">
                     <div className="relative">
                       <img
                         src={URL.createObjectURL(image)}
@@ -468,7 +339,7 @@ const HousingForm = () => {
                       <button
                         type="button"
                         onClick={() => handleImageRemove(index)}
-                        className="absolute top-0 right-0 bg-red-500 text-white font-bold py-1 px-2 rounded-full"
+                        className="absolute top-0 right-0 bg-gray-500 text-white font-bold py-1 px-2 rounded-full"
                       >
                         X
                       </button>
@@ -480,7 +351,7 @@ const HousingForm = () => {
                     key={index}
                     className="h-16 w-16 border border-gray-300 flex items-center justify-center rounded-md mr-2"
                   >
-                    <span className="text-gray-400 text-xs">
+                    <span className="font-custom font-semibold text-[12px] text-gray-500">
                       Imagen {formData.images.length + index + 1}
                     </span>
                   </div>
@@ -488,21 +359,18 @@ const HousingForm = () => {
               </div>
             </div>
           )}
-
-          {errors.images && (
-            <p className="text-red-500 text-xs italic">{errors.images}</p>
-          )}
         </div>
+        <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.images}</p>
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white shadow-md"
-            disabled={disableSubmit}
-          >
+            className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${disableSubmit ? 'bg-[transparent] text-black shadow-md' : 'bg-[black] text-white shadow-md'}`} disabled={disableSubmit}>
             Enviar
           </button>
         </div>
+
       </form>
+      </div>
     </div>
   );
 };
