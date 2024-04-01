@@ -5,7 +5,7 @@ export const CardPrincipal = ({alojamiento}) => {
     const [indexImage, setIndexImage] = useState(0);
     const [hover, setHover] = useState(false);
 
-    const { accommodationType, datesAvailable, datesEnd, images, location, price, square, title, Services } = alojamiento;
+    const { accommodationType, datesAvailable, datesEnd, images, provinces, cities, price, square, title, Services } = alojamiento;
     
     const changeImage = (direccion) => {
         if (direccion === 'anterior') {
@@ -21,18 +21,31 @@ export const CardPrincipal = ({alojamiento}) => {
                 {hover && (
                     <button onClick={() => changeImage("anterior")}
                     className="absolute top-1/2 transform -translate-y-1/2 left-4 rounded-[50%] bg-white bg-opacity-70 hover:bg-white hover:bg-opacity-100 cursor-pointer z-10"
-                    > Prev </button>
+                    >❮</button>
                 )}
                 {hover && (
                     <button onClick={() => changeImage("siguiente")}
                     className="absolute top-1/2 transform -translate-y-1/2 right-4 rounded-[50%] bg-white bg-opacity-70 hover:bg-white hover:bg-opacity-100 cursor-pointer z-10"
-                    > Next </button>
+                    >❯</button>
                 )}
+
                 <img className="w-[200px] h-[220px] rounded-lg" src={images[indexImage]} alt={`Imagen ${indexImage + 1}`} />
+           
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+                    {images.map((image, idx) => (
+                        <span key={idx} onClick={() => setIndexImage(idx)} className={`mx-1 w-3 h-3 rounded-full cursor-pointer ${idx === indexImage ? 'bg-white' : 'bg-gray-300'}`}></span>
+                    ))}
+                </div>
             </div>
+            
 
             <div className="mt-[2px] text-start flex w-[250px]">
-                <p className="text-base font-custom font-extrabold text-black">{location}, {title}</p>
+                <p className="text-base font-custom font-extrabold text-black">{cities}, {provinces}</p>
+                
+            </div>
+            <div className="mt-[2px] text-start flex w-[250px]">
+                
+                <p className="text-base font-custom font-extrabold text-gray-300"></p>
             </div>
 
             <div className="text-start flex flex-wrap gap-1 w-[250px] mt-[-20px]">

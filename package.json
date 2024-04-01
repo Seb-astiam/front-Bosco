@@ -11,7 +11,8 @@
     "start": "serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
-
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
