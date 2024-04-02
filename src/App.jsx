@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import { FormReserva } from "./Components/Register/formReserva/formReserva.jsx";
 import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva.jsx";
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
+import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/formReserva" element={<FormReserva />} />
         <Route path="/historial-reservas" element={<HistorialReserva />} />
         <Route path="/solicitud-reserva" element={<SolicitudReserva />} />
+        <Route path="/activate-account" element={<ActivateAccount />} />
       </Routes>
     </>
   );

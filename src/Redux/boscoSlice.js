@@ -2,10 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allAlojamientos: [],
-  AllLocation: [],
+  AllProvinces: [],
+  AllCities: [],
   AllService: [],
   email: ''
 };
+
+//! creo que no es necesario un estado local para provinces, cities y servicios. tema para resolver luego - ari
 
 const boscoSlice = createSlice({
   name: "storage",
@@ -14,8 +17,11 @@ const boscoSlice = createSlice({
     getAllAlojamientos (state, action) {
         state.allAlojamientos = action.payload;
     },
-    getAllLocation (state, action) {
-      state.AllLocation = action.payload
+    getAllProvinces (state, action) {
+      state.AllProvinces = action.payload
+    },
+    getAllCities (state, action) {
+      state.AllCities = action.payload
     },
     getAllService (state, action) {
       state.AllService = action.payload
@@ -26,6 +32,6 @@ const boscoSlice = createSlice({
   },
 });
 
-export const { getAllAlojamientos, getAllLocation, getAllService, getAllUser } = boscoSlice.actions;
+export const { getAllAlojamientos, getAllProvinces, getAllCities, getAllService, getAllUser } = boscoSlice.actions;
 
 export default boscoSlice.reducer;
