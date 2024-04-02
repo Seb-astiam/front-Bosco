@@ -63,7 +63,6 @@ const HousingForm = () => {
       ...formData,
       [name]: newValue, // Actualiza el valor cambiado en el objeto formData
     });
-    console.log("validationErrors", validationErrors)
 
     setErrors(validationErrors);
     
@@ -71,9 +70,6 @@ const HousingForm = () => {
     
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
-  
-  console.log("errors:", errors)
-  console.log("DisabledSubmit", disableSubmit)
 
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;

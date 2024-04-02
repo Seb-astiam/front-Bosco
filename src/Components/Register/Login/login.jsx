@@ -226,7 +226,31 @@ const LoginPage = ()=>{
             fetchData();
         }
     }, [tokenFB]);
-    
+
+    /**************************************** */
+
+    const [adviceRecover, setAdviceRecover] = useState(false)
+    const [emailRecover, setEmailRecover] = useState()
+    const [emailNotFound, setEmailNotFound] = useState(false)
+    const handleAdviceRecover = ()=>{
+        if(adviceRecover) {
+        setAdviceRecover(false)
+        } else {
+            setAdviceRecover(true)
+            setEmailNotFound(false)
+            setEmailRecover("")
+        }
+    }
+
+    const recoverPassword = async()=>{
+       
+        try {
+         const response = await axios.post(`http://localhost:3001/auth/password-reset/${emailRecover}`)
+            handleAdviceRecover();
+        } catch (error) {
+            setEmailNotFound(true)
+    }
+    }
 
     return (
         <div className=" w-screen h-screen flex justify-center items-center absolute" >
@@ -238,7 +262,7 @@ const LoginPage = ()=>{
                         <h2 className='font-custom font-extrabold'>Bienvenido</h2>
                         <p className="font-custom font-semibold text-center">Para poder unirte a nuestra comunidad por favor inicia sesión con tus datos. </p>
                         <button className="font-bold font-custom outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleLogin} >Inicia Sesión</button>
-                        <p className="font-custom"> Si no tienes una cuenta, <a href="/register" className="text-blue-500 hover:underline">regístrate aquí</a>
+                        <p className="font-custom"> Si no tienes una cuenta, <a href="/register" className="text-blue-900 hover:underline">regístrate aquí</a>
                         </p>
                     </div>
                 </div>
@@ -278,7 +302,8 @@ const LoginPage = ()=>{
                             </label>
                         <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordVisibility} />
                         </div>
-                            <p className="font-custom font-semibold text-center text-sm"> No tienes una cuenta? <a href="/register" className="text-blue-500 hover:underline">regístrate aquí</a></p>
+                            <p className="font-custom font-semibold text-center text-sm"> No tienes una cuenta? <a href="/register" className="text-blue-900 cursor-pointer">Regístrate aquí</a></p>
+                            <p className='font-custom font-semibold text-center text-sm'>Olvidaste tu contraseña? <a onClick={handleAdviceRecover} className="text-blue-900 underline cursor-pointer">Recuperar</a> </p>
                             <button 
                             className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${isFormValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`}
                             disabled={!isFormValid}
@@ -309,6 +334,21 @@ const LoginPage = ()=>{
                     </label>
                     <p className="font-custom font-semibold text-center mx-10" >Cuenta no registrada, por favor registrese o intente con otra cuenta.</p>
                     <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="/register"  style={{ textDecoration: 'none' }} >Registrarme</a>
+                    </div>
+                </div>
+                <div className={`${adviceRecover? '-translate-y-[500%]' : 'bg-[rgba(0,_0,_0,_0.5)] '} w-screen h-screen flex justify-center items-center absolute`}>
+                    < div className= {`${adviceRecover ? '-translate-y-[500%]' : '' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px]`}>
+            
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Recuperar contraseña
+                        <span className= "cursor-pointer" onClick={handleAdviceRecover}>&times;</span>
+                    </label>
+                    <label className=" flex justify-center py-[20px]">
+                        <box-icon name='mail-send' size='100px'></box-icon>
+                    </label>
+                    <p className="font-custom font-semibold text-center mx-10" >Enviaremos un mail a tu correo con una nueva contraseña</p>
+                    <input className="shadow rounded-[20px] px-5 py-3 " placeholder='Correo de recuperación' value={emailRecover} onChange={(e) => setEmailRecover(e.target.value)}></input>  
+                    <p className={`${emailNotFound? '' : '-translate-y-[1000000%]'} font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727] m-1`} > *Email no registrado</p>
+                    <a className={`font-bold font-custom outline-none text-center px-[30px] rounded-[20px] py-[15px] my-[10px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md  ${emailRecover ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`} onClick={recoverPassword} disabled={!emailRecover}>Enviar</a>
                     </div>
                 </div>
         </div>
