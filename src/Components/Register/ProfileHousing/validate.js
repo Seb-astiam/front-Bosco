@@ -13,7 +13,7 @@ export const ValidateFormdata = (formdata) => {
   } = formdata;
 
  
-  let errors = "";
+  let errors = {};
   if (!title) {
     errors.title = "El nombre del alojamiento es requerido";
   }
