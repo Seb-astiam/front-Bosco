@@ -12,7 +12,6 @@ export const ValidateFormdata = (formdata) => {
     title,
   } = formdata;
 
- 
   let errors = {};
   if (!title) {
     errors.title = "El nombre del alojamiento es requerido";
@@ -52,7 +51,6 @@ export const ValidateFormdata = (formdata) => {
   //Cambiar esto en la nueva rama real
   const startDate = new Date(datesAvailable);
   const endDate = new Date(datesEnd);
-  
 
   if (startDate.getTime() > endDate.getTime()) {
     errors.datesEnd =
