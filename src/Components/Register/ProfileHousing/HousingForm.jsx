@@ -31,10 +31,6 @@ const HousingForm = () => {
   });
   //para poder ver si se estaba actualizando el estado correctamente.
 
-  useEffect(() => {
-    // aca renderizo los servicios desde el json mientras no tenga la ruta
-    console.log(formData);
-  }, [formData]);
 
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);

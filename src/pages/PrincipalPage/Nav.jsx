@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 export const Nav = ({ pathname }) => {
   const navigate = useNavigate();
 
+  const nameUsuario = JSON.parse(localStorage.getItem("user"));
+
+
   return (
     <div className="shadow-lg bg-[#f7ab5e] border-b-4 border-solid border-chocolate-100 w-screen flex flex-row items-start justify-start  box-border max-w-full text-left text-mini-8 text-midnightblue font-inter  mq1300:box-border ">
       <div className=" flex flex-row items-center justify-between w-full pt-0 px-5">
@@ -23,6 +26,8 @@ export const Nav = ({ pathname }) => {
             />
           </div>
         </div>
+
+        <h2 className="font-mono text-mini-9 text-red-600">Email: {nameUsuario.email}</h2>
 
         <div className=" flex flex-row items-start justify-end gap-[0px_101.9px] text-lg mq450:gap-[0px_25px] mq900:w-[354.9px] mq900:gap-[0px_51px] ">
           <nav className="m-0 h-[42.1px] flex-1 flex flex-row items-start justify-start text-left text-mini-8 text-midnightblue font-inter mq1300:hidden">
