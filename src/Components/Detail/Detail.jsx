@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
+
+  const navigate = useNavigate()
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
@@ -32,6 +34,14 @@ const Detail = () => {
       setAmount((prev) => prev + increment);
     }
   };
+
+  const handleClick = () => {
+      navigate('/formReserva', {
+        state: {
+            id: id
+        }
+    })
+  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-16 lg:items-start rounded-xl py-5 w-full  justify-center bg-lime-100">
@@ -84,31 +94,11 @@ const Detail = () => {
           <h1 className="text-2xl font-semibold text-lime-700 ">$ {price}</h1>
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-12">
-          <div className="flex flex-row items-center">
-            <button
-              className="bg-orange-500 py-2 px-5 rounded-lg text-white text-3xl"
-              onClick={() => handleAmountChange(-1)}
-              disabled={amount === 1}
-            >
-              -
-            </button>
-            <span className="py-4 px-6 rounded-lg">{amount}</span>
-            <button
-              className="bg-gray-200 py-2 px-4 rounded-lg text-violet-800 text-3xl"
-              onClick={() => handleAmountChange(1)}
-            >
-              +
-            </button>
-          </div>
-          <button className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full">
-            Add to Cart
-          </button>
-        </div>
-
         <div className="flex items-center justify-center">
-          <button className="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl">
-            SOLICITAR
+          <button className="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl"
+            onClick={handleClick}
+          >
+            Realiza tu reserva
           </button>
         </div>
       </div>

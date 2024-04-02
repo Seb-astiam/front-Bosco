@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -16,7 +16,7 @@ const HousingForm = () => {
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
 
-  const email = "guilleirigoin@hotmail.com";
+  const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
     title: "",
     provinces: "",
@@ -30,6 +30,8 @@ const HousingForm = () => {
     images: [],
   });
   //para poder ver si se estaba actualizando el estado correctamente.
+
+
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);
   // const errorMessages = Object.values(errors);
@@ -66,9 +68,7 @@ const HousingForm = () => {
     console.log("validationErrors", validationErrors);
 
     setErrors(validationErrors);
-
-    const errorMessages = Object.values(errors);
-
+    const errorMessages = Object.values(validationErrors);
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
 
@@ -109,6 +109,8 @@ const HousingForm = () => {
       }
     });
 
+    console.log(formDataToSend)
+
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
@@ -127,6 +129,7 @@ const HousingForm = () => {
         });
         clearFormData();
       }
+
     } catch (error) {
       console.error("Error:", error);
     }

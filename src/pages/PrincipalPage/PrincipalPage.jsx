@@ -1,7 +1,7 @@
 import { Filtros } from "./Filtro";
-import { Nav } from "./Nav";
 import { useAlojamientoPrincipal } from "../../Hooks/useAlojamientoPrincipal";
 import { CardsPrincipal } from "./Cards y Card/CardsPrincipal";
+
 
 const PrincipalPage = () => {
   useAlojamientoPrincipal();

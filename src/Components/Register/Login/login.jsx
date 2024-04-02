@@ -52,7 +52,9 @@ const LoginPage = ()=>{
 
             if (error.response && error.response.status === 400) {
                 // El servidor respondió con un código de estado 400 (Bad Request)
-                setIsNotUser(true)
+                // setIsNotUser(true)
+                window.alert(error.response.data); 
+
                 //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
                 
             } if (error.response && error.response.status === 500) {
@@ -97,7 +99,6 @@ const LoginPage = ()=>{
             setHaveAccount(false)
         }
        }
-       console.log("haveAccount", haveAccount)
 
        const [accessToken, setAccessToken] = useState([]);
        // guarda entre otras cosas que no sirven, una propiedad access_token 
@@ -115,7 +116,6 @@ const LoginPage = ()=>{
             if (accessToken && accessToken.access_token) {
                 try {
                     const token = accessToken.access_token;
-                    console.log("token", token);
                     
                     // Realiza la solicitud al servidor para registrar al usuario
                     const userResponse = await axios.post("http://localhost:3001/auth/google-login", { token }
@@ -207,8 +207,8 @@ const LoginPage = ()=>{
                         );
     
                         const userData = userResponse.data;
-                        console.log("userData", userData)
     
+                        // Guardar la información del usuario en el localStorage
                         localStorage.setItem("user", JSON.stringify(userData));
     
                         navigate('/principal');
