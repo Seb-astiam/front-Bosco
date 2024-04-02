@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -13,7 +13,7 @@ const HousingForm = () => {
   const provincias = useSelector((state) => state.storage.AllLocation);
   const servicesA = useSelector((state) => state.storage.AllService);
 
-  const email = "bosco@gmail.com";
+  const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -26,11 +26,6 @@ const HousingForm = () => {
     images: [],
   });
   //para poder ver si se estaba actualizando el estado correctamente.
-
-  useEffect(() => {
-    // aca renderizo los servicios desde el json mientras no tenga la ruta
-    console.log(formData);
-  }, [formData]);
 
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);
@@ -67,7 +62,7 @@ const HousingForm = () => {
     });
 
     setErrors(validationErrors);
-    const errorMessages = Object.values(errors);
+    const errorMessages = Object.values(validationErrors);
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
 
@@ -105,6 +100,8 @@ const HousingForm = () => {
       }
     });
 
+    console.log(formDataToSend)
+
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
@@ -123,7 +120,6 @@ const HousingForm = () => {
         clearFormData();
       }
 
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -146,7 +142,7 @@ const HousingForm = () => {
     <div className="max-w-lg mx-auto my-8 ">
       <form
         onSubmit={handleSubmit}
-        className="bg-naranjaForm shadow-md rounded-[20px] pt-6 flex flex-col items-center flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%] "
+        className="bg-naranjaForm shadow-md rounded-[20px] pt-6  flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%] "
         encType="multipart/form-data"
       >
         <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>

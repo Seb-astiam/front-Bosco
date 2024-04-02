@@ -52,7 +52,9 @@ const LoginPage = ()=>{
 
             if (error.response && error.response.status === 400) {
                 // El servidor respondió con un código de estado 400 (Bad Request)
-                setIsNotUser(true)
+                // setIsNotUser(true)
+                window.alert(error.response.data); 
+
                 //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
                 
             } if (error.response && error.response.status === 500) {
@@ -97,7 +99,6 @@ const LoginPage = ()=>{
             setHaveAccount(false)
         }
        }
-       console.log("haveAccount", haveAccount)
 
        const [accessToken, setAcessToken] = useState([]);
        // guarda entre otras cosas que no sirven, una propiedad access_token 
@@ -115,7 +116,6 @@ const LoginPage = ()=>{
             if (accessToken) {
                 try {
                     const token = accessToken.access_token;
-                    console.log("token", token);
                     
                     // Comprueba si login se ha ejecutado con éxito
                     if (token) {
@@ -130,7 +130,7 @@ const LoginPage = ()=>{
     
                         // Establecer usuario con los datos obtenidos
                         const userData = userResponse.data;
-    
+
                         // Guardar la información del usuario en el localStorage
                         localStorage.setItem("user", JSON.stringify(userData));
     

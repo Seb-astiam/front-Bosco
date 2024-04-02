@@ -13,7 +13,6 @@ const boscoSlice = createSlice({
   reducers: {
     getAllAlojamientos (state, action) {
         state.allAlojamientos = action.payload;
-        console.log(state.allAlojamientos)
     },
     getAllLocation (state, action) {
       state.AllLocation = action.payload

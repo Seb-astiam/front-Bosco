@@ -11,7 +11,6 @@ export const ValidateFormdata = (formdata) => {
     title,
   } = formdata;
 
-  console.log(title);
   let errors = {
     msgAd: "",
   };
@@ -50,8 +49,6 @@ export const ValidateFormdata = (formdata) => {
   //Cambiar esto en la nueva rama real
   const startDate = new Date(datesAvailable);
   const endDate = new Date(datesEnd);
-  console.log(startDate.getTime());
-  console.log(endDate.getTime());
 
   if (startDate.getTime() > endDate.getTime()) {
     errors.datesEnd =

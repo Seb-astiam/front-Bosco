@@ -81,6 +81,25 @@ export const Nav = ({ pathname }) => {
               </NavLink>
             </button>
           </div>
+          
+          <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
+            <NavLink
+              to="/historial-reservas"
+              className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
+            >
+              Historial de Reservas
+            </NavLink>
+          </div>
+
+           
+          <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
+            <NavLink
+              to="/solicitud-reserva"
+              className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
+            >
+              Solicitudes
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>
