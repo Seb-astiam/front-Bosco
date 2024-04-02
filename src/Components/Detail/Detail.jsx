@@ -28,14 +28,6 @@ const Detail = () => {
   } = card;
 
 
-  const [amount, setAmount] = useState(1);
-
-  const handleAmountChange = (increment) => {
-    if ((increment === -1 && amount > 1) || increment === 1) {
-      setAmount((prev) => prev + increment);
-    }
-  };
-
   const handleClick = () => {
       navigate('/formReserva', {
         state: {
@@ -138,6 +130,7 @@ const Detail = () => {
         </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
