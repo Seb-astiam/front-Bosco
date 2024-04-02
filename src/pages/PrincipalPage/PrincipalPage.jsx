@@ -10,7 +10,7 @@ const PrincipalPage = () => {
     <div className="flex flex-col">
       <div className="flex items-start w-full h-[100vh] ">
         <Filtros />
-        <CardsPrincipal />
+        <CardsPrincipal/>
       </div>
     </div>
   );
