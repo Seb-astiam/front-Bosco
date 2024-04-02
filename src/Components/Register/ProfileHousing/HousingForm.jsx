@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -31,11 +31,15 @@ const HousingForm = () => {
   });
   //para poder ver si se estaba actualizando el estado correctamente.
 
-
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);
   // const errorMessages = Object.values(errors);
   // setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    setShow(true);
+  }, [formData]);
 
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
@@ -109,7 +113,7 @@ const HousingForm = () => {
       }
     });
 
-    console.log(formDataToSend)
+    console.log(formDataToSend);
 
     try {
       const response = await axios.post(
@@ -127,13 +131,14 @@ const HousingForm = () => {
           title: "¡Registro Exitoso!",
           text: "Los datos del alojamiento han sido registrados correctamente.",
         });
+        if (show) setShow(false);
         clearFormData();
       }
-
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const clearFormData = () => {
     setFormData({
       title: "",
@@ -356,33 +361,38 @@ const HousingForm = () => {
             {errors.square}
           </p>
 
-          <div className="bg-[white] rounded-[20px] py-2">
-            <label className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500">
-              Selecciona los servicios:
-            </label>
-            <div className="flex w-[270px] flex-wrap gap-2 justify-center">
-              {services &&
-                services.map((service) => (
-                  <label
-                    key={service.id}
-                    className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] ${
-                      formData.services.includes(service.id)
-                        ? "bg-[#e7e6e6] border-none"
-                        : ""
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      name="services"
-                      value={service.id}
-                      onChange={handleServiceChange}
-                      className="form-checkbox h-3 w-3 text-gray-600 "
-                    />
-                    <span className="ml-2 text-gray-700 ">{service.type}</span>
-                  </label>
-                ))}
+          {show && (
+            <div className="bg-[white] rounded-[20px] py-2">
+              <label className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500">
+                Selecciona los servicios:
+              </label>
+              <div className="flex w-[270px] flex-wrap gap-2 justify-center">
+                {services &&
+                  services.map((service) => (
+                    <label
+                      key={service.id}
+                      className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] ${
+                        formData.services.includes(service.id)
+                          ? "bg-[#e7e6e6] border-none"
+                          : ""
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        name="services"
+                        value={service.id}
+                        onChange={handleServiceChange}
+                        className="form-checkbox h-3 w-3 text-gray-600 "
+                      />
+                      <span className="ml-2 text-gray-700 ">
+                        {service.type}
+                      </span>
+                    </label>
+                  ))}
+              </div>
             </div>
-          </div>
+          )}
+
           <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
             {errors.services}
           </p>
