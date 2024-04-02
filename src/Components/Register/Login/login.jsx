@@ -257,9 +257,6 @@ const LoginPage = ()=>{
                             <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
                                 <box-icon size='30px' type='logo' name='facebook' onClick={handleFacebookLogin} ></box-icon>
                             </div> 
-                            <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                                <box-icon size='30px' type='logo' name='github'></box-icon>
-                            </div>
                             </div>
                             <p className="font-custom">- o -</p>
                         <div className="mb-[20px]">

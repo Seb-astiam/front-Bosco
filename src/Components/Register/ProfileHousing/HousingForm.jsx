@@ -155,7 +155,7 @@ const HousingForm = () => {
   const cities = useCities(selectedProvince ? selectedProvince : null);
 
   return (
-    <div className="flex justify-center items-center h-[800px] w-[100%] my-[50px]">
+    <div className="flex justify-center items-center h-[900px] w-[100%] my-[50px]">
       <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] ">
         <img
           src={bosco}
