@@ -31,7 +31,7 @@ export const Filtros = () => {
     provinces: "",
     cities: "",
     serviceId: "",
-    square: 1,
+    square: "",
     minPrice: "",
     maxPrice: "",
     startDate: "",
@@ -41,6 +41,7 @@ export const Filtros = () => {
   };
 
   const [filter, setFilter] = useState(initialState);
+ 
 
   const URL = "http://localhost:3001/profileHousing/filtered";
 
@@ -53,11 +54,12 @@ export const Filtros = () => {
 
     for (const [key, value] of Object.entries(changeFilter)) {
       if (value) query += `${key}=${value}&`;
+    
     }
-    console.log(query);
 
     try {
       const { data } = await axios.get(URL + query);
+
       dispatch(getAllAlojamientos(data));
     } catch (error) {
       console.log(error);
