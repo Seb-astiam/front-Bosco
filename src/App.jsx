@@ -16,6 +16,7 @@ import { FormReserva } from "./Components/Register/formReserva/formReserva.jsx";
 import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva.jsx";
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
 import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
+import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/historial-reservas" element={<HistorialReserva />} />
         <Route path="/solicitud-reserva" element={<SolicitudReserva />} />
         <Route path="/activate-account" element={<ActivateAccount />} />
+        <Route path="/detail-mascota/:id" element={<DetalleMascota />} />
       </Routes>
     </>
   );

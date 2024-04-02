@@ -11,7 +11,7 @@ export const HistorialReserva = () => {
         const Historial = async () => {
             try {
                 const { data } = await axios(`http://localhost:3001/reservation/allReservation/${email_usuario.email}`)
-                 
+
 
                 const response = data.map((dataHousing)=> {
                     let obj;
@@ -56,9 +56,9 @@ export const HistorialReserva = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaInicio}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaFin}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings.map((title)=> title.title)}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings.map((price)=> price.price)}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings.map((location)=> location.location)}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings[0]?.title}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings[0]?.price}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{reserva.Housings[0]?.provinces}</td>
               </tr>
             ))}
           </tbody>

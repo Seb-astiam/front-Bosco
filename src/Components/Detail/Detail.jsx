@@ -25,6 +25,7 @@ const Detail = () => {
     square,
     title,
     Services,
+    User
   } = card;
 
 
@@ -76,6 +77,11 @@ const Detail = () => {
         <div className="flex flex-col items-start justify-start w-[60%]">
           <h1 className="font-custom font-bold m-0">{title}</h1>
           <h2 className="font-bold font-custom m-0 text-gray-700">{accommodationType}, en {cities}, {provinces}</h2>
+        </div>
+
+        <div className="flex gap-7">
+          <p>Nombre del Anfitrion: {User?.name}</p>
+          <p>Email: {User?.email}</p>
         </div>
 
         <div className="flex items-center justify-center gap-2 ">
