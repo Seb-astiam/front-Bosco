@@ -7,7 +7,6 @@ export const Nav = ({ pathname }) => {
 
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
 
-
   return (
     <div className="shadow-lg bg-[#f7ab5e] border-b-4 border-solid border-chocolate-100 w-screen flex flex-row items-start justify-start  box-border max-w-full text-left text-mini-8 text-midnightblue font-inter  mq1300:box-border ">
       <div className=" flex flex-row items-center justify-between w-full pt-0 px-5">
@@ -26,9 +25,11 @@ export const Nav = ({ pathname }) => {
             />
           </div>
         </div>
-
-        <h2 className="font-mono text-mini-9 text-red-600">Email: {nameUsuario.email}</h2>
-
+        {nameUsuario?.email && (
+          <h2 className="font-mono text-mini-9 text-red-600">
+            Email: {nameUsuario.email}
+          </h2>
+        )}
         <div className=" flex flex-row items-start justify-end gap-[0px_101.9px] text-lg mq450:gap-[0px_25px] mq900:w-[354.9px] mq900:gap-[0px_51px] ">
           <nav className="m-0 h-[42.1px] flex-1 flex flex-row items-start justify-start text-left text-mini-8 text-midnightblue font-inter mq1300:hidden">
             <div className="self-stretch w-[127.4px] rounded-181xl flex flex-col items-start justify-start pt-[11.100000000000025px] pb-[10.999999999999972px] pr-[7.5px] pl-[49.89999999999998px] box-border z-[4] ml-[-24px] text-mini-9">
@@ -86,7 +87,7 @@ export const Nav = ({ pathname }) => {
               </NavLink>
             </button>
           </div>
-          
+
           <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
             <NavLink
               to="/historial-reservas"
@@ -96,7 +97,6 @@ export const Nav = ({ pathname }) => {
             </NavLink>
           </div>
 
-           
           <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
             <NavLink
               to="/solicitud-reserva"
