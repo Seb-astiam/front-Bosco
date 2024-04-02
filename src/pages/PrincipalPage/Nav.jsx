@@ -47,6 +47,15 @@ export const Nav = ({ pathname }) => {
             </div>
           </nav>
 
+          <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
+            <NavLink
+              to="/Principal"
+              className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
+            >
+              Home
+            </NavLink>
+          </div>
+
           <div className=" flex flex-row items-start justify-start gap-[0px_29.8px] mq900:hidden">
             <button className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
               <NavLink
@@ -105,6 +114,7 @@ export const Nav = ({ pathname }) => {
               Solicitudes
             </NavLink>
           </div>
+
         </div>
       </div>
     </div>

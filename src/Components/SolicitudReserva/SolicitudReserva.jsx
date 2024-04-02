@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import Swal from "sweetalert2";
+import { NavLink } from "react-router-dom";
 
 export const SolicitudReserva = () => {
 
@@ -13,8 +14,6 @@ export const SolicitudReserva = () => {
             try {
                 const { data } = await axios(`http://localhost:3001/reservation/reservations/${email_usuario.id}`);
 
-                 
-
                 const response = data.flat().map((dataHousing)=> {
                     let obj;
                    return obj = { 
@@ -22,7 +21,10 @@ export const SolicitudReserva = () => {
                     fechaInicio: dataHousing.fechaInicio,
                     fechaFin: dataHousing.fechaFin,
                     estatus: dataHousing.estatus,
-                    Housings: dataHousing.Housings[0]?.title
+                    Housings: dataHousing.Housings[0]?.title,
+                    UserEmail: dataHousing.Users[0]?.email,
+                    UserName: dataHousing.Users[0]?.name,
+                    UserId: dataHousing.Users[0]?.id
                    }
                 })
 
@@ -89,6 +91,8 @@ export const SolicitudReserva = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Fin</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre Alojamiento</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -99,6 +103,8 @@ export const SolicitudReserva = () => {
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaFin}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
                         <td className="px-6 py-4 whitespace-nowrap"><button onClick={handleClick} className="cursor-pointer" name={reserva.id}>{reserva.Housings}</button></td>
+                        <td className="px-6 py-4 whitespace-nowrap"><NavLink to={`/detail-mascota/${reserva.UserId}`}>{reserva.UserName}</NavLink></td>
+                        <td className="px-6 py-4 whitespace-nowrap">{reserva.UserEmail}</td>
                     </tr>
                     ))}
                 </tbody>

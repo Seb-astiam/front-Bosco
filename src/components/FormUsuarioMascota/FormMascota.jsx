@@ -1,9 +1,12 @@
 import { useState } from "react"
 import axios from "axios";
 import bosco from "../../assets/bosco-logo.jpeg"
+import Swal from 'sweetalert2'
 
 export const FormMascota = () => {
-    
+
+    const email_usuario = JSON.parse(localStorage.getItem("user"));
+
     const [input, setInput] = useState({
         image: "",
         name: "",
@@ -41,12 +44,18 @@ export const FormMascota = () => {
                 size: input.size === "" ? "Dinos que tamaño aproximado tiene tu mascota" : ""
             };
         });
+        const valid = Object.values({
+            ...errors,
+            name: input.name === "" ? "No has registrado un nombre!" : "",
+            type: input.type === "" ? "Selecciona un tipo" : "",
+            age: input.age === "" ? "debe colocar la edad" : "",
+            raze: input.raze === "" ? "Debe indicar la raza" : "",
+            genre: input.genre === "" ? "Selecciona el genero de tu mascota" : "",
+            size: input.size === "" ? "Dinos que tamaño aproximado tiene tu mascota" : ""
+        }).every(error => error === "");
+        return valid
     }
 
-    
-    
-    console.log("errors", errors)
-    
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInput({
@@ -54,29 +63,51 @@ export const FormMascota = () => {
             [name]: value
         });
         
-        validate({
+        const valid = validate({
             ...input,
             [name]: value
         });
-        isFormValid();
+        setDisableSubmit(!valid);
     }
 
-    const [disabledSubmit, setDisableSubmit] =useState(true)
+    const [disabledSubmit, setDisableSubmit] = useState(true)
 
-    const isFormValid = () => {
-        // Verificar si todos los campos son válidos
-    const valid = Object.values(errors).every(error => error === "");
-    // Actualizar el estado de disabledSubmit en función de si el formulario es válido o no
-    setDisableSubmit(!valid);
-    }
+  
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const sendBack = await axios.post("http://localhost:3001/newMascota", input);
+        const {image,
+            name,
+            type,
+            age,
+            raze,
+            aggressiveness,
+            genre,
+            coexistence,
+            size} = input 
+
+        const nuevaMascota = {
+            image,
+            name,
+            type,
+            age,
+            raze,
+            aggressiveness,
+            genre,
+            coexistence,
+            size,
+            UserId: email_usuario.id
+        }
+
+        const sendBack = await axios.post("http://localhost:3001/newMascota", nuevaMascota);
 
         if (sendBack.status === 201) {
-            console.log('Datos enviados con éxito', input);
+            Swal.fire({
+                title: "Excelente",
+                text: sendBack.data,
+                icon: "success"
+              });
             setInput({
                 image: "",
                 name: "",
@@ -93,7 +124,7 @@ export const FormMascota = () => {
         }
     }
 
-    const [verificationSuccessful, setVerificationSuccessful]= useState(false)
+    // const [verificationSuccessful, setVerificationSuccessful]= useState(false)
 
     const reset = () => {
         setInput({
@@ -113,7 +144,7 @@ export const FormMascota = () => {
 
     return (
          <div className="w-screen h-[800px] my-[10px] flex justify-center items-center">
-            <div className={`${verificationSuccessful? '' : ''} h-[90%] w-[80%] flex justify-center`}>
+            <div className={`h-[90%] w-[80%] flex justify-center`}>
 
             <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px]">
                 <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
