@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
+
+  const navigate = useNavigate()
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
@@ -23,16 +25,17 @@ const Detail = () => {
     square,
     title,
     Services,
+    User
   } = card;
 
 
-  const [amount, setAmount] = useState(1);
-
-  const handleAmountChange = (increment) => {
-    if ((increment === -1 && amount > 1) || increment === 1) {
-      setAmount((prev) => prev + increment);
-    }
-  };
+  const handleClick = () => {
+      navigate('/formReserva', {
+        state: {
+            id: id
+        }
+    })
+  }
 
 
   const [activeImg, setActiveImage] = useState(images[0]);
@@ -42,6 +45,7 @@ const Detail = () => {
     // Establecer la nueva imagen como activa
     setActiveImage(image);
   };
+
 
   return (
     <div className="flex flex-col lg:flex-row gap-16 lg:items-center rounded-xl py-5 w-full justify-center bg-white">
@@ -73,6 +77,11 @@ const Detail = () => {
         <div className="flex flex-col items-start justify-start w-[60%]">
           <h1 className="font-custom font-bold m-0">{title}</h1>
           <h2 className="font-bold font-custom m-0 text-gray-700">{accommodationType}, en {cities}, {provinces}</h2>
+        </div>
+
+        <div className="flex gap-7">
+          <p>Nombre del Anfitrion: {User?.name}</p>
+          <p>Email: {User?.email}</p>
         </div>
 
         <div className="flex items-center justify-center gap-2 ">
@@ -118,35 +127,16 @@ const Detail = () => {
              </label>
         </div>
 
-        <div className="flex flex-row items-center justify-start gap-12 px-[15px] py-[10px]  bg-[white] rounded-bl-[20px] rounded-br-[20px]">
-          <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Plazas </a>
-          <div className="flex flex-row items-center">
-            <button
-              className="bg-gray-200 py-0 px-2 rounded-[20px] text-white text-3xl cursor-pointer"
-              onClick={() => handleAmountChange(-1)}
-              disabled={amount === 1}
-            >
-              -
-            </button>
-            <span className="py-4 px-6 rounded-lg">{amount}</span>
-            <button
-              className="bg-orange-500 py-0 px-2 rounded-[20px] text-white text-3xl cursor-pointer"
-              onClick={() => handleAmountChange(1)}
-            >
-              +
-            </button>
-          </div>
-          </div>  
-
-        </div>
-
-        <div className="flex items-center justify-center mt-[20px]">
-          <button className="bg-orange-500  py-2 px-5 rounded-[20px] text-white text-3xl font-custom font-bold cursor-pointer">
-            Reservar
+        <div className="flex items-center justify-center">
+          <button className="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl"
+            onClick={handleClick}
+          >
+            Realiza tu reserva
           </button>
         </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
