@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -113,8 +113,6 @@ const HousingForm = () => {
       }
     });
 
-    console.log(formDataToSend);
-
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
@@ -134,6 +132,8 @@ const HousingForm = () => {
         if (show) setShow(false);
         clearFormData();
       }
+
+      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
