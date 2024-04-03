@@ -12,6 +12,7 @@ import { Terms } from "./Components/Terms/Terms.jsx";
 import { Declaration } from "./Components/Declaration/declaration.jsx";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
+import { Profile } from "./Components/Profile/Profile.jsx";
 import { FormReserva } from "./Components/Register/formReserva/formReserva.jsx";
 import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva.jsx";
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";

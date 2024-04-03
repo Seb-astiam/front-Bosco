@@ -7,7 +7,6 @@ import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
 import useCities from "../../../Hooks/useCities";
-import bosco from "../../../assets/bosco-logo.jpeg";
 
 const HousingForm = () => {
   useServices();
