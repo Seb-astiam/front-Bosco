@@ -12,7 +12,11 @@ import { Terms } from "./Components/Terms/Terms.jsx";
 import { Declaration } from "./Components/Declaration/declaration.jsx";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
-import { Profile } from "./Components/Profile/Profile.jsx";
+import { FormReserva } from "./Components/Register/formReserva/formReserva.jsx";
+import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva.jsx";
+import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
+import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
+import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -32,6 +36,11 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/terms" element={<Terms></Terms>} />
         <Route path="/declaration" element={<Declaration></Declaration>} />
+        <Route path="/formReserva" element={<FormReserva />} />
+        <Route path="/historial-reservas" element={<HistorialReserva />} />
+        <Route path="/solicitud-reserva" element={<SolicitudReserva />} />
+        <Route path="/activate-account" element={<ActivateAccount />} />
+        <Route path="/detail-mascota/:id" element={<DetalleMascota />} />
       </Routes>
     </>
   );

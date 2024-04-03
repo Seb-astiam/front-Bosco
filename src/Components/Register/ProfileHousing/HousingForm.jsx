@@ -6,26 +6,21 @@ import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
+import useCities from "../../../Hooks/useCities";
+import bosco from "../../../assets/bosco-logo.jpeg";
 
 const HousingForm = () => {
   useServices();
   useLocationProvincias();
-  const provincias = useSelector((state) => state.storage.AllLocation);
-  const servicesA = useSelector((state) => state.storage.AllService);
+  useCities();
+  const provincias = useSelector((state) => state.storage.AllProvinces);
+  const services = useSelector((state) => state.storage.AllService);
 
-
-  const email = "Dario@mail.com";
-
-  const [selected, setSelected] = useState(
-    {
-      precioHora: false
-    }
-  )
-
-
+  const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
     title: "",
-    location: "",
+    provinces: "",
+    cities: "",
     datesAvailable: "",
     datesEnd: "",
     price: "",
@@ -36,15 +31,15 @@ const HousingForm = () => {
   });
   //para poder ver si se estaba actualizando el estado correctamente.
 
-  useEffect(() => {
-    // aca renderizo los servicios desde el json mientras no tenga la ruta
-    console.log(formData);
-  }, [formData]);
-
   // manejo del boton de submit
   const [disableSubmit, setDisableSubmit] = useState(true);
   // const errorMessages = Object.values(errors);
   // setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    setShow(true);
+  }, [formData]);
 
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
@@ -74,11 +69,15 @@ const HousingForm = () => {
       ...formData,
       [name]: newValue, // Actualiza el valor cambiado en el objeto formData
     });
+    console.log("validationErrors", validationErrors);
 
     setErrors(validationErrors);
-    const errorMessages = Object.values(errors);
+    const errorMessages = Object.values(validationErrors);
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
+
+  console.log("errors:", errors);
+  console.log("DisabledSubmit", disableSubmit);
 
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;
@@ -114,11 +113,14 @@ const HousingForm = () => {
       }
     });
 
+    console.log(formDataToSend);
+
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
         formDataToSend
       );
+
       if (
         response.status === 201 &&
         response.data.message === "Datos recibidos correctamente"
@@ -129,18 +131,19 @@ const HousingForm = () => {
           title: "¡Registro Exitoso!",
           text: "Los datos del alojamiento han sido registrados correctamente.",
         });
+        if (show) setShow(false);
         clearFormData();
       }
-
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const clearFormData = () => {
     setFormData({
       title: "",
-      location: "",
+      provinces: "",
+      cities: "",
       datesAvailable: "",
       datesEnd: "",
       price: "",
@@ -151,24 +154,28 @@ const HousingForm = () => {
     });
   };
 
+  /****************************** */
+  // Obtener las ciudades según la provincia seleccionada
+  const selectedProvince = formData.provinces;
+  const cities = useCities(selectedProvince ? selectedProvince : null);
+
   return (
-    <div className="max-w-lg mx-auto my-8 flex">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-naranjaForm p-0 rounded-[20px] flex shadow-md shadow-gray-400 rounded-br-[20px] rounded-tr-[20px] w-[500px] "
-        encType="multipart/form-data"
-      >
-        {/* <div className="h-[100%]  rounded-bl-[20px] rounded-tl-[20px]">
-          <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
-        </div> */}
-        <div
-          className="px-[50px] "
+    <div className="flex justify-center items-center h-[900px] w-[100%] my-[50px]">
+      <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] ">
+        <img
+          src={bosco}
+          alt="bosco"
+          className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover"
+        />
+      </div>
+      <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
+        <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%]"
+          encType="multipart/form-data"
         >
-
-
-          <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
-
-          <div className="mb-4 relative">
+          <div>
             <label
               htmlFor="title"
               className="flex flex-grow px-[10px] py-[5px] bg-[white] rounded-[20px]"
@@ -549,9 +556,9 @@ const HousingForm = () => {
           </div>
           <div className="">
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </div >
   );
 };
 

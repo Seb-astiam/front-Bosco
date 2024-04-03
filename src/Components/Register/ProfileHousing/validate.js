@@ -4,22 +4,23 @@ export const ValidateFormdata = (formdata) => {
     datesAvailable,
     datesEnd,
     images,
-    location,
+    provinces,
+    cities,
     price,
     services,
     square,
     title,
   } = formdata;
 
-  console.log(title);
-  let errors = {
-    msgAd: "",
-  };
+  let errors = {};
   if (!title) {
     errors.title = "El nombre del alojamiento es requerido";
   }
-  if (!location) {
-    errors.location = "La ubicación es requerida";
+  if (!provinces) {
+    errors.provinces = "Debes seleccionar una provincia";
+  }
+  if (!cities) {
+    errors.cities = "Debes seleccionar una localidad";
   }
 
   if (!datesAvailable || !datesEnd) {
@@ -50,8 +51,6 @@ export const ValidateFormdata = (formdata) => {
   //Cambiar esto en la nueva rama real
   const startDate = new Date(datesAvailable);
   const endDate = new Date(datesEnd);
-  console.log(startDate.getTime());
-  console.log(endDate.getTime());
 
   if (startDate.getTime() > endDate.getTime()) {
     errors.datesEnd =
