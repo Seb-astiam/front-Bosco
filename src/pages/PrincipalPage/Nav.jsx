@@ -77,25 +77,37 @@ export const Nav = ({ pathname }) => {
             </button>
           </div>
 
-          <div className=" flex flex-row items-center justify-start gap-[0px_29.8px] ">
-            <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0 bg-[#f7ab5e]">
-              <NavLink
-                to="/Register"
-                className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
-              >
-                Registrate
-              </NavLink>
-            </button>
+          {nameUsuario?.email ?
+            <div>
+              <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
+                <NavLink
+                  to="/Profile/perfil"
+                  className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
+                >
+                  <img className="w-[40px] h-[40px] bg-slate-300 " src={Isologotipo} alt="" />
+                </NavLink>
+              </button>
+            </div>
+            :
+            <div className=" flex flex-row items-center justify-start gap-[0px_29.8px] ">
+              <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0 bg-[#f7ab5e]">
+                <NavLink
+                  to="/Register"
+                  className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
+                >
+                  Registrate
+                </NavLink>
+              </button>
 
-            <button className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
-              <NavLink
-                to="/login"
-                className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
-              >
-                Log In
-              </NavLink>
-            </button>
-          </div>
+              <button className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
+                <NavLink
+                  to="/login"
+                  className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
+                >
+                  Log In
+                </NavLink>
+              </button>
+            </div>}
 
           <div className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">
             <NavLink
