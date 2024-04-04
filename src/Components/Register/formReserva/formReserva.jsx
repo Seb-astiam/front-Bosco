@@ -64,7 +64,7 @@ export const FormReserva = () => {
     return (
         <form className='flex flex-col items-center justify-center gap-8'>
 
-            <h1>Reservar!</h1>
+           
 
             <label className='w-64 h-10 text-center flex items-center justify-center gap-5'>
                 <box-icon name='calendar-edit' ></box-icon>
@@ -76,7 +76,7 @@ export const FormReserva = () => {
                 <input type="date" name="fechaFin" onChange={handleChange}></input>
             </label>
 
-            <button onClick={handleSubmit}>Enviar reserva</button>
+            <button className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]" onClick={handleSubmit}>Enviar reserva</button>
         </form>
     )
 }

@@ -14,6 +14,8 @@ export const Filtros = () => {
   useServices();
   const dispatch = useDispatch();
 
+  const nameUsuario = JSON.parse(localStorage.getItem("user"));
+
   // Obtener provincias del estado
   const provincias = useSelector((state) => state.storage.AllProvinces);
   // Obtener ciudades del estado
@@ -93,7 +95,7 @@ export const Filtros = () => {
   const cities = useCities(selectedProvince ? selectedProvince : null);
 
   return (
-    <div className="w-[300px] bg-whiteseñales shadow-lg h-[100vh] font-custom pt-4">
+    <div className="w-[300px] bg-whiteseñales ml-[20px] mt-[10px] rounded-lg shadow-lg h-[100vh] font-custom pt-4">
       {show && (
         <div className="">
           <div className="flex flex-row items-center justify-between border-b-4 border-gray-400 shadow-md px-2">
@@ -280,8 +282,15 @@ export const Filtros = () => {
                     className="bg-transparent text-[#8b8e58] font-medium focus:outline-none text-sm w-[100px] py-2 pl-1 rounded-[20px] bg-white bg-opacity-60 ml-[15px]"
                   />
                 </div>
+          
               </div>
+              
             </div>
+            {nameUsuario?.email && (
+          <h2 className="font-mono text-mini-9 mt-[30px] text-red-600">
+            Usuario: {nameUsuario.email}
+          </h2>
+        )}
           </div>
         </div>
       )}

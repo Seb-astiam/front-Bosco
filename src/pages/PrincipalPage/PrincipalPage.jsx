@@ -7,7 +7,7 @@ const PrincipalPage = () => {
   useAlojamientoPrincipal();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-[10px] rounded-full">
       <div className="flex items-start w-full h-[100vh] ">
         <Filtros />
         <CardsPrincipal/>

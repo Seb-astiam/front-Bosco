@@ -18,7 +18,7 @@ export const CardPrincipal = ({alojamiento}) => {
 
     return (
         <NavLink to={`/detail/${alojamiento.id}`} className='no-underline'>
-        <div className='flex flex-col items-center h-[420x] w-[240px]  bg-white rounded-[15px] '>  
+        <div className='flex flex-col items-center h-[600x] w-[300px]  bg-white rounded-[15px] shadow-lg '>  
        
             <div className="relative" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 {hover && (
@@ -58,7 +58,7 @@ export const CardPrincipal = ({alojamiento}) => {
                             }`} > {service.type} </p> );
                     })}
             </div>
-            <div className="flex justify-between w-[240px]">
+            <div className="flex justify-between mb-3 w-[240px]">
                 <p className="text-[15px] font-custom font-semibold  text-black my-1">${price},00 ARS / noche</p>
             </div>
         </div>
