@@ -32,7 +32,7 @@ export const CardsPrincipal = () => {
     };
 
     return (
-        <div className="flex flex-col gap-1 mr-[10px] ml-[10px] mt-[10px] rounded-lg border-justify-evenly w-full h-screen bg-orange-100 bg-opacity-80 m-1">
+        <div className="flex flex-col gap-1 mr-[10px] ml-[10px] mt-[10px] rounded-lg border-justify-evenly w-full h-screen  bg-opacity-80 m-1">
 
             <div className="flex h-[5%] w-full justify-center items-center m-2">
                 <button onClick={prevPage} disabled={numberPage === 1} className=" bg-transparent ">❮</button>
@@ -48,7 +48,7 @@ export const CardsPrincipal = () => {
                 <button onClick={nextPage} disabled={numberPage === totalPages} className=" bg-transparent ">❯</button>
             </div>
 
-            <div className="flex flex-wrap h-[95%] w-full gap-7 justify-center items-center">
+            <div className="flex flex-wrap h-[95%] w-full gap-7 justify-center items-start">
                 {newArrAlojamientos.map((alojamiento) => {
                     return <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
                 })}

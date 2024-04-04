@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {FormReserva } from "../Register/formReserva/formReserva"
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
-
-  const navigate = useNavigate()
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
@@ -27,15 +25,6 @@ const Detail = () => {
     Services,
     User
   } = card;
-
-
-  const handleClick = () => {
-      navigate('/formReserva', {
-        state: {
-            id: id
-        }
-    })
-  }
 
 
   const [activeImg, setActiveImage] = useState(images[0]);
@@ -114,7 +103,7 @@ const Detail = () => {
         
         <div className="flex flex-row">
          
-        <FormReserva/>
+          <FormReserva id={id}/>
         </div>
 
        
