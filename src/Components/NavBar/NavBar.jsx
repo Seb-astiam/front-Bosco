@@ -4,6 +4,8 @@ import Isologotipo from "../../assets/IsoLogotipoBosco.png";
 
 export const Navbar = () => {
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
+  const picture = JSON.parse(localStorage.getItem("user")).picture
+
   return (
     <div className="w-full flex flex-row items-start justify-start pt-0 px-20 pb-[53.30000000000001px] box-border max-w-full text-left text-mini-8 text-midnightblue font-inter mq1300:pl-10 mq1300:pr-10 mq1300:box-border">
       <div className="flex-1 flex flex-row items-end justify-between gap-[45px] max-w-full">
@@ -42,12 +44,12 @@ export const Navbar = () => {
               nameUsuario?.email ?
                 <div>
 
-                  <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
+                  <button className="flex flex-col items-start w-[45px] h-[45px] justify-start pt-[7.899999999999977px] px-0 pb-0">
                     <NavLink
                       to="/Profile/perfil"
                       className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
                     >
-                      <img className="w-[45px] h-[45px] bg-slate-300 " src={Isologotipo} alt="" />
+                      <img className="w-full h-full bg-slate-300 " src={picture} alt="" />
                     </NavLink>
                   </button>
                 </  div>

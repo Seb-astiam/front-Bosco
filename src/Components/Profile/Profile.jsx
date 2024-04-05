@@ -1,10 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { FormProfile } from "./FormProfile/FormProfile";
 import { MyPets } from "./MyPets/MyPets";
 import { MyHousing } from "./MyHousing/MyHousing";
+import axios from "axios";
 
 export const Profile = () => {
+    const userId= JSON.parse(localStorage.getItem("user")).id
+    const [formData, setFormData] = useState({
+        userId,
+        name: "",
+        username:"",
+        genre:"",
+        province: "",
+        city: "",
+        address: "",
+        phone: "",
+        balance:0
+
+    });
+    const [nuevo,setrNuevo]=useState(true)
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/profile/${userId}`);
+                const userData = response.data;
+                console.log(userData);
+                setFormData({
+                    ...formData,
+                    name: userData.name || "",
+                    surname: userData.surname || "",
+                    genre: userData.genre || "",
+                    province: userData.province || "",
+                    city: userData.city || "",
+                    address: userData.address || "",
+                    phone: userData.phone || "",
+                    balance: userData.balance || 0
+                });
+                setrNuevo(false)
+            } catch (error) {
+                setrNuevo(true)
+                console.error("Error fetching user data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+    const handleUpdate = async () => {
+        try {
+            await axios.put("http://localhost:3001/profile/", formData);
+            alert("User data updated successfully!");
+        } catch (error) {
+            console.error("Error updating user data:", error);
+            alert("Failed to update user data. Please try again.");
+        }
+    };
+    const handlePost = async () => {
+        try {
+            await axios.post("http://localhost:3001/profile/", formData);
+            alert("User data updated successfully!");
+        } catch (error) {
+            console.error("Error updating user data:", error);
+            alert("Failed to update user data. Please try again.");
+        }
+    };
     return (
         <div
         className="flex  gap-2"
@@ -37,7 +101,7 @@ export const Profile = () => {
 
                 <Routes>
                     <Route path='perfil' element={
-                        <FormProfile/>
+                        <FormProfile nuevo={nuevo} handlePost={handlePost} handleUpdate={handleUpdate} handleChange={handleChange} formData={formData}/>
                     } />
                     <Route path='alojamientos' element={
                         <div>

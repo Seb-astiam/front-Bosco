@@ -6,6 +6,8 @@ export const Nav = ({ pathname }) => {
   const navigate = useNavigate();
 
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
+  const picture = JSON.parse(localStorage.getItem("user")).picture
+  
 
   return (
     <div className="shadow-lg bg-[#f7ab5e] border-b-4 border-solid border-chocolate-100 w-screen flex flex-row items-start justify-start  box-border max-w-full text-left text-mini-8 text-midnightblue font-inter  mq1300:box-border ">
@@ -79,12 +81,12 @@ export const Nav = ({ pathname }) => {
 
           {nameUsuario?.email ?
             <div>
-              <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
+              <button className="flex flex-col w-[40px] h-[40px] border rounded-md mt-[7.899999999999977px] p-0 items-start justify-start  ">
                 <NavLink
                   to="/Profile/perfil"
-                  className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
+                  className="cursor-pointer relative p-0 w-[40px] h-[40px] whitespace-nowrap  no-underline"
                 >
-                  <img className="w-[40px] h-[40px] bg-slate-300 " src={Isologotipo} alt="" />
+                  <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
                 </NavLink>
               </button>
             </div>

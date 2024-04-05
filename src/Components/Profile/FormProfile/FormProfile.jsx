@@ -1,84 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export const FormProfile = () => {
-    const userId= JSON.parse(localStorage.getItem("user")).id
-    const [formData, setFormData] = useState({
-        userId,
-        name: "",
-        username:"",
-        genre:"",
-        province: "",
-        city: "",
-        address: "",
-        phone: "",
-        balance:0
+export const FormProfile = (params) => {
+    const { formData, handlePost, handleUpdate, nuevo, handleChange } = params
+    const picture = JSON.parse(localStorage.getItem("user")).picture
 
-    });
-    const [nuevo,setrNuevo]=useState(true)
 
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData({ ...formData, [id]: value });
-    };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/profile/${userId}`);
-                const userData = response.data;
-                console.log(userData);
-                setFormData({
-                    ...formData,
-                    name: userData.name || "",
-                    surname: userData.surname || "",
-                    genre: userData.genre || "",
-                    province: userData.province || "",
-                    city: userData.city || "",
-                    address: userData.address || "",
-                    phone: userData.phone || "",
-                    balance: userData.balance || 0
-                });
-                setrNuevo(false)
-            } catch (error) {
-                setrNuevo(true)
-                console.error("Error fetching user data:", error);
-            }
-        };
-        fetchData();
-    }, []);
-    const handleUpdate = async () => {
-        try {
-            await axios.put("http://localhost:3001/profile/", formData);
-            alert("User data updated successfully!");
-        } catch (error) {
-            console.error("Error updating user data:", error);
-            alert("Failed to update user data. Please try again.");
-        }
-    };
-    const handlePost = async () => {
-        try {
-            await axios.post("http://localhost:3001/profile/", formData);
-            alert("User data updated successfully!");
-        } catch (error) {
-            console.error("Error updating user data:", error);
-            alert("Failed to update user data. Please try again.");
-        }
-    };
     return (
         <div>
-            <div className="flex flex-col space-y-4">
+
+            <div className="flex gap-[15px] items-center space-y-4">
                 <div>
-                    <label htmlFor="name" className="text-sm">Nombre:</label>
-                    <input type="text" id="name" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.name} onChange={handleChange} />
+                    <img src={picture} alt="" />
                 </div>
                 <div>
-                    <label htmlFor="surname" className="text-sm">Apellido:</label>
-                    <input type="text" id="surname" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.surname} onChange={handleChange} />
-                </div>
-                <div>
-                    <label htmlFor="genre" className="text-sm">Sexo:</label>
-                    <input type="text" id="genre" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.genre} onChange={handleChange} />
+
+                    <div>
+                        <label htmlFor="name" className="text-sm">Nombre:</label>
+                        <input type="text" id="name" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.name} onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="surname" className="text-sm">Apellido:</label>
+                        <input type="text" id="surname" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.surname} onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label htmlFor="genre" className="text-sm">Sexo:</label>
+                        <input type="text" id="genre" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.genre} onChange={handleChange} />
+                    </div>
                 </div>
             </div>
             <div className="flex flex-col border-4 w-[500px] p-5 border-black space-y-4">
@@ -107,9 +55,9 @@ export const FormProfile = () => {
             {!nuevo ? <button onClick={handleUpdate} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Actualizar
             </button> :
-            <button onClick={handlePost} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Nuevo
-            </button>}
+                <button onClick={handlePost} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Nuevo
+                </button>}
         </div>
     );
 };
