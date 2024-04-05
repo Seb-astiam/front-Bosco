@@ -14,6 +14,7 @@ export const SolicitudReserva = () => {
             try {
                 const { data } = await axios(`http://localhost:3001/reservation/reservations/${email_usuario.id}`);
 
+
                 const response = data.flat().map((dataHousing)=> {
                     let obj;
                    return obj = { 
@@ -24,7 +25,8 @@ export const SolicitudReserva = () => {
                     Housings: dataHousing.Housings[0]?.title,
                     UserEmail: dataHousing.Users[0]?.email,
                     UserName: dataHousing.Users[0]?.name,
-                    UserId: dataHousing.Users[0]?.id
+                    UserId: dataHousing.Users[0]?.id,
+                    idMascota: dataHousing.UserMascotumId
                    }
                 })
 
@@ -86,7 +88,6 @@ export const SolicitudReserva = () => {
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Inicio</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Fin</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
@@ -98,12 +99,11 @@ export const SolicitudReserva = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                     {solicitudes.map((reserva) => (
                     <tr key={reserva.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">{reserva.id}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaInicio}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaFin}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
                         <td className="px-6 py-4 whitespace-nowrap"><button onClick={handleClick} className="cursor-pointer" name={reserva.id}>{reserva.Housings}</button></td>
-                        <td className="px-6 py-4 whitespace-nowrap"><NavLink to={`/detail-mascota/${reserva.UserId}`}>{reserva.UserName}</NavLink></td>
+                        <td className="px-6 py-4 whitespace-nowrap"><NavLink to={`/detail-mascota/${reserva.idMascota}`}>{reserva.UserName}</NavLink></td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.UserEmail}</td>
                     </tr>
                     ))}

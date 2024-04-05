@@ -17,10 +17,10 @@ export const CardPrincipal = ({alojamiento}) => {
       };
 
     return (
-        <NavLink to={`/detail/${alojamiento.id}`} className='no-underline'>
-        <div className='flex flex-col items-center h-[420x] w-[240px]  bg-white rounded-[15px] '>  
+        
+        <div className='flex flex-col items-center h-[400px] w-[300px]  bg-white rounded-[15px] justify-between'>  
        
-            <div className="relative" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <div className="relative pt-2" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 {hover && (
                     <button onClick={() => changeImage("anterior")}
                     className="absolute top-1/2 transform -translate-y-1/2 left-4 rounded-[50%] bg-white bg-opacity-70 hover:bg-white hover:bg-opacity-100 cursor-pointer z-10"
@@ -32,7 +32,7 @@ export const CardPrincipal = ({alojamiento}) => {
                     >❯</button>
                 )}
 
-                <img className="w-[240px] h-[220px] rounded-lg" src={images[indexImage]} alt={`Imagen ${indexImage + 1}`} />
+                <img className="w-[250px] h-[220px] rounded-lg" src={images[indexImage]} alt={`Imagen ${indexImage + 1}`} />
            
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center">
                     {images.map((image, idx) => (
@@ -41,7 +41,7 @@ export const CardPrincipal = ({alojamiento}) => {
                 </div>
             </div>
             
-
+            <NavLink to={`/detail/${alojamiento.id}`} className='no-underline'>
             <div className="text-start flex w-[240px] flex-col">
                 <p className="text-base font-custom font-semibold text-black my-1">{title}</p>
                 <p className="font-custom font-semibold text-gray-500 text-[13px] my-1">{cities}, {provinces}</p>
@@ -58,11 +58,11 @@ export const CardPrincipal = ({alojamiento}) => {
                             }`} > {service.type} </p> );
                     })}
             </div>
-            <div className="flex justify-between w-[240px]">
+            <div className="flex mb-3 w-[240px]">
                 <p className="text-[15px] font-custom font-semibold  text-black my-1">${price},00 ARS / noche</p>
             </div>
+            </NavLink>
         </div>
-        </NavLink>
     )
 }
 
