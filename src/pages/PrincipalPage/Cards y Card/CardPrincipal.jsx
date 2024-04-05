@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-useNavigate
 
 export const CardPrincipal = ({alojamiento}) => {
     const [indexImage, setIndexImage] = useState(0);
