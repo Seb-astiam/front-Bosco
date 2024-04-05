@@ -58,7 +58,7 @@ const HousingForm = () => {
     } else {
       newValue = e.target.value;
     }
-
+    console.log(newValue);
     setFormData((prevData) => ({
       ...prevData,
       [name]: newValue,
@@ -434,8 +434,8 @@ const HousingForm = () => {
                 }`}
             >
               <div>
-                {servicesA &&
-                  servicesA.map((service) => (
+                {services &&
+                  services.map((service) => (
                     <label
                       key={service.id}
                       className="bg-white p-[5px] m-[3px] inline-flex items-center rounded-[20px] ml-4"

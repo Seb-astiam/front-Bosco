@@ -9,6 +9,7 @@ export const Profile = () => {
     const userId= JSON.parse(localStorage.getItem("user")).id
     const [formData, setFormData] = useState({
         userId,
+        images:[],
         name: "",
         username:"",
         genre:"",
@@ -23,6 +24,7 @@ export const Profile = () => {
 
     const handleChange = (e) => {
         const { id, value } = e.target;
+       
         setFormData({ ...formData, [id]: value });
     };
 

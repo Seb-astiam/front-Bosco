@@ -4,14 +4,50 @@ import axios from "axios";
 export const FormProfile = (params) => {
     const { formData, handlePost, handleUpdate, nuevo, handleChange } = params
     const picture = JSON.parse(localStorage.getItem("user")).picture
+    const [updatePicture_,setUpdatePicture]=useState(null)
+    
+    const [img,setImg] =useState(null)
+    const updatePicture=(e)=>{
+        const { files } = e.target;
+        const picture = Array.from(files).slice(0, 3 - formData.images.length)
+        setImg(picture)
 
+ 
+    }
 
     return (
         <div>
 
             <div className="flex gap-[15px] items-center space-y-4">
                 <div>
-                    <img src={picture} alt="" />
+                    <div className="h-[160px] w-[160px] m-2">
+                    {img?
+                    
+                    <img src={URL.createObjectURL(img[0])} className="h-full" alt="" />
+                    :
+
+                    <img src={picture} className="h-full" alt="" />
+                    }
+
+                    </div>
+                    <div >
+                        <input
+                            type="file"
+                            accept="image/*"
+                            name="images"
+                            id="images"
+                            onChange={updatePicture}
+                            className="hidden"
+                            multiple
+                        />
+                        <label
+                            htmlFor="images"
+                            className="flex justify-center relative px-4 bg-slate-200 rounded-lg cursor-pointer border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:outline-none"
+                        >
+                            <span className="m-2">Cambiar foto de perfil</span>
+
+                        </label>
+                    </div>
                 </div>
                 <div>
 
