@@ -83,7 +83,7 @@ export const Nav = ({ pathname }) => {
           
           
           <div className="ml-[100px] flex items-center justify-center gap-1">
-            <h1>{nameUsuario.name}</h1>
+            <h1>{nameUsuario?.name}</h1>
             <DropDown/>
           </div>
            

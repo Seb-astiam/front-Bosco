@@ -14,7 +14,6 @@ export const Filtros = () => {
   useServices();
   const dispatch = useDispatch();
 
-  const nameUsuario = JSON.parse(localStorage.getItem("user"));
 
   // Obtener provincias del estado
   const provincias = useSelector((state) => state.storage.AllProvinces);
@@ -286,11 +285,7 @@ export const Filtros = () => {
               </div>
               
             </div>
-            {nameUsuario?.email && (
-          <h2 className="font-mono text-mini-9 mt-[30px] text-red-600">
-            Usuario: {nameUsuario.email}
-          </h2>
-        )}
+            
           </div>
         </div>
       )}

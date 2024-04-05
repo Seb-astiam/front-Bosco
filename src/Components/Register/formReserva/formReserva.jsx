@@ -5,6 +5,12 @@ import 'boxicons'
 import { useMascotas } from "../../../Hooks/useMascota";
 import { useSelector } from "react-redux";
 
+import perro from "../../../assets/gestos-de-los-perros.jpg"
+import gato from "../../../assets/gato.webp"
+import caballo from "../../../assets/caballo.jpeg"
+import gecko from "../../../assets/gecko.webp"
+
+
 export const FormReserva = (id) => {
 
     const [open, setOpen] = useState(false)
@@ -12,9 +18,9 @@ export const FormReserva = (id) => {
     const email_usuario = JSON.parse(localStorage.getItem("user"));
 
     useMascotas(email_usuario.id);
-    const data = useSelector((state) => state.storage.MascotasUsuario)
+    const pet = useSelector((state) => state.storage.MascotasUsuario)
 
-    const mascota = data
+    const mascota = pet
 
     const [input, setInput] = useState({
         fechaInicio: '',
@@ -54,10 +60,10 @@ export const FormReserva = (id) => {
         }
 
         try {
-            const { data } = await axios.post('http://localhost:3001/reservation/newReservation', body);
+            const { pet } = await axios.post('http://localhost:3001/reservation/newReservation', body);
             Swal.fire({
                 icon: "success",
-                title: data,
+                title: pet,
                 text: "Esperando aceptación",
               });
 
@@ -114,13 +120,17 @@ export const FormReserva = (id) => {
             {
                 open && (
                     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-                <div className="bg-white p-5 rounded flex flex-col justify-center items-center gap-5">
+                <div className="bg-white p-5 rounded flex flex-col justify-center items-center">
                     <button onClick={() => setOpen(false)} className="cursor-pointer">X</button>
                     <h1 className="font-custom">Cual mascota alojaras?</h1>
-                    <div className="flex">
+                    <div className="flex gap-5">
                         {mascota?.map((pet) => {
                                 return  <div className="max-w-lg w-full bg-white shadow-md rounded-lg overflow-hidden font-custom">
-                                    <img className="w-full h-64 object-cover object-center" src={pet.image} alt={`Imagen de ${pet.name}`} />
+                                        <div className="felx items-center justify-center bg-slate-600">
+                                            <img className="w-[230px] h-[240px]"
+                                            src={pet.type === 'Cat' ? gato : pet.type === 'Dog' ? perro : pet.type === 'Caballo' ? caballo : pet.type === 'Reptil' ? gecko : ''} alt="Imagen de mascota" 
+                                            />
+                                        </div>
                                     <div className="p-6">
                                         <h2 className="text-3xl font-bold mb-2 text-gray-800">{pet.name}</h2>
                                         <div className="flex items-center mb-2">
@@ -152,7 +162,7 @@ export const FormReserva = (id) => {
                                             <span className="text-gray-800 font-semibold">{pet.coexistence ? 'Sí' : 'No'}</span>
                                         </div>
 
-                                        <button onClick={handleSubmit} value={pet.id} className="text-gray-800 font-semibold">Selecionar</button>
+                                        <button onClick={handleSubmit} value={pet.id} className="text-gray-800 font-semibold cursor-pointer p-2 bg-orange-500 hover:bg-pink-100">Selecionar</button>
                                     </div>
                                 </div>
                             })}

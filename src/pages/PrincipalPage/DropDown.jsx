@@ -1,5 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import { useNavigate } from 'react-router-dom'
+
 
 
 function classNames(...classes) {
@@ -7,6 +9,7 @@ function classNames(...classes) {
 }
 
 export default function DropDown() {
+  const navigate = useNavigate();
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -71,7 +74,6 @@ export default function DropDown() {
                 </a>
               )}
             </Menu.Item>
-            <form method="POST" action="#">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -80,12 +82,16 @@ export default function DropDown() {
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
+
+                    onClick={() => {
+                         localStorage.removeItem("user");
+                         navigate('/')
+                    }}
                   >
                     Sign out
                   </button>
                 )}
               </Menu.Item>
-            </form>
           </div>
         </Menu.Items>
       </Transition>
