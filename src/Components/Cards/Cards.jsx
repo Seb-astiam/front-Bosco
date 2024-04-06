@@ -13,18 +13,10 @@ export const Cards = () => {
   const alojamiento = useSelector((state) => state.storage.allAlojamientos)
   
 
-  let data = alojamiento.slice(0, 4); // Mostrar cuatro tarjetas
-  const containerRef = React.useRef(null);
+  let data = alojamiento.slice(0, 4); 
+  
 
-  // Calcular el ancho de cada tarjeta
-  const calculateCardWidth = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.clientWidth;
-      const numCards = alojamiento.length;
-      return `${containerWidth / numCards}px`;
-    }
-    return 'auto';
-  }
+
 
     return (
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">
