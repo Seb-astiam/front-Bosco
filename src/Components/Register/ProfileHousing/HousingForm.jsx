@@ -8,13 +8,19 @@ import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
 import useCities from "../../../Hooks/useCities";
 import bosco from "../../../assets/bosco-logo.jpeg";
+import { useTiposAlojamientos } from "../../../Hooks/useTiposAlojamientos";
 
 const HousingForm = () => {
   useServices();
   useLocationProvincias();
   useCities();
+  useTiposAlojamientos();
+
+  const TiposHost = useSelector((state)=> state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
+
+
 
   const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
@@ -109,7 +115,6 @@ const HousingForm = () => {
       }
     });
 
-    console.log(formDataToSend);
 
     try {
       const response = await axios.post(
@@ -347,9 +352,9 @@ const HousingForm = () => {
                 <option value="" disabled selected>
                   Selecciona un tipo de alojamiento
                 </option>
-                <option value="Cabaña">Cabaña</option>
-                <option value="Hotel">Hotel</option>
-                <option value="Casa Rural">Casa Rural</option>
+                {TiposHost.map((tipo) => {
+                  return <option key={tipo.id} value={tipo.type}>{tipo.type}</option>
+                })}
               </select>
             </label>
           </div>
