@@ -80,7 +80,7 @@ const HousingForm = () => {
     const errorMessages = Object.values(validationErrors);
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
-  
+
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;
     const serviceId = parseInt(value); // Convertimos el valor a número

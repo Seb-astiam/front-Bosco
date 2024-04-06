@@ -4,8 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const DateSearch = () => {
  
-  const [fechaSalida, setFechaSalida] = useState(new Date());
-  const [fechaRetorno, setFechaRetorno] = useState(new Date());
+  const [fechaSalida, setFechaSalida] = useState();
+  const [fechaRetorno, setFechaRetorno] = useState();
 
   
   const enviarFechas = () => {
@@ -13,55 +13,139 @@ export const DateSearch = () => {
     alert(`Salida: ${fechaSalida.toDateString()}, Retorno: ${fechaRetorno.toDateString()}`);
   };
 
+/****************************************** */
+
+  const [opcionesAbiertas, setOpcionesAbiertas] = useState(false);
+
+
+  const toggleOpciones = () => {
+      setOpcionesAbiertas(!opcionesAbiertas);
+  };
+
+  /***************************************** */
+  const [cantidadMascotas, setCantidadMascotas] = useState(0);
+
+  const incrementarCantidad = () => {
+    if (cantidadMascotas <= 14)
+    setCantidadMascotas(prevCantidad => prevCantidad + 1);
+  
+  };
+
+  const decrementarCantidad = () => {
+    if (cantidadMascotas > 0) {
+      setCantidadMascotas(prevCantidad => prevCantidad - 1);
+    }
+  };
+
+
   return (
-    <div className="self-stretch rounded-181xl bg-white shadow-[0px_10px_40px_rgba(0,_0,_0,_0.05)] flex flex-row items-end justify-between pt-[9.699999999999989px] pb-[10.300000000000011px] pr-[9px] pl-5 box-border max-w-full gap-[20px] z-[3] text-xl mq1300:flex-wrap">
-      <div className="w-[483.5px] flex flex-col items-start justify-start pt-0 px-0 pb-[4.699999999999989px] box-border max-w-full">
-        <div className="self-stretch flex flex-row items-start justify-start gap-[0px_57.9px] mq900:flex-wrap mq900:gap-[0px_29px]">
-          {/* Salida */}
-          <div className="flex-1 flex flex-row items-start justify-start gap-[0px_10.3px] min-w-[139px] mq450:flex-wrap">  
-            <div className="h-[50px] w-[50px] flex-1 relative rounded-xl max-w-full overflow-hidden object-cover ">
+    <div className=" rounded-[80px] bg-white shadow-[0px_10px_40px_rgba(0,_0,_0,_0.05)] flex flex-row items-center justify-between p-3  max-w-full  z-[3] ">
+
+          <div className='flex flex-col ml-10 w-[150px]'> 
+            <label className='font-medium'>Lugar</label>
+            <input placeholder = '¿Dónde?'
+            className='outline-none'
+            
+            ></input>
+          </div>
+
+            <div className=" flex flex-row max-w-full overflow-hidden items-center">
             <img
-              className="h-[25px] w-[25px] py-3 flex-1 relative rounded-xl max-w-full overflow-hidden object-cover"
+              className="h-[25px] w-[25px] rounded-[20px] max-w-full overflow-hidden "
               loading="lazy"
               alt=""
               src="/1084899-4caf50.png"
             />    
-              {/* Ícono o contenido adicional aquí */}
-              
+            
+
+            <div className="flex flex-col items-start justify-start ml-[10px] w-[100px]">
+              <div className=" font-medium">Check-in</div>
+              <DatePicker
+                selected={fechaSalida}
+                onChange={setFechaSalida}
+                placeholderText={fechaSalida ? `${fechaSalida}` : '¿Cuándo?'}
+                className='outline-none'
+                
+                />
             </div>
-            <div className="flex flex-col items-start justify-start pt-[3.1999999999999886px] px-0 pb-0 text-mini-9">
-              <div className="relative leading-[24px] font-medium">Salida</div>
-              <DatePicker selected={fechaSalida} onChange={setFechaSalida} />
-            </div>
+
           </div>
-          {/* Retorno */}
-          <div className="flex-1 flex flex-row items-start justify-start gap-[0px_10.3px] min-w-[139px] mq450:flex-wrap">
-          <div className="h-[50px] w-[50px] flex-1 relative rounded-xl max-w-full overflow-hidden object-cover ">
+          
+          <div className="flex flex-row max-w-full overflow-hidden items-center">
+            
             <img
-              className="h-[25px] w-[25px] py-3 flex-1 relative rounded-xl max-w-full overflow-hidden object-cover"
+              className="h-[25px] w-[25px] rounded-[20px] max-w-full overflow-hidden"
               loading="lazy"
               alt=""
               src="/1084899-ff5722.png"
             />    
-              {/* Ícono o contenido adicional aquí */}
-              
+
+            <div className="flex flex-col items-start justify-start ml-[10px]  w-[100px]">
+              <div className="font-medium">Check-out</div>
+              <DatePicker selected={fechaRetorno} onChange={setFechaRetorno} placeholderText={fechaRetorno ? `${fechaRetorno}` : '¿Cuándo?'} 
+              className='outline-none'
+              />
             </div>
-            <div className="flex flex-col items-start justify-start pt-[1.6999999999999886px] px-0 pb-0 text-mini-9">
-              <div className="relative leading-[24px] font-medium">Retorno</div>
-              <DatePicker selected={fechaRetorno} onChange={setFechaRetorno} />
-            </div>
+
           </div>
-        </div>
-      </div>
+
+          <div className='flex flex-col w-[100px]'> 
+            <label className='font-medium'>Mascotas</label>
+            <div className="relative">
+                <button
+                    type="button"
+                    className="bg-transparent outline-none flex justify-start w-full text-[#767676]"
+                    onClick={toggleOpciones}
+                    
+                >¿Cuántas?</button>
+                {opcionesAbiertas && (
+                    <div className="absolute z-10 mt-6 w-[200px] h-[165px] rounded-[20px] bg-white shadow-lg">
+                        <div className="mt-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
+                                <span className='mr-[55px]'>Perro</span>
+                                <div className="flex">
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={decrementarCantidad}>-</button>
+                                    <input  className='outline-none w-[35px] flex text-center' value= {cantidadMascotas} readOnly />
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={incrementarCantidad}>+</button>
+                                </div>
+                            </div>
+                            <div className="flex gap-1 w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
+                                <span  className='mr-[55px]' >Gato</span>
+                                <div className="flex">
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
+                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
+                                </div>
+                            </div>
+                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
+                                <span  className='mr-[53px]'>Reptil</span>
+                                <div className="flex">
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
+                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
+                                </div>
+                            </div>
+                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
+                                <span  className='mr-[41px]'>Caballo</span>
+                                <div className="flex">
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
+                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
+                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                )}
+            </div>
+            </div>
+        
      
       <button 
-        className="cursor-pointer [border:none] pt-[19px] pb-[21px] pr-7 pl-[30px] bg-chocolate-100 w-[137px] rounded-181xl flex flex-row items-start justify-start box-border hover:bg-chocolate-200" 
-        onClick={enviarFechas}  
-      >
-        <div className="flex-1 relative text-xl leading-[20px] font-medium font-inter text-white text-center mq450:text-base mq450:leading-[22px]"> 
-          Buscar 
-        </div>
-      </button>
+        className="cursor-pointer py-2 font-medium text-[20px] text-white  bg-chocolate-100 w-[130px] rounded-[50px] flex items-center justify-between px-[20px] hover:bg-chocolate-200" 
+        onClick={enviarFechas}>
+        <box-icon name='search' size='25px' color='white'></box-icon> 
+        Buscar</button>
     </div>
   );
 };
