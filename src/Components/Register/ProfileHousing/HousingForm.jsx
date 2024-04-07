@@ -115,7 +115,6 @@ const HousingForm = () => {
       }
     });
 
-
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
@@ -135,6 +134,8 @@ const HousingForm = () => {
         if (show) setShow(false);
         clearFormData();
       }
+
+      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
