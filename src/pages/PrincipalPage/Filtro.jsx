@@ -7,12 +7,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useServices } from "../../Hooks/useServices";
 import useCities from "../../Hooks/useCities";
+
+
 //comentario generico para poder comitear
 
 export const Filtros = () => {
   useLocationProvincias();
   useServices();
   const dispatch = useDispatch();
+
+  
+
 
   // Obtener provincias del estado
   const provincias = useSelector((state) => state.storage.AllProvinces);
@@ -93,7 +98,7 @@ export const Filtros = () => {
   const cities = useCities(selectedProvince ? selectedProvince : null);
 
   return (
-    <div className="w-[300px] bg-whiteseñales shadow-lg h-[100vh] font-custom pt-4">
+    <div className="w-[300px] bg-whiteseñales ml-[10px] mt-[10px] rounded-lg shadow-lg h-[100vh] font-custom pt-4 ${isSmallScreen ? 'mt-0' : ''}`">
       {show && (
         <div className="">
           <div className="flex flex-row items-center justify-between border-b-4 border-gray-400 shadow-md px-2">
@@ -280,8 +285,11 @@ export const Filtros = () => {
                     className="bg-transparent text-[#8b8e58] font-medium focus:outline-none text-sm w-[100px] py-2 pl-1 rounded-[20px] bg-white bg-opacity-60 ml-[15px]"
                   />
                 </div>
+          
               </div>
+              
             </div>
+            
           </div>
         </div>
       )}

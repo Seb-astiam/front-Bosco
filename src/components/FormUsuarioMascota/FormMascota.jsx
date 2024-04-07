@@ -2,8 +2,11 @@ import { useState } from "react"
 import axios from "axios";
 import bosco from "../../assets/bosco-logo.jpeg"
 import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 export const FormMascota = () => {
+
+    const navigate = useNavigate();
 
     const email_usuario = JSON.parse(localStorage.getItem("user"));
 
@@ -119,6 +122,7 @@ export const FormMascota = () => {
                 coexistence: "",
                 size: ""
             });
+            navigate('/Principal');
         } else {
         console.error('Error al enviar datos al servidor', sendBack.data);
         }
