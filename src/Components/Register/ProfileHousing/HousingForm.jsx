@@ -35,6 +35,7 @@ const HousingForm = () => {
     square: 0,
     images: [],
   });
+
   //para poder ver si se estaba actualizando el estado correctamente.
 
   // manejo del boton de submit
@@ -314,7 +315,7 @@ const HousingForm = () => {
               className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "
             >
               {" "}
-              $/hora
+              $/noche
               <input
                 type="number"
                 name="price"
@@ -372,8 +373,8 @@ const HousingForm = () => {
                   services.map((service) => (
                     <label
                       key={service.id}
-                      className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] ${
-                        formData.services.includes(service.id)
+                      className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] 
+                      ${ formData.services.includes(service.id)
                           ? "bg-[#e7e6e6] border-none"
                           : ""
                       }`}
