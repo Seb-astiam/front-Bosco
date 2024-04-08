@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Modal from "react-modal";
+import axiosJwt from "../../utils/axiosJwt";
 
 Modal.setAppElement("#root");
 
@@ -16,7 +17,7 @@ export const HistorialReserva = () => {
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
-        const { data } = await axios(
+        const { data } = await axiosJwt(
           `http://localhost:3001/reservation/allReservation/${email_usuario.email}`
         );
         setHistorial(
@@ -44,7 +45,7 @@ export const HistorialReserva = () => {
       const reserv = historial.find((reserva) => reserva.id === id);
 
       try {
-        const response = await axios.post(
+        const response = await axiosJwt.post(
           "http://localhost:3001/pagos/create_preference",
           {
             title: reserv.Housings[0]?.title,
@@ -137,7 +138,10 @@ export const HistorialReserva = () => {
                     reserva.estatus !== "Success"
                   }
                   onClick={() => createPreference(reserva.id)}
-                  style={{ cursor: reserva.estatus === "Pending" ? "not-allowed" : "pointer" }}
+                  style={{
+                    cursor:
+                      reserva.estatus === "Pending" ? "not-allowed" : "pointer",
+                  }}
                 >
                   Pagar
                 </button>

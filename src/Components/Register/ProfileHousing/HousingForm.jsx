@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Swal from "sweetalert2";
 
 import { ValidateFormdata } from "./validate";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import useCities from "../../../Hooks/useCities";
 import bosco from "../../../assets/bosco-logo.jpeg";
 import { useTiposAlojamientos } from "../../../Hooks/useTiposAlojamientos";
+import axiosJwt from "../../../utils/axiosJwt";
 
 const HousingForm = () => {
   useServices();
@@ -16,11 +17,9 @@ const HousingForm = () => {
   useCities();
   useTiposAlojamientos();
 
-  const TiposHost = useSelector((state)=> state.storage.TipoAlojamientos);
+  const TiposHost = useSelector((state) => state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
-
-
 
   const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
@@ -116,7 +115,7 @@ const HousingForm = () => {
     });
 
     try {
-      const response = await axios.post(
+      const response = await axiosJwt.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
         formDataToSend
       );
@@ -354,7 +353,11 @@ const HousingForm = () => {
                   Selecciona un tipo de alojamiento
                 </option>
                 {TiposHost.map((tipo) => {
-                  return <option key={tipo.id} value={tipo.type}>{tipo.type}</option>
+                  return (
+                    <option key={tipo.id} value={tipo.type}>
+                      {tipo.type}
+                    </option>
+                  );
                 })}
               </select>
             </label>
