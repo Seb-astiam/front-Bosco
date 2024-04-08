@@ -8,13 +8,19 @@ import { useServices } from "../../../Hooks/useServices";
 import { useSelector } from "react-redux";
 import useCities from "../../../Hooks/useCities";
 import bosco from "../../../assets/bosco-logo.jpeg";
+import { useTiposAlojamientos } from "../../../Hooks/useTiposAlojamientos";
 
 const HousingForm = () => {
   useServices();
   useLocationProvincias();
   useCities();
+  useTiposAlojamientos();
+
+  const TiposHost = useSelector((state)=> state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
+
+
 
   const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
@@ -69,15 +75,11 @@ const HousingForm = () => {
       ...formData,
       [name]: newValue, // Actualiza el valor cambiado en el objeto formData
     });
-    console.log("validationErrors", validationErrors)
 
     setErrors(validationErrors);
     const errorMessages = Object.values(validationErrors);
     setDisableSubmit(errorMessages.some((ermsg) => ermsg !== ""));
   };
-  
-  console.log("errors:", errors)
-  console.log("DisabledSubmit", disableSubmit)
 
   const handleServiceChange = (e) => {
     const { value, checked } = e.target;
@@ -113,8 +115,6 @@ const HousingForm = () => {
       }
     });
 
-    console.log(formDataToSend);
-
     try {
       const response = await axios.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
@@ -134,6 +134,8 @@ const HousingForm = () => {
         if (show) setShow(false);
         clearFormData();
       }
+
+      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -351,9 +353,9 @@ const HousingForm = () => {
                 <option value="" disabled selected>
                   Selecciona un tipo de alojamiento
                 </option>
-                <option value="Cabaña">Cabaña</option>
-                <option value="Hotel">Hotel</option>
-                <option value="Casa Rural">Casa Rural</option>
+                {TiposHost.map((tipo) => {
+                  return <option key={tipo.id} value={tipo.type}>{tipo.type}</option>
+                })}
               </select>
             </label>
           </div>
