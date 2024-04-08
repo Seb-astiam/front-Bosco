@@ -14,9 +14,6 @@ export const Cards = () => {
   
 
   let data = alojamiento.slice(0, 4); 
-  
-
-
 
     return (
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">

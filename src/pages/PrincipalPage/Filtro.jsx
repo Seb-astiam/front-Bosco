@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useServices } from "../../Hooks/useServices";
 import useCities from "../../Hooks/useCities";
 import Switch from 'react-switch'
-
 export const Filtros = () => {
  
   const [opcionesAbiertas, setOpcionesAbiertas] = useState(false);
