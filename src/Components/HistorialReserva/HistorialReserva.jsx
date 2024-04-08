@@ -35,17 +35,17 @@ export const HistorialReserva = () => {
     }, []);
 
     return (
-        <div>
-        <h1 className="text-2xl font-bold mb-4">Historial de Reservas</h1>
-        <table className="min-w-full divide-y divide-gray-200">
+        <div className="ml-2 mr-2 ">
+        <h1 className="text-2xl text-center font-inter  my-4  py-2 rounded-lg text-white shadow-lg bg-orange-400">Historial de Reservas</h1>
+        <table className="mr-3 min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Inicio</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Fin</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">price</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+            <tr className="font-inter ">
+              <th className="px-3 py-3 text-left bg-green-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">Fecha de Inicio</th>
+              <th className="px-3 py-3 text-left bg-red-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">Fecha de Fin</th>
+              <th className="px-3 py-3 text-left bg-orange-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">Estatus</th>
+              <th className="px-3 py-3 text-left bg-orange-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">Title</th>
+              <th className="px-3 py-3 text-left bg-orange-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">price</th>
+              <th className="px-3 py-3 text-left bg-orange-200 rounded-lg text-xs font-medium text-gray-500 uppercase ">Location</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">

@@ -98,7 +98,7 @@ export const Filtros = () => {
   const cities = useCities(selectedProvince ? selectedProvince : null);
 
   return (
-    <div className="w-[300px] bg-whiteseñales ml-[10px] mt-[10px] rounded-lg shadow-lg h-[100vh] font-custom pt-4 ${isSmallScreen ? 'mt-0' : ''}`">
+    <div className="w-[300px] bg-whiteseñales ml-[10px] mt-[10px] rounded-lg shadow-lg h-[100vh] font-custom pt-4">
       {show && (
         <div className="">
           <div className="flex flex-row items-center justify-between border-b-4 border-gray-400 shadow-md px-2">

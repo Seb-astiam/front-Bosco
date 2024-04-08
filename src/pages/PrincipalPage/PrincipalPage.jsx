@@ -21,7 +21,7 @@ const PrincipalPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col mt-[10px] rounded-full">
+    <div className="flex flex-col bg-red-100 mx-2 mt-[10px] rounded-lg">
       <div className="flex items-start w-full h-[100vh] ">
         {windowWidth >= 1200 && <Filtros />}
         <CardsPrincipal />
