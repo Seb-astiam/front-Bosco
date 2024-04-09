@@ -40,8 +40,6 @@ const App = () => {
   };
 
 
-  console.log(notificacion, 'notificacion lectura')
-
   return (
     <>
     <span>{notificacion}</span>
