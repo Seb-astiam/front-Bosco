@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import axios from 'axios'
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
+import { io } from "socket.io-client";
 
 export const SolicitudReserva = () => {
 
     const email_usuario = JSON.parse(localStorage.getItem("user"));
-
     const [solicitudes, setSolicitudes] = useState([]);
+    const socket = io.connect("http://localhost:3001");
 
     useEffect(() => {
         const solicitud = async () => {
@@ -42,7 +43,7 @@ export const SolicitudReserva = () => {
 
     const handleClick = (e) => {
 
-        const { name } = e.target 
+        const { name, value } = e.target 
 
         const modificarReserva = async (estado) => {
             try {
@@ -74,7 +75,9 @@ export const SolicitudReserva = () => {
             cancelButtonText: 'Cerrar'
           }).then((result) => {
             if (result.isConfirmed) {
-                modificarReserva('Success')
+                modificarReserva('Success');
+                const usuario = solicitudes.find((user) => user.UserEmail === value)
+                socket.emit("notificacion", "Solicitud fue aceptada", usuario)
             } else if (result.isDenied) {
                 modificarReserva('Reject')
             }
@@ -102,7 +105,7 @@ export const SolicitudReserva = () => {
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaInicio}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.fechaFin}</td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
-                        <td className="px-6 py-4 whitespace-nowrap"><button onClick={handleClick} className="cursor-pointer" name={reserva.id}>{reserva.Housings}</button></td>
+                        <td className="px-6 py-4 whitespace-nowrap"><button onClick={handleClick} className="cursor-pointer" value={reserva.UserEmail} name={reserva.id}>{reserva.Housings}</button></td>
                         <td className="px-6 py-4 whitespace-nowrap"><NavLink to={`/detail-mascota/${reserva.idMascota}`}>{reserva.UserName}</NavLink></td>
                         <td className="px-6 py-4 whitespace-nowrap">{reserva.UserEmail}</td>
                     </tr>

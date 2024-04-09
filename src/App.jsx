@@ -17,12 +17,34 @@ import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
 import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
 import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
 
 const App = () => {
   const { pathname } = useLocation();
+  const socket = io.connect("http://localhost:3001");
+
+  const [notificacion, setNotificacion] = useState('')
+
+  useEffect(() => {
+    socket.on("notificacion", receiveMessage);
+  
+    return () => {
+      socket.off("notificacion", receiveMessage);
+    };
+  }, [socket]);
+  
+  const receiveMessage = (mensaje) => {
+    setNotificacion(mensaje);
+  };
+
+
+  console.log(notificacion, 'notificacion lectura')
 
   return (
     <>
+    <span>{notificacion}</span>
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
         <Route path="/" element={<Home />} />
