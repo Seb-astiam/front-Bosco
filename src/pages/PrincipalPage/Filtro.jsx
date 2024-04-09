@@ -16,20 +16,6 @@ export const Filtros = () => {
   const toggleOpciones = () => {
       setOpcionesAbiertas(!opcionesAbiertas);
   };
-  
-  const incrementarCantidad = () => {
-    if (filter.square <= 14) {
-      const newSquare = filter.square + 1;
-      setFilter({ ...filter, square: newSquare });
-    }
-  };
-
-  const decrementarCantidad = () => {
-    if (filter.square > 0) {
-      const newSquare = filter.square - 1;
-      setFilter({ ...filter, square: newSquare });
-    }
-  };
 
   useLocationProvincias();
   useServices();
@@ -47,7 +33,7 @@ export const Filtros = () => {
     provinces: "",
     cities: "",
     serviceId: [],
-    square: "",
+    square: null,
     minPrice: "",
     maxPrice: "",
     startDate: "",
@@ -56,46 +42,106 @@ export const Filtros = () => {
     orderDirection: "",
   };
 
+  const incrementarCantidad = () => {
+    if (filter.square <= 14) {
+      setFilter((prevFilter) => ({
+        ...prevFilter,
+        square: prevFilter.square + 1
+      }));
+    }
+  };
+  
+  const decrementarCantidad = () => {
+    if (filter.square > 0) {
+      setFilter((prevFilter) => ({
+        ...prevFilter,
+        square: prevFilter.square - 1
+      }));
+    }
+  };
+
   const [filter, setFilter] = useState(initialState);
 
   const URL = "http://localhost:3001/profileHousing/filtered";
 
   const handleProvinceSelection = async (selectedProvince) => {
     
-    setSearchText('');
+    setSearchProvinceText('');
 
-    const changeFilter = { ...filter, provinces: selectedProvince };
+    const changeFilter = { ...filter, provinces: selectedProvince,
+      cities: ''  };
     setFilter(changeFilter);
 
-    let query = `?provinces=${selectedProvince}`;
-    if (filter.serviceId) query += `&serviceId=${filter.serviceId}`;
+    buildQueryParams();
+    fetchAlojamientos();
+  };
 
+  const handleCitySelection = async (selectedCity) => {
+    
+    setSearchCityText('');
+
+    const changeFilter = { ...filter, cities: selectedCity };
+    setFilter(changeFilter);
+
+   buildQueryParams();
+   fetchAlojamientos();
+  };
+
+  useEffect(() => {
+    const queryParams = buildQueryParams(filter);
+    fetchAlojamientos(queryParams);
+  }, [filter]);
+
+  const buildQueryParams = (filter) => {
+    let queryParams = "?";
+  
+    for (const [key, value] of Object.entries(filter)) {
+      if (value !== null && value !== "") {
+        if (Array.isArray(value) && value.length > 0) {
+          queryParams += `${key}=${value.join(",")}&`;
+        } else {
+          queryParams += `${key}=${value}&`;
+        }
+      }
+    }
+  
+    return queryParams;
+  };
+
+  const fetchAlojamientos = async (queryParams) => {
     try {
-      const { data } = await axios.get(URL + query);
+      const { data } = await axios.get(URL + queryParams);
       dispatch(getAllAlojamientos(data));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleChange = async (e) => {
-    
+
+const handleFilterChange = async (e)=>{
     const changeFilter = { ...filter, [e.target.name]: e.target.value };
+     setFilter(changeFilter);
+     buildQueryParams();
+     fetchAlojamientos();
+}
+
+  const handleChangeCity = async (e) => {
+    setSearchCityText(e.target.value);
+
+    // Lógica para filtrar las localidades
+    const selectedProvince = filter.provinces;
+
+    if (!selectedProvince) {
+      return; // Salir temprano si no hay provincia seleccionada
+    }
+    const changeFilter = { ...filter, cities: e.target.value };
     setFilter(changeFilter);
 
-    let query = "?";
+    const filteredCities = cities.filter((city) =>
+      city.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
 
-    for (const [key, value] of Object.entries(changeFilter)) {
-      if (value) query += `${key}=${value}&`;
-    }
-
-    try {
-      const { data } = await axios.get(URL + query);
-
-      dispatch(getAllAlojamientos(data));
-    } catch (error) {
-      console.log(error);
-    }
+    setFilteredLocalidades(filteredCities);
   };
 
   const [show, setShow] = useState(true);
@@ -118,23 +164,25 @@ export const Filtros = () => {
   }, [Alojamiento]);
 
   const selectedProvince = filter.provinces;
-  const cities = useCities(selectedProvince ? selectedProvince : null);
-  const [searchText, setSearchText] = useState('');
+  const cities = useCities(selectedProvince ? selectedProvince : 'Escoge una provincia');
+  const [searchProvinceText, setSearchProvinceText] = useState('');
+  const [searchCityText, setSearchCityText] = useState('');
   const [filteredProvincias, setFilteredProvincias] = useState([]);
+  const [filteredLocalidades, setFilteredLocalidades] = useState([]);
 
   const handleChangeProvince = (e) => {
-    setSearchText(e.target.value);
+    setSearchProvinceText(e.target.value);
   };
 
   useEffect(() => {
     const filtered = provincias.filter((provincia) =>
-      provincia.nombre.toLowerCase().includes(searchText.toLowerCase())
+      provincia.nombre.toLowerCase().includes(searchProvinceText.toLowerCase())
     );
     setFilteredProvincias(filtered);
-  }, [searchText, provincias]);
+  }, [searchProvinceText, provincias]);
  
   console.log('filter:', filter)
-
+  
   const [filterOn, setFilterOn] = useState(false)
 
   const handleFilterOn = () => {
@@ -149,30 +197,10 @@ export const Filtros = () => {
   
       const changeFilter = { ...prevFilter, serviceId: updatedServiceId };
   
-      fetchFilteredAlojamientos(changeFilter);
+      fetchAlojamientos(changeFilter);
   
       return changeFilter;
     });
-  };
-  
-  const fetchFilteredAlojamientos = async (changeFilter) => {
-    let query = "?";
-  
-    for (const [key, value] of Object.entries(changeFilter)) {
-      if (value && !Array.isArray(value)) {
-        query += `${key}=${value}&`;
-      }
-      if (Array.isArray(value) && value.length > 0) {
-        query += `${key}=${value.join(",")}&`;
-      }
-    }
-  
-    try {
-      const { data } = await axios.get(URL + query);
-      dispatch(getAllAlojamientos(data));
-    } catch (error) {
-      console.log(error);
-    }
   };
   
   const [showAdditionalDiv, setShowAdditionalDiv] = useState(false);
@@ -183,22 +211,26 @@ export const Filtros = () => {
     }
   };
 
+  useEffect(() => {
+    fetchAlojamientos();
+  }, [filter]);
+
   return (
     <div className=' flex flex-row justify-center items-center'>
     <div className=" border h-[40px] border-solid border-gray-200 rounded-[80px] bg-white shadow-md flex flex-row items-center justify-between p-3 mq900:p-1  max-w-full  z-[3] ">
-
-          <div className='flex flex-col mq900:ml-5 ml-10 w-[150px]'> 
-            <label className='font-medium'>Lugar</label>
+          <input className='hidden mq900:block font-medium ml-3 w-[150px] outline-none' onClick={handleInputClick } placeholder='Buscar alojamientos...'></input>
+          <div className='mq900:hidden flex flex-col mq900:ml-5 ml-10 w-[125px]'> 
+            <label className='font-medium'>Provincia</label>
             <input
             type="text"
             placeholder={filter.provinces ? `${filter.provinces}` : '¿Dónde?'}
-            value={searchText}
+            value={searchProvinceText}
             onChange={handleChangeProvince}
             className="bg-transparent outline-none"
-            onClick={handleInputClick }
+            
           />
 
-        {searchText && (
+          {searchProvinceText && (
             <div className="mq900:hidden absolute z-10 mt-16 bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
               {filteredProvincias.map((provincia) => (
                 <div
@@ -213,38 +245,90 @@ export const Filtros = () => {
           )}
      
           </div>
+    <div className=' mq900:hidden flex flex-col mq900:ml-5 w-[125px]'>
+
+      <label className='font-medium'>Localidad</label>
+      <input
+        type="text"
+        placeholder={filter.cities ? `${filter.cities}` : '¿Dónde?'}
+        value={searchCityText}
+        onChange={handleChangeCity}
+        className="bg-transparent outline-none"
+        onClick={handleInputClick}
+      />
+
+      {searchCityText && (
+        <div className="absolute z-10 mt-16 w-[200px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
+          {filteredLocalidades.map((localidad) => (
+            <div
+              key={localidad.id}
+              onClick={() => handleCitySelection(localidad.name)}
+              className="hover:bg-gray-200 cursor-pointer p-[10px] rounded-lg flex"
+            >
+              {localidad.name}
+            </div>
+          ))}
+        </div>
+      )}
+      </div>
 
           {showAdditionalDiv && (
-            <div className='absolute justify-center z-10 flex flex-col w-[400px] top-[108px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200'>
+             <div className="fixed top-0 left-0 w-full h-full flex items-start justify-center z-50 bg-black bg-opacity-50">
+            <div className='relative z-10 flex flex-col w-[400px] top-[108px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200'>
               <box-icon name='arrow-back' onClick={handleInputClick} size='20px'></box-icon>
-              <label className='font-medium ml-8'>Lugar</label>
-            <input
-            type="text"
-            placeholder={filter.provinces ? `${filter.provinces}` : '¿Dónde?'}
-            value={searchText}
-            onChange={handleChangeProvince}
-            className="bg-transparent outline-none mb-2 ml-8"
-          />
+              <label className='font-medium ml-8'>Provincia</label>
+                <input
+                type="text"
+                placeholder={filter.provinces ? `${filter.provinces}` : '¿Dónde?'}
+                value={searchProvinceText}
+                onChange={handleChangeProvince}
+                className="bg-transparent outline-none mb-2 ml-8"
+                />
 
-        {searchText && (
-            <div className="  z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200">
-              {filteredProvincias.map((provincia) => (
-                <div
-                  key={provincia.id}
-                  onClick={() => handleProvinceSelection(provincia.nombre)}
-                  className="hover:bg-gray-200 cursor-pointer p-[5px] rounded-lg flex text-sm "
-                >
-                  {provincia.nombre}
-                </div>
-              ))}
-            </div>
-          )}
+                  {searchProvinceText && (
+                    <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
+                      {filteredProvincias.slice(0, 5).map((provincia) => (
+                        <div
+                          key={provincia.id}
+                          onClick={() => handleProvinceSelection(provincia.nombre)}
+                          className="hover:bg-gray-200 cursor-pointer p-2 rounded-lg flex text-sm"
+                        >
+                          {provincia.nombre}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+
+              <label className='font-medium ml-8'>Localidad</label>
+                <input
+                  type="text"
+                  placeholder={filter.cities ? `${filter.cities}` : '¿Dónde?'}
+                  value={searchCityText}
+                  onChange={handleChangeCity}
+                  className="bg-transparent outline-none ml-8"
+                />
+
+                {searchCityText && (
+                  <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
+                    {filteredLocalidades.slice(0, 5).map((localidad) => (
+                      <div
+                        key={localidad.id}
+                        onClick={() => handleCitySelection(localidad.name)}
+                        className="hover:bg-gray-200 cursor-pointer p-2 rounded-lg flex text-sm"
+                      >
+                        {localidad.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+      
 
           <div className=" font-medium ml-8">Check-in</div>
 
           <DatePicker
             selected={filter.startDate} 
-            onChange={(date) => handleChange({ target: { name: 'startDate', value: date } })}
+            onChange={(date) => handleFilterChange({ target: { name: 'startDate', value: date } })}
             placeholderText={filter.startDate ? `${filter.startDate}` : '¿Cuándo?'}
             maxDate={filter.endDate}
             className="outline-none mb-2 ml-8" 
@@ -254,7 +338,7 @@ export const Filtros = () => {
               
               <DatePicker
                selected={filter.endDate} 
-               onChange={(date) => handleChange({ target: { name: 'endDate', value: date } })}
+               onChange={(date) => handleFilterChange({ target: { name: 'endDate', value: date } })}
                placeholderText={filter.endDate ? `${filter.endDate}` : '¿Cuándo?'} 
                minDate={filter.startDate}
                className="outline-none mb-2 ml-8"
@@ -313,6 +397,7 @@ export const Filtros = () => {
                 )}
             </div>
           </div>
+          </div>
 )}
 
             <div className="mq900:hidden flex flex-row max-w-full overflow-hidden items-center">
@@ -328,7 +413,7 @@ export const Filtros = () => {
 
               <DatePicker
                 selected={filter.startDate} 
-                onChange={(date) => handleChange({ target: { name: 'startDate', value: date } })}
+                onChange={(date) => handleFilterChange({ target: { name: 'startDate', value: date } })}
                 placeholderText={filter.startDate ? `${filter.startDate}` : '¿Cuándo?'}
                 maxDate={filter.endDate}
                 className="outline-none" 
@@ -351,7 +436,7 @@ export const Filtros = () => {
               
                <DatePicker
                 selected={filter.endDate} 
-                onChange={(date) => handleChange({ target: { name: 'endDate', value: date } })}
+                onChange={(date) => handleFilterChange({ target: { name: 'endDate', value: date } })}
                 placeholderText={filter.endDate ? `${filter.endDate}` : '¿Cuándo?'} 
                 minDate={filter.startDate}
                 className="outline-none"
@@ -416,23 +501,27 @@ export const Filtros = () => {
             </div>
         
       <button 
-        className="cursor-pointer  py-2 font-medium text-[20px] text-white  bg-chocolate-100 w-[130px] rounded-[50px] flex items-center justify-between px-[20px] hover:bg-chocolate-200" 
+        className="cursor-pointer  py-2 text-white  bg-chocolate-100 w-[42.5px] rounded-[80px] flex items-center justify-center px-[20px] hover:bg-chocolate-200" 
         >
         <box-icon name='search' size='25px' color='white'></box-icon> 
-        Buscar</button>
+        </button>
     </div>
     <div className='relative'>
-    <button className=' flex h-[40px] ml-2 font-custom font-medium items-center rounded-[80px] p-2 bg-white border border-gray-200 shadow-md hover:border-gray-900 '
+    <button className=' mq900:text-4px flex mq900:h-[30px] h-[40px] ml-2 font-custom font-medium items-center rounded-[80px] mq900:p-1 p-2 bg-white border border-gray-200 shadow-md hover:border-gray-900 '
     onClick={handleFilterOn}>
     <box-icon name='filter'></box-icon>
     Filtros
     </button>
+    <a className='text-chocolate-100 text-sm hover:underline cursor-pointer flex justify-center' onClick={resetFilter}>
+  Limpiar
+</a>
+
     {filterOn && (
                     <div className='absolute mt-4 right-0 mt-106 p-4 z-10 border border-solid border-gray-200 shadow-xl bg-white flex flex-col rounded-[20px]'>
                       <label className='text-md mt-1'>Ordenar por:</label>
                       <select
                         name="orderDirection"
-                        onChange={handleChange}
+                        onChange={handleFilterChange}
                         className=" bg-transparent focus:outline-none text-chocolate-100 mb-1"
                       >
                         <option value="" className="">
@@ -461,7 +550,7 @@ export const Filtros = () => {
                                           max="99000"
                                           step="1000"
                                           placeholder={filter.minPrice}
-                                          onChange={handleChange}
+                                          onChange={handleFilterChange}
                                           className="bg-transparent text-chocolate-100 focus:outline-none text-sm w-[60px]"
                                         />
                                       </a>
@@ -482,7 +571,7 @@ export const Filtros = () => {
                                         min={parseInt(filter.minPrice) + 1000}
                                         max="99000"
                                         step="1000"
-                                        onChange={handleChange}
+                                        onChange={handleFilterChange}
                                         className="bg-transparent text-chocolate-100 focus:outline-none text-sm w-[60px]"
                                       />
                                     </a>
