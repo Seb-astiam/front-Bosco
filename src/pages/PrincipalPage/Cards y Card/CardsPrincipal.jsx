@@ -48,7 +48,7 @@ export const CardsPrincipal = () => {
                 <button onClick={nextPage} disabled={numberPage === totalPages} className=" bg-transparent ">❯</button>
             </div>
 
-            <div className="flex flex-wrap h-[95%] w-full gap-7 justify-center items-start">
+            <div className="flex flex-wrap h-[95%] w-full gap-1 justify-center items-start">
                 {newArrAlojamientos.map((alojamiento) => {
                     return <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
                 })}
