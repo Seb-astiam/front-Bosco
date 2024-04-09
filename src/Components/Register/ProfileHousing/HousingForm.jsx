@@ -168,10 +168,10 @@ const HousingForm = () => {
   <img
     src={bosco}
     alt="bosco"
-    className="w-full mq900:w-[100%] h-[1005px] object-cover mq900:mt-10 rounded-tl-[20px] rounded-bl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[350px]"
+    className="w-full h-[1005px] object-cover mq900:mt-10 rounded-tl-[20px] rounded-bl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[350px]"
   />
 </div>
-      <div className="flex flex-col items-center justify-center px-[50px] mq900:px-[0px] rounded-br-[20px] rounded-tr-[20px] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:w-[95%] mq900:max-w-[95%] h-[1005px] w-[400px] !bg-[#FEB156] max-w-[400px]">
+      <div className="flex flex-col items-center justify-center px-[50px] mq900:px-0 rounded-br-[20px] rounded-tr-[20px] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:w-[95%] mq900:max-w-[95%] h-[1005px] w-[400px] !bg-[#FEB156] max-w-[400px]">
         <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
         <form
           onSubmit={handleSubmit}

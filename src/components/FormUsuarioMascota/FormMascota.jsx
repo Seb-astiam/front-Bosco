@@ -147,15 +147,16 @@ export const FormMascota = () => {
     }
 
     return (
-         <div className="w-screen h-[800px] my-[10px] flex justify-center items-center">
-            <div className={`h-[90%] w-[80%] flex justify-center`}>
+         
+            <div className='flex justify-center items-center  h-full w-full mq900:flex-col my-[50px] mq900:my-[20px]'>
 
-            <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px]">
-                <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
+            <div className="h-[700px] w-[50%] flex justify-center rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] mq900:max-w-[95%] mq900:w-[95%] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] ">
+                <img src={bosco} alt="bosco" 
+                className="rounded-bl-[20px] rounded-tl-[20px] w-full h-[700px] object-cover mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] flex justify-center" />
             </div>
 
 
-        <form onSubmit={handleSubmit} className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center px-[5%] mq900:px-0 rounded-br-[20px] rounded-tr-[20px] h-[700px] w-[50%] !bg-[#FEB156] max-w-[400px] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:w-[95%] mq900:max-w-[95%]">
 
             <h1 className="font-custom font-extrabold text-[20px] mb-[20px]">Contanos sobre tu mascota!</h1>
             
@@ -273,6 +274,6 @@ export const FormMascota = () => {
 
         </form>
         </div>
-    </div>
+    
     )
 }
