@@ -71,6 +71,7 @@ export const Filtros = () => {
     const changeFilter = { ...filter, provinces: selectedProvince,
       cities: ''  };
     setFilter(changeFilter);
+    setProvinceClick(false)
 
     buildQueryParams();
     fetchAlojamientos();
@@ -82,6 +83,7 @@ export const Filtros = () => {
 
     const changeFilter = { ...filter, cities: selectedCity };
     setFilter(changeFilter);
+    setCityClick(false)
 
    buildQueryParams();
    fetchAlojamientos();
@@ -213,6 +215,21 @@ const handleFilterChange = async (e)=>{
     fetchAlojamientos();
   }, [filter]);
 
+const [provinceClick, setProvinceClick] = useState(false)
+   const handleProvinceClick = () => {
+    
+      setProvinceClick((prev) => !prev);
+    
+  };
+
+  const [cityClick, setCityClick] = useState(false)
+   const handleCityClick = () => {
+   if (!filter.provinces ) {
+  return
+      
+    } else { setCityClick((prev) => !prev); }
+  };
+
   return (
     <div className=' flex flex-row justify-center items-center'>
     <div className=" border h-[40px] border-solid border-gray-200 rounded-[80px] bg-white shadow-md flex flex-row items-center justify-between p-3 mq900:p-1  max-w-full  z-[3] ">
@@ -225,22 +242,23 @@ const handleFilterChange = async (e)=>{
             value={searchProvinceText}
             onChange={handleChangeProvince}
             className="bg-transparent outline-none"
+            onClick={handleProvinceClick}
             
           />
 
-          {searchProvinceText && (
-            <div className="mq900:hidden absolute z-10 mt-16 bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
-              {filteredProvincias.map((provincia) => (
-                <div
-                  key={provincia.id}
-                  onClick={() => handleProvinceSelection(provincia.nombre)}
-                  className="hover:bg-gray-200 cursor-pointer p-[10px] rounded-lg flex"
-                >
-                  {provincia.nombre}
-                </div>
-              ))}
-            </div>
-          )}
+          {searchProvinceText || provinceClick && (
+          <div className="mq900:hidden absolute z-10 mt-16 bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200 max-h-40 overflow-y-auto">
+            {filteredProvincias.slice(0, 5).map((provincia) => (
+              <div
+                key={provincia.id}
+                onClick={() => handleProvinceSelection(provincia.nombre)}
+                className="hover:bg-gray-200 cursor-pointer p-[10px] rounded-lg flex"
+              >
+                {provincia.nombre}
+              </div>
+            ))}
+          </div>
+        )}
      
           </div>
     <div className=' mq900:hidden flex flex-col mq900:ml-5 w-[125px]'>
@@ -252,22 +270,23 @@ const handleFilterChange = async (e)=>{
         value={searchCityText}
         onChange={handleChangeCity}
         className="bg-transparent outline-none"
-        onClick={handleInputClick}
+        onClick={handleCityClick}
       />
 
-      {searchCityText && (
-        <div className="absolute z-10 mt-16 w-[200px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
-          {filteredLocalidades.map((localidad) => (
-            <div
-              key={localidad.id}
-              onClick={() => handleCitySelection(localidad.name)}
-              className="hover:bg-gray-200 cursor-pointer p-[10px] rounded-lg flex"
-            >
-              {localidad.name}
-            </div>
-          ))}
-        </div>
-      )}
+     {searchCityText || cityClick && (
+      <div className="absolute z-10 mt-16 w-[200px] max-h-40 overflow-y-auto bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
+        {filteredLocalidades.slice(0, 5).map((localidad) => (
+          <div
+            key={localidad.id}
+            onClick={() => handleCitySelection(localidad.name)}
+            className="hover:bg-gray-200 cursor-pointer p-[10px] rounded-lg flex"
+          >
+            {localidad.name}
+          </div>
+        ))}
+      </div>
+    )}
+
       </div>
 
           {showAdditionalDiv && (
@@ -352,9 +371,9 @@ const handleFilterChange = async (e)=>{
 
                 {opcionesAbiertas && (
                     <div className=" ml-8 z-10 mt-2 border border-solid border-gray-200 rounded-[20px] bg-white shadow-lg">
-                        <div className="mt-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        
                             <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span className='mr-[55px]'>Perro</span>
+                                <span className='mr-[55px]'>Mascotas</span>
                                 <div className="flex">
                                     <button className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" 
                                     onClick={decrementarCantidad}
@@ -364,32 +383,6 @@ const handleFilterChange = async (e)=>{
                                     onClick={incrementarCantidad}
                                     >+</button>
                                 </div>
-                            </div>
-                            <div className="flex gap-1 w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[55px]' >Gato</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[53px]'>Reptil</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[41px]'>Caballo</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            
                         </div>
                     </div>
                 )}
@@ -454,9 +447,9 @@ const handleFilterChange = async (e)=>{
 
                 {opcionesAbiertas && (
                     <div className="absolute z-10 mt-7 border border-solid border-gray-200 rounded-[20px] bg-white shadow-lg">
-                        <div className="mt-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                       
                             <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span className='mr-[55px]'>Perro</span>
+                                <span className='mr-[55px]'>Mascotas</span>
                                 <div className="flex">
                                     <button className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" 
                                     onClick={decrementarCantidad}
@@ -466,33 +459,8 @@ const handleFilterChange = async (e)=>{
                                     onClick={incrementarCantidad}
                                     >+</button>
                                 </div>
-                            </div>
-                            <div className="flex gap-1 w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[55px]' >Gato</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[53px]'>Reptil</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            <div className="flex w-[200px] px-4 py-2 text-sm text-gray-700  focus:outline-none " role="menuitem">
-                                <span  className='mr-[41px]'>Caballo</span>
-                                <div className="flex">
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('-')}>-</button>
-                                    <input type='number' className='outline-none w-[35px] flex text-center' defaultValue='0' min='0' />
-                                    <button type="button" className="flex items-center w-[20px] h-[20px] justify-center focus:outline-none rounded-[20px]" onClick={() => console.log('+')}>+</button>
-                                </div>
-                            </div>
-                            
-                        </div>
+                            </div>    
+                        
                     </div>
                 )}
             </div>
