@@ -16,7 +16,7 @@ export const FormReserva = (id) => {
 
   const email_usuario = JSON.parse(localStorage.getItem("user"));
 
-  useMascotas(email_usuario.id);
+  useMascotas(email_usuario?.id);
   const pet = useSelector((state) => state.storage.MascotasUsuario);
 
   const mascota = pet;

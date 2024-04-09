@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import axiosJwt from "../../utils/axiosJwt";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
+import { io } from "socket.io-client";
 
 export const SolicitudReserva = () => {
   const email_usuario = JSON.parse(localStorage.getItem("user"));
-
   const [solicitudes, setSolicitudes] = useState([]);
+  const socket = io.connect("http://localhost:3001");
 
   useEffect(() => {
     const solicitud = async () => {
@@ -41,7 +42,7 @@ export const SolicitudReserva = () => {
   }, []);
 
   const handleClick = (e) => {
-    const { name } = e.target;
+    const { name, value } = e.target;
 
     const modificarReserva = async (estado) => {
       try {
@@ -77,6 +78,8 @@ export const SolicitudReserva = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         modificarReserva("Success");
+        const usuario = solicitudes.find((user) => user.UserEmail === value);
+        socket.emit("notificacion", "Solicitud fue aceptada", usuario);
       } else if (result.isDenied) {
         modificarReserva("Reject");
       }
@@ -122,6 +125,7 @@ export const SolicitudReserva = () => {
                 <button
                   onClick={handleClick}
                   className="cursor-pointer"
+                  value={reserva.UserEmail}
                   name={reserva.id}
                 >
                   {reserva.Housings}
