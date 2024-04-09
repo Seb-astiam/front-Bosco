@@ -219,8 +219,8 @@ const handleFilterChange = async (e)=>{
   return (
     <div className=' flex flex-row justify-center items-center'>
     <div className=" border h-[40px] border-solid border-gray-200 rounded-[80px] bg-white shadow-md flex flex-row items-center justify-between p-3 mq900:p-1  max-w-full  z-[3] ">
-
-          <div className='flex flex-col mq900:ml-5 ml-10 w-[125px]'> 
+          <input className='hidden mq900:block font-medium ml-3 w-[150px] outline-none' onClick={handleInputClick } placeholder='Buscar alojamientos...'></input>
+          <div className='mq900:hidden flex flex-col mq900:ml-5 ml-10 w-[125px]'> 
             <label className='font-medium'>Provincia</label>
             <input
             type="text"
@@ -228,7 +228,7 @@ const handleFilterChange = async (e)=>{
             value={searchProvinceText}
             onChange={handleChangeProvince}
             className="bg-transparent outline-none"
-            onClick={handleInputClick }
+            
           />
 
           {searchProvinceText && (
@@ -246,7 +246,7 @@ const handleFilterChange = async (e)=>{
           )}
      
           </div>
- <div className='flex flex-col mq900:ml-5 ml-10 w-[125px]'>
+    <div className=' mq900:hidden flex flex-col mq900:ml-5 w-[125px]'>
 
       <label className='font-medium'>Localidad</label>
       <input
@@ -274,30 +274,56 @@ const handleFilterChange = async (e)=>{
       </div>
 
           {showAdditionalDiv && (
-            <div className='absolute justify-center z-10 flex flex-col w-[400px] top-[108px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200'>
+             <div className="fixed top-0 left-0 w-full h-full flex items-start justify-center z-50 bg-black bg-opacity-50">
+            <div className='relative z-10 flex flex-col w-[400px] top-[108px] bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200'>
               <box-icon name='arrow-back' onClick={handleInputClick} size='20px'></box-icon>
-              <label className='font-medium ml-8'>Lugar</label>
-            <input
-            type="text"
-            placeholder={filter.provinces ? `${filter.provinces}` : '¿Dónde?'}
-            value={searchText}
-            onChange={handleChangeProvince}
-            className="bg-transparent outline-none mb-2 ml-8"
-          />
+              <label className='font-medium ml-8'>Provincia</label>
+                <input
+                type="text"
+                placeholder={filter.provinces ? `${filter.provinces}` : '¿Dónde?'}
+                value={searchProvinceText}
+                onChange={handleChangeProvince}
+                className="bg-transparent outline-none mb-2 ml-8"
+                />
 
-        {searchText && (
-            <div className="  z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200">
-              {filteredProvincias.map((provincia) => (
-                <div
-                  key={provincia.id}
-                  onClick={() => handleProvinceSelection(provincia.nombre)}
-                  className="hover:bg-gray-200 cursor-pointer p-[5px] rounded-lg flex text-sm "
-                >
-                  {provincia.nombre}
-                </div>
-              ))}
-            </div>
-          )}
+                  {searchProvinceText && (
+                    <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
+                      {filteredProvincias.slice(0, 5).map((provincia) => (
+                        <div
+                          key={provincia.id}
+                          onClick={() => handleProvinceSelection(provincia.nombre)}
+                          className="hover:bg-gray-200 cursor-pointer p-2 rounded-lg flex text-sm"
+                        >
+                          {provincia.nombre}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+
+              <label className='font-medium ml-8'>Localidad</label>
+                <input
+                  type="text"
+                  placeholder={filter.cities ? `${filter.cities}` : '¿Dónde?'}
+                  value={searchCityText}
+                  onChange={handleChangeCity}
+                  className="bg-transparent outline-none ml-8"
+                />
+
+                {searchCityText && (
+                  <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
+                    {filteredLocalidades.slice(0, 5).map((localidad) => (
+                      <div
+                        key={localidad.id}
+                        onClick={() => handleCitySelection(localidad.name)}
+                        className="hover:bg-gray-200 cursor-pointer p-2 rounded-lg flex text-sm"
+                      >
+                        {localidad.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+      
 
           <div className=" font-medium ml-8">Check-in</div>
 
@@ -371,6 +397,7 @@ const handleFilterChange = async (e)=>{
                     </div>
                 )}
             </div>
+          </div>
           </div>
 )}
 
@@ -481,7 +508,7 @@ const handleFilterChange = async (e)=>{
         </button>
     </div>
     <div className='relative'>
-    <button className=' flex h-[40px] ml-2 font-custom font-medium items-center rounded-[80px] p-2 bg-white border border-gray-200 shadow-md hover:border-gray-900 '
+    <button className=' mq900:text-4px flex mq900:h-[30px] h-[40px] ml-2 font-custom font-medium items-center rounded-[80px] mq900:p-1 p-2 bg-white border border-gray-200 shadow-md hover:border-gray-900 '
     onClick={handleFilterOn}>
     <box-icon name='filter'></box-icon>
     Filtros
