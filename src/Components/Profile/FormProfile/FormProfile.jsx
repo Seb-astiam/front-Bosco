@@ -4,17 +4,49 @@ import axios from "axios";
 export const FormProfile = (params) => {
     const { formData, handlePost, handleUpdate, nuevo, handleChange } = params
     const picture = JSON.parse(localStorage.getItem("user")).picture
+    const email = JSON.parse(localStorage.getItem("user")).email
     const [updatePicture_,setUpdatePicture]=useState(null)
     
     const [img,setImg] =useState(null)
-    const updatePicture=(e)=>{
+    useEffect(()=>{
+        axios.get(`http://localhost:3001/user/${email}`).then(({data})=>{
+            setImg(data);
+        });
+            
+    },[])
+    const updatePicture = async (e) => {
         const { files } = e.target;
-        const picture = Array.from(files).slice(0, 3 - formData.images.length)
-        setImg(picture)
-
- 
-    }
-
+        const picture = files[0];
+      
+        const formDataToSend = createFormDataWithPicture(picture);
+      
+        try {
+          const response = await axios.put(
+            `http://localhost:3001/user/pictureUser?email=${email}`,
+            formDataToSend
+          );
+      
+          if (
+            response.status === 201 &&
+            response.data.message === "Datos recibidos correctamente"
+          ) {
+            console.log("actualizado correctamente");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      
+        setImg(picture);
+      };
+      
+    const createFormDataWithPicture = (picture) => {
+        const formData = new FormData();
+        formData.append("picture", picture);
+        console.log(picture);
+        console.log(formData);
+        return formData;
+      };
+      
     return (
         <div>
 
@@ -23,7 +55,7 @@ export const FormProfile = (params) => {
                     <div className="h-[160px] w-[160px] m-2">
                     {img?
                     
-                    <img src={URL.createObjectURL(img[0])} className="h-full" alt="" />
+                    <img src={img} className="h-full" alt="" />
                     :
 
                     <img src={picture} className="h-full" alt="" />
