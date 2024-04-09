@@ -1,6 +1,4 @@
 export const isValidPasswordConfirmation = (password, passwordConfirmation) => {
-    console.log("passwordConfirmation", passwordConfirmation)
-    console.log("password", password)
     try {
         // Verificar si la contraseña y la confirmación de contraseña están vacías
         if (!passwordConfirmation) {
