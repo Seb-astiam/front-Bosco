@@ -53,7 +53,16 @@ export const Navbar = () => {
                       to="/Profile/perfil"
                       className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
                     >
+<<<<<<< HEAD
                           <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
+=======
+                      {
+                        !picture ?
+                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src="" alt="" />
+                          :
+                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
+                      }
+>>>>>>> c23277b645983527d6ffaaa6b7cc7d6d92eeea90
                     </NavLink>
                   </button>
                 </  div>

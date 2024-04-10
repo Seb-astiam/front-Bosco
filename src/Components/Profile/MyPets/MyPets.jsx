@@ -130,7 +130,7 @@ export const MyPets = () => {
                 {
                     pets.map((mascota) => {
                         return (
-                            <div className="bg-slate-100" key={mascota.id} onClick={() => handleShowForm(mascota)}>
+                            <div className="bg-slate-100 cursor-pointer" key={mascota.id} onClick={() => handleShowForm(mascota)}>
                                 <img className="w-[150px]" src={mascota.image} alt="" />
                                 <p>{mascota.name}</p>
                             </div>
