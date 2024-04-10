@@ -7,6 +7,7 @@ export const MyPets = () => {
     const [pets, setPets] = useState([])
     const [selectedPet, setSelectedPet] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [showImage, setShowImage] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/allMascotas/${userId}`).then(({ data }) => {
@@ -15,10 +16,23 @@ export const MyPets = () => {
         })
     }, [])
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value, type, checked,files } = e.target;
+        console.log(selectedPet);
+        console.log("petString");
+        console.log(typeof selectedPet.image);
+        let newValue;
+        console.log(selectedPet);
+        if (name === "images") {
+            newValue = [
+                ...showImage,
+                ...Array.from(files).slice(0, 1 - showImage.length),
+            ];
+        } else {
+            newValue =value;
+          }
         setSelectedPet(prevState => ({
             ...prevState,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : newValue
         }));
     };
 
@@ -27,10 +41,23 @@ export const MyPets = () => {
         setShowForm(true);
     }
 
-   
-    const handleUpdate = async () => {
+
+    const handleUpdate = async (event) => {
+        event.preventDefault();
         try {
-            await axios.put(`http://localhost:3001/mascota/${selectedPet.id}`, selectedPet);
+            const formDataToSend = new FormData();
+            Object.entries(selectedPet).forEach(([key, value]) => {
+                if (key === "images") {
+                    // Si el campo es "images", agregamos cada archivo al FormData
+                    
+                    value.forEach((image) => formDataToSend.append("images", image));
+                } else {
+                    // Para otros campos del formulario, simplemente los agregamos al FormData
+                    formDataToSend.append(key, value);
+                }
+            });
+
+            await axios.put(`http://localhost:3001/mascota/${selectedPet.id}`, formDataToSend);
             alert("User data updated successfully!");
         } catch (error) {
             console.error("Error updating user data:", error);
@@ -44,6 +71,32 @@ export const MyPets = () => {
                 {showForm && selectedPet && (
                     <div>
                         <form className="flex flex-col gap-[15px]">
+                            <div>
+                                {
+                                    (!selectedPet.images)?
+                                    <img className="w-[150px]" src={selectedPet.image} alt="" />
+                                    :
+                                    <img className="w-[150px]" src={URL.createObjectURL(selectedPet.images[0])} alt="" />
+                                }
+                            </div>
+                            <div >
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    name="images"
+                                    id="images"
+                                    onChange={handleChange}
+                                    className="hidden"
+                                    multiple
+                                />
+                                <label
+                                    htmlFor="images"
+                                    className="flex justify-center relative px-4 bg-slate-200 rounded-lg cursor-pointer border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:outline-none"
+                                >
+                                    <span className="m-2">Cambiar foto de mascota</span>
+
+                                </label>
+                            </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
                                 <label>Name:</label>
                                 <input

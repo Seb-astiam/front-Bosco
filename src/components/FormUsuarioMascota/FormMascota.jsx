@@ -8,7 +8,7 @@ export const FormMascota = () => {
     const email_usuario = JSON.parse(localStorage.getItem("user"));
 
     const [input, setInput] = useState({
-        image: [],
+        images: [],
         name: "",
         type: "",
         age: 1,
@@ -20,7 +20,7 @@ export const FormMascota = () => {
     })
 
     const [errors, setErrors] = useState({
-        image: "",
+        images: "",
         name: "",
         type: "",
         age: "",
@@ -57,15 +57,26 @@ export const FormMascota = () => {
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, value , files} = event.target;
+        let newValues;
+        if (name==="images") {
+            newValues=[
+                ...input.images,
+                //modificar 1 por la cantidad de imagenes que se cargaran
+                ...Array.from(files).slice(0,1-input.images.length)
+            ]
+        }else{
+            newValues=value
+        }
+        console.log(input);
         setInput({
             ...input,
-            [name]: value
+            [name]: newValues
         });
 
         const valid = validate({
             ...input,
-            [name]: value
+            [name]: newValues
         });
         setDisableSubmit(!valid);
     }
@@ -77,30 +88,23 @@ export const FormMascota = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const { image,
-            name,
-            type,
-            age,
-            raze,
-            aggressiveness,
-            genre,
-            coexistence,
-            size } = input
+            const formDataToSend = new FormData();
+            Object.entries(input).forEach(([key, value]) => {
+                if (key === "images") {
+                    // Si el campo es "images", agregamos cada archivo al FormData
+                    
+                    value.forEach((image) => formDataToSend.append("images", image));
+                } else {
+                    // Para otros campos del formulario, simplemente los agregamos al FormData
+                    formDataToSend.append(key, value);
+                }
+            });
+            formDataToSend.append('UserId', email_usuario.id);
 
-        const nuevaMascota = {
-            image,
-            name,
-            type,
-            age,
-            raze,
-            aggressiveness,
-            genre,
-            coexistence,
-            size,
-            UserId: email_usuario.id
-        }
+            console.log(formDataToSend.getAll('UserId'));
+            
 
-        const sendBack = await axios.post("http://localhost:3001/newMascota", nuevaMascota);
+        const sendBack = await axios.post("http://localhost:3001/newMascota", formDataToSend);
 
         if (sendBack.status === 201) {
             Swal.fire({
@@ -109,7 +113,7 @@ export const FormMascota = () => {
                 icon: "success"
             });
             setInput({
-                image: [],
+                images: [],
                 name: "",
                 type: "",
                 age: "",
@@ -128,7 +132,7 @@ export const FormMascota = () => {
 
     const reset = () => {
         setInput({
-            image: [],
+            images: [],
             name: "",
             type: "",
             age: "",
@@ -141,17 +145,17 @@ export const FormMascota = () => {
 
         )
     }
-    const updatePicture = async (e) => {
-        const { files } = e.target;
-        const picture = [
-            ...input.image,
-            ...Array.from(files).slice(0, 3 - input.image.length),
-          ];
-        console.log(picture);
 
 
+    const handleImageRemove = (index) => {
+        const updatedImages = [...input.images];
+        updatedImages.splice(index, 1);
+        setInput((prevData) => ({
+          ...prevData,
+          images: updatedImages,
+        }));
+      };
 
-    };
     return (
         <div className="w-screen h-[800px] my-[10px] flex justify-center items-center">
             <div className={`h-[90%] w-[80%] flex justify-center`}>
@@ -166,24 +170,6 @@ export const FormMascota = () => {
                     <h1 className="font-custom font-extrabold text-[20px] mb-[20px]">Contanos sobre tu mascota!</h1>
 
 
-                    <div >
-                        <input
-                            type="file"
-                            accept="image/*"
-                            name="images"
-                            id="images"
-                            onChange={updatePicture}
-                            className="hidden"
-                            multiple
-                        />
-                        <label
-                            htmlFor="images"
-                            className="flex justify-center relative px-4 bg-slate-200 rounded-lg cursor-pointer border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:outline-none"
-                        >
-                            <span className="m-2">Cambiar foto de perfil</span>
-
-                        </label>
-                    </div>
 
                     {/* <div className="">
                 <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
@@ -291,8 +277,46 @@ export const FormMascota = () => {
                         </label>
 
                     </div>
+                    
                     <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.genre}</p>
+ 
+                    <div >
+                        <input
+                            type="file"
+                            accept="image/*"
+                            name="images"
+                            id="images"
+                            onChange={handleChange}
+                            className="hidden"
+                            multiple
+                        />
+                        <label
+                            htmlFor="images"
+                            className="flex justify-center relative px-4 bg-slate-200 rounded-lg cursor-pointer border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:outline-none"
+                        >
+                            <span className="m-2">Subir foto</span>
 
+                        </label>
+                    </div>
+                    {input.images.map((image, index) => (
+                    <div key={index} className="flex items-center mr-2">
+                      <div className="relative">
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Imagen ${index + 1}`}
+                          className="h-16 w-16 object-cover mr-2"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleImageRemove(index)}
+                          className="absolute top-0 right-0 bg-red-500 text-white font-bold py-1 px-2 rounded-full"
+                        >
+                          X
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  
                     <a onClick={reset} className="font-custom font-semibold flex justify-end cursor-pointer text-[12px] hover:underline">Limpiar formulario</a>
                     <button type="submit" className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${disabledSubmit ? 'bg-[transparent] text-black shadow-md' : 'bg-[black] text-white shadow-md'}`} disabled={disabledSubmit}>Submit</button>
 
