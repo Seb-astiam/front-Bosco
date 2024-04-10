@@ -1,13 +1,16 @@
 import { NavLink } from "react-router-dom";
 import Isologotipo from "../../assets/IsoLogotipoBosco.png";
 import { useNavigate } from "react-router-dom";
-
+import pictureDefault from "../../assets/perfilPicture.webp"
 export const Nav = ({ pathname }) => {
   const navigate = useNavigate();
 
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
-  const picture = JSON.parse(localStorage.getItem("user")).picture
-  
+  let picture = pictureDefault
+  if (JSON.parse(localStorage.getItem("user")).picture) {
+
+    picture = JSON.parse(localStorage.getItem("user")).picture
+  }
 
   return (
     <div className="shadow-lg bg-[#f7ab5e] border-b-4 border-solid border-chocolate-100 w-screen flex flex-row items-start justify-start  box-border max-w-full text-left text-mini-8 text-midnightblue font-inter  mq1300:box-border ">
@@ -86,7 +89,12 @@ export const Nav = ({ pathname }) => {
                   to="/Profile/perfil"
                   className="cursor-pointer relative p-0 w-[40px] h-[40px] whitespace-nowrap  no-underline"
                 >
-                  <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
+                  {
+                    !picture?
+                    <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src="" alt="" />
+                    :
+                    <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
+                  }
                 </NavLink>
               </button>
             </div>

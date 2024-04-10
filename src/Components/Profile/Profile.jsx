@@ -33,7 +33,6 @@ export const Profile = () => {
             try {
                 const response = await axios.get(`http://localhost:3001/profile/${userId}`);
                 const userData = response.data;
-                console.log(userData);
                 setFormData({
                     ...formData,
                     name: userData.name || "",

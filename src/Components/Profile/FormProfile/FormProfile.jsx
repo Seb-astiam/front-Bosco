@@ -1,19 +1,68 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import pictureDefault from "../../../assets/perfilPicture.webp"
 
 export const FormProfile = (params) => {
     const { formData, handlePost, handleUpdate, nuevo, handleChange } = params
-    const picture = JSON.parse(localStorage.getItem("user")).picture
-    const [updatePicture_,setUpdatePicture]=useState(null)
-    
-    const [img,setImg] =useState(null)
-    const updatePicture=(e)=>{
-        const { files } = e.target;
-        const picture = Array.from(files).slice(0, 3 - formData.images.length)
-        setImg(picture)
-
- 
+    let picture = pictureDefault
+    if (JSON.parse(localStorage.getItem("user")).picture) {
+        picture = JSON.parse(localStorage.getItem("user")).picture
     }
+    const email = JSON.parse(localStorage.getItem("user")).email
+    const [updatePicture_, setUpdatePicture] = useState(null)
+
+    const [img, setImg] = useState(null)
+    useEffect(() => {
+        axios.get(`http://localhost:3001/user/${email}`).then(({ data }) => {
+
+            // Obtener el objeto del localStorage
+            const userLocal = JSON.parse(localStorage.getItem("user"));
+
+            // Actualizar el valor 'picture' en el objeto
+            userLocal.picture = data;
+
+            // Guardar el objeto actualizado en localStorage
+            localStorage.setItem("user", JSON.stringify(userLocal));
+
+
+            setImg(data);
+        });
+
+    }, [])
+    const updatePicture = async (e) => {
+        const { files } = e.target;
+        const picture = files[0];
+console.log(picture);
+        const formDataToSend = createFormDataWithPicture(picture);
+
+        try {
+            const response = await axios.put(
+                `http://localhost:3001/user/pictureUser?email=${email}`,
+                formDataToSend
+            );
+
+            if (
+                response.status === 201 &&
+                response.data.message === "Datos recibidos correctamente"
+            ) {
+                console.log("actualizado correctamente");
+            }
+
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        setImg(URL.createObjectURL(picture));
+    };
+
+    const createFormDataWithPicture = (picture) => {
+        const formData = new FormData();
+        formData.append("picture", picture);
+        console.log(picture);
+        console.log(formData);
+        return formData;
+    };
 
     return (
         <div>
@@ -21,13 +70,13 @@ export const FormProfile = (params) => {
             <div className="flex gap-[15px] items-center space-y-4">
                 <div>
                     <div className="h-[160px] w-[160px] m-2">
-                    {img?
-                    
-                    <img src={URL.createObjectURL(img[0])} className="h-full" alt="" />
-                    :
+                        {img ?
 
-                    <img src={picture} className="h-full" alt="" />
-                    }
+                            <img src={img} className="h-full" alt="" />
+                            :
+
+                            <img src={picture} className="h-full" alt="" />
+                        }
 
                     </div>
                     <div >
