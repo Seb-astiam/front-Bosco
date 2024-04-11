@@ -77,7 +77,7 @@ export const SolicitudReserva = () => {
             if (result.isConfirmed) {
                 modificarReserva('Success');
                 const usuario = solicitudes.find((user) => user.UserEmail === value)
-                socket.emit("notificacion", "Solicitud fue aceptada", usuario)
+                socket.emit("notificacion", "Solicitud fue aceptada", usuario);
             } else if (result.isDenied) {
                 modificarReserva('Reject')
             }
