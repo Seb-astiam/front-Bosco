@@ -50,10 +50,10 @@ const LoginPage = ()=>{
             
         } catch (error) {
 
-            if (error.response && error.response.status === 400) {
+            if (error.response && error.response.status === 401) {
                 // El servidor respondió con un código de estado 400 (Bad Request)
                 // setIsNotUser(true)
-                window.alert(error.response.data); 
+                setIsNotUser(true)
 
                 //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
                 
@@ -132,7 +132,7 @@ const LoginPage = ()=>{
                     
                 } catch (error) {
                     // Maneja cualquier error que ocurra durante la solicitud
-                    if (error.response && error.response.status === 400) {
+                    if (error.response && error.response.status === 401) {
                         setHaveAccount(false);
                     } else {
                         console.error("Error during registration:", error);
@@ -249,13 +249,15 @@ const LoginPage = ()=>{
     }
     }
 
+    console.log('haveAccount', haveAccount)
+
     return (
-        <div className=" w-screen h-screen flex justify-center items-center absolute" >
-                 <div className={` ${isLoggedIn ? '-translate-y-[300%]' : ''} h-[90%] w-[80%] flex  absolute`} >
-                    <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px]">
-                        <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
+        <div className="w-screen h-screen flex justify-center items-center absolute" >
+                 <div className={` ${isLoggedIn ? '-translate-y-[300%]' : ''} h-[90%] w-[80%] mq900:w-full justify-center  items-center flex mq900:flex-col absolute`} >
+                    <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-[95%]">
+                        <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-full" />
                     </div>
-                    <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]" >
+                    <div className="flex flex-col items-center px-[5%] mq900:px-[0px] justify-center rounded-br-[20px] rounded-tr-[20px] mq900:rounded-bl-[20px] mq900:rounded-tr-[0px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px] mq900:max-w-[95%] mq900:w-[95%]" >
                         <h2 className='font-custom font-extrabold'>Bienvenido</h2>
                         <p className="font-custom font-semibold text-center">Para poder unirte a nuestra comunidad por favor inicia sesión con tus datos. </p>
                         <button className="font-bold font-custom outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" onClick={handleLogin} >Inicia Sesión</button>
@@ -263,12 +265,12 @@ const LoginPage = ()=>{
                         </p>
                     </div>
                 </div>
-                <div className= {` ${isLoggedIn ? '' : '-translate-y-[300%]'} flex absolute h-[90%] w-[80%] `} >
-                    <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px]">
-                        <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
+                <div className= {` ${isLoggedIn ? '' : '-translate-y-[300%]'} flex absolute h-[90%] w-[80%]  mq900:w-full mq900:flex-col `} >
+                    <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-[95%]">
+                        <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-full" />
                     </div>
             
-                    <form className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]" onSubmit={ handleSubmit}>
+                    <form className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px] mq900:px-[0px] mq900:rounded-bl-[20px] mq900:rounded-tr-[0px] mq900:max-w-[95%] mq900:w-[95%] mq900:py-[20px]" onSubmit={ handleSubmit}>
                         <h2 className="font-custom font-extrabold my-0">Hola de nuevo!</h2>
                         <p className="font-custom font-semibold text-center">Nos alegra volver a verte, por favor inicia sesión:</p>
                             <div className="flex flex-row  items-center">
@@ -321,9 +323,9 @@ const LoginPage = ()=>{
                     </div>
                 </div>
                 <div className={`${haveAccount? '-translate-y-[500%]' : 'bg-[rgba(0,_0,_0,_0.5)] '} w-screen h-screen flex justify-center items-center absolute`}>
-                    < div className= {`${haveAccount ? '-translate-y-[500%]' : '' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px]`}>
+                    < div className= {`${haveAccount ? '-translate-y-[500%]' : '' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px]  mq900:w-[95%] mq900:max-w-[95%]`}>
             
-                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center  mq900:w-[95%] mq900:px-[2.5%]'>Aviso
                         <span className= "cursor-pointer" onClick={handleHaveAccount}>&times;</span>
                     </label>
                     <label className=" flex justify-center py-[30px]">
@@ -334,9 +336,9 @@ const LoginPage = ()=>{
                     </div>
                 </div>
                 <div className={`${!adviceRecover? '-translate-y-[500%]' : 'bg-[rgba(0,_0,_0,_0.5)] '} w-screen h-screen flex justify-center items-center absolute`}>
-                    < div className= {`${!adviceRecover ? '-translate-y-[500%]' : '' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px]`}>
+                    < div className= {`${!adviceRecover ? '-translate-y-[500%]' : '' }  flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[400px] mq900:w-[95%] mq900:max-w-[95%]`}>
             
-                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Recuperar contraseña
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center mq900:w-[95%] mq900:px-[2.5%]'>Recuperar contraseña
                         <span className= "cursor-pointer" onClick={handleAdviceRecover}>&times;</span>
                     </label>
                     <label className=" flex justify-center py-[20px]">
