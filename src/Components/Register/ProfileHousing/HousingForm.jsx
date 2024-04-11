@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import Swal from "sweetalert2";
+import Switch from "react-switch";
 
 import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
@@ -26,6 +27,9 @@ const HousingForm = () => {
     title: "",
     provinces: "",
     cities: "",
+    hourly: false,
+    hourAvailable: "",
+    hourEnd: "",
     datesAvailable: "",
     datesEnd: "",
     price: "",
@@ -163,13 +167,13 @@ const HousingForm = () => {
 
   return (
     <div className="flex  justify-center items-center mq900:mb-10 mq900:flex-col  mq900:h-full h-[1005px] w-full my-[50px] mq900:mt-0">
-     <div className="flex justify-center h-full w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[95%] mq900:max-w-[95%] mq900:w-[95%] mq900:h-[350px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] ">
-  <img
-    src={bosco}
-    alt="bosco"
-    className="w-full h-[1005px] object-cover mq900:mt-10 rounded-tl-[20px] rounded-bl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[350px]"
-  />
-</div>
+      <div className="flex justify-center h-full w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[95%] mq900:max-w-[95%] mq900:w-[95%] mq900:h-[350px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] ">
+        <img
+          src={bosco}
+          alt="bosco"
+          className="w-full h-[1005px] object-cover mq900:mt-10 rounded-tl-[20px] rounded-bl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[350px]"
+        />
+      </div>
       <div className="flex flex-col items-center justify-center px-[50px] mq900:px-0 rounded-br-[20px] rounded-tr-[20px] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:w-[95%] mq900:max-w-[95%] h-[1005px] w-[400px] !bg-[#FEB156] max-w-[400px]">
         <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
         <form
@@ -248,48 +252,125 @@ const HousingForm = () => {
           <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
             {errors.cities}
           </p>
+          <div>
+            <div className="flex flex-col items-center px-[15px]  bg-[white] rounded-t-[20px] ">
+              <p className="font-custom font-semibold text-[12px] mb-[15px] text-gray-500">
+                Alojamiento por...
+              </p>
+              <div className="flex align-middle">
+                <span className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500 mr-3">
+                  Días
+                </span>
+                <Switch
+                  onChange={(checked) =>
+                    setFormData({ ...formData, hourly: checked })
+                  }
+                  checked={formData.hourly}
+                  onColor="#eb662b"
+                  offColor="#eb662b"
+                  checkedIcon={false}
+                  uncheckedIcon={false}
+                  height={20}
+                  width={40}
+                  handleDiameter={16}
+                />
+                <span className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500 ml-3">
+                  Horas
+                </span>
+              </div>
+            </div>
 
-          <div className="flex flex-row">
-            <label
-              htmlFor="datesAvailable"
-              className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] rounded-tl-[20px]"
-            >
-              <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                {" "}
-                Fecha de inicio{" "}
-              </a>
-              <input
-                type="date"
-                name="datesAvailable"
-                id="datesAvailable"
-                onChange={handleChange}
-                value={formData.datesAvailable}
-                max={formData.datesEnd}
-                className="outline-none"
-              />
-            </label>
-            <label
-              htmlFor="datesEnd"
-              className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] rounded-tr-[20px]"
-            >
-              <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                {" "}
-                Fecha de fin{" "}
-              </a>
-              <input
-                type="date"
-                name="datesEnd"
-                id="datesEnd"
-                onChange={handleChange}
-                value={formData.datesEnd}
-                min={formData.datesAvailable}
-                className="outline-none"
-              />
-            </label>
+            {formData.hourly ? (
+              <div className="flex flex-row">
+                <label
+                  htmlFor="datesAvailable"
+                  className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] "
+                >
+                  <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+                    Hora de inicio
+                  </a>
+                  <input
+                    type="number"
+                    name="hourAvailable"
+                    id="hourAvailable"
+                    onChange={handleChange}
+                    value={formData.hourAvailable}
+                    min={0}
+                    max={formData.hourEnd}
+                    step={1}
+                    className="outline-none w-12"
+                  />
+                </label>
+                <label
+                  htmlFor="datesEnd"
+                  className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] "
+                >
+                  <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+                    Hora de fin
+                  </a>
+                  <input
+                    type="number"
+                    name="hourEnd"
+                    id="hourEnd"
+                    onChange={handleChange}
+                    value={formData.hourEnd}
+                    min={formData.hourAvailable}
+                    step={1}
+                    max={24}
+                    className="outline-none w-12"
+                  />
+                </label>
+              </div>
+            ) : (
+              <div className="flex flex-row">
+                <label
+                  htmlFor="datesAvailable"
+                  className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] "
+                >
+                  <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+                    {" "}
+                    Fecha de inicio{" "}
+                  </a>
+                  <input
+                    type="date"
+                    name="datesAvailable"
+                    id="datesAvailable"
+                    onChange={handleChange}
+                    value={formData.datesAvailable}
+                    max={formData.datesEnd}
+                    className="outline-none"
+                  />
+                </label>
+                <label
+                  htmlFor="datesEnd"
+                  className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] "
+                >
+                  <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+                    {" "}
+                    Fecha de fin{" "}
+                  </a>
+                  <input
+                    type="date"
+                    name="datesEnd"
+                    id="datesEnd"
+                    onChange={handleChange}
+                    value={formData.datesEnd}
+                    min={formData.datesAvailable}
+                    className="outline-none"
+                  />
+                </label>
+              </div>
+            )}
           </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.datesAvailable}
-          </p>
+          {formData.hourly ? (
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
+              {errors.hourAvailable}
+            </p>
+          ) : (
+            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
+              {errors.datesAvailable}
+            </p>
+          )}
           <div className="flex flex-row justify-between  gap-4">
             <label
               htmlFor="square"
@@ -378,7 +459,8 @@ const HousingForm = () => {
                     <label
                       key={service.id}
                       className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] 
-                      ${ formData.services.includes(service.id)
+                      ${
+                        formData.services.includes(service.id)
                           ? "bg-[#e7e6e6] border-none"
                           : ""
                       }`}

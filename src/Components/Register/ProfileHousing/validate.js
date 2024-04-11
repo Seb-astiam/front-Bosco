@@ -53,7 +53,7 @@ export const ValidateFormdata = (formdata) => {
   const endDate = new Date(datesEnd);
 
   if (startDate.getTime() > endDate.getTime()) {
-    errors.datesEnd =
+    errors.datesAvailable =
       "La fecha de fin debe ser posterior o igual a la fecha de inicio";
   }
   //-----------------------------------------------------------
