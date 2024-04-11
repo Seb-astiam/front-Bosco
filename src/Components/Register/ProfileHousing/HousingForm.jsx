@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Swal from "sweetalert2";
 
 import { ValidateFormdata } from "./validate";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import useCities from "../../../Hooks/useCities";
 import bosco from "../../../assets/bosco-logo.jpeg";
 import { useTiposAlojamientos } from "../../../Hooks/useTiposAlojamientos";
+import axiosJwt from "../../../utils/axiosJwt";
 
 const HousingForm = () => {
   useServices();
@@ -16,11 +17,9 @@ const HousingForm = () => {
   useCities();
   useTiposAlojamientos();
 
-  const TiposHost = useSelector((state)=> state.storage.TipoAlojamientos);
+  const TiposHost = useSelector((state) => state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
-
-
 
   const email = JSON.parse(localStorage.getItem("user")).email;
   const [formData, setFormData] = useState({
@@ -117,7 +116,7 @@ const HousingForm = () => {
     });
 
     try {
-      const response = await axios.post(
+      const response = await axiosJwt.post(
         `http://localhost:3001/profileHousing/register?email=${email}`,
         formDataToSend
       );
@@ -163,19 +162,19 @@ const HousingForm = () => {
   const cities = useCities(selectedProvince ? selectedProvince : null);
 
   return (
-    <div className="flex justify-center items-center h-[900px] w-[100%] my-[50px]">
-      <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] ">
-        <img
-          src={bosco}
-          alt="bosco"
-          className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover"
-        />
-      </div>
-      <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
+    <div className="flex  justify-center items-center mq900:mb-10 mq900:flex-col  mq900:h-full h-[1005px] w-full my-[50px] mq900:mt-0">
+     <div className="flex justify-center h-full w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[95%] mq900:max-w-[95%] mq900:w-[95%] mq900:h-[350px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] ">
+  <img
+    src={bosco}
+    alt="bosco"
+    className="w-full mq900:w-[100%] h-[1005px] object-cover mq900:mt-10 rounded-tl-[20px] rounded-bl-[20px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[350px]"
+  />
+</div>
+      <div className="flex flex-col items-center justify-center px-[50px] mq900:px-[0px] rounded-br-[20px] rounded-tr-[20px] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:w-[95%] mq900:max-w-[95%] h-[1005px] w-[400px] !bg-[#FEB156] max-w-[400px]">
         <h2 className="font-custom font-extrabold">Registrar alojamiento</h2>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%]"
+          className="flex flex-col items-center my-[0%] px-[5%] mq900:px-0 justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%]"
           encType="multipart/form-data"
         >
           <div>
@@ -355,7 +354,11 @@ const HousingForm = () => {
                   Selecciona un tipo de alojamiento
                 </option>
                 {TiposHost.map((tipo) => {
-                  return <option key={tipo.id} value={tipo.type}>{tipo.type}</option>
+                  return (
+                    <option key={tipo.id} value={tipo.type}>
+                      {tipo.type}
+                    </option>
+                  );
                 })}
               </select>
             </label>
