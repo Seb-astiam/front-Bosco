@@ -67,7 +67,7 @@ export const SolicitudReserva = () => {
         });
       }
     };
-
+    
     Swal.fire({
       title: "Confirmas esta reserva?",
       showDenyButton: true,
