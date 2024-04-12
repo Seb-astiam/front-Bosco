@@ -16,13 +16,15 @@ export const SolicitudReserva = () => {
         const { data } = await axiosJwt(
           `http://localhost:3001/reservation/reservations/${email_usuario.id}`
         );
-
+        console.log(data);
         const response = data.flat().map((dataHousing) => {
           let obj;
           return (obj = {
             id: dataHousing.id,
             fechaInicio: dataHousing.fechaInicio,
             fechaFin: dataHousing.fechaFin,
+            horaInicio: dataHousing.horaInicio,
+            horaFin: dataHousing.horaFin,
             estatus: dataHousing.estatus,
             Housings: dataHousing.Housings[0]?.title,
             UserEmail: dataHousing.Users[0]?.email,
@@ -67,7 +69,7 @@ export const SolicitudReserva = () => {
         });
       }
     };
-    
+
     Swal.fire({
       title: "Confirmas esta reserva?",
       showDenyButton: true,
@@ -98,6 +100,12 @@ export const SolicitudReserva = () => {
               Fecha de Fin
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Hora de Inicio
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Hora de Fin
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Estatus
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -120,6 +128,10 @@ export const SolicitudReserva = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {reserva.fechaFin}
               </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {reserva.horaInicio}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">{reserva.horaFin}</td>
               <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button

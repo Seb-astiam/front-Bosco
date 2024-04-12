@@ -328,8 +328,7 @@ const HousingForm = () => {
                   className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] "
                 >
                   <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                    {" "}
-                    Fecha de inicio{" "}
+                    Fecha de inicio
                   </a>
                   <input
                     type="date"
@@ -346,8 +345,7 @@ const HousingForm = () => {
                   className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] "
                 >
                   <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                    {" "}
-                    Fecha de fin{" "}
+                    Fecha de fin
                   </a>
                   <input
                     type="date"
@@ -376,7 +374,6 @@ const HousingForm = () => {
               htmlFor="square"
               className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "
             >
-              {" "}
               Plazas
               <input
                 placeholder="Cantidad de plazas"
@@ -395,8 +392,7 @@ const HousingForm = () => {
               htmlFor="price"
               className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "
             >
-              {" "}
-              $/noche
+              Precio $
               <input
                 type="number"
                 name="price"
