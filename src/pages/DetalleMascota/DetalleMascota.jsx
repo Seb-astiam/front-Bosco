@@ -14,8 +14,6 @@ export const DetalleMascota = () => {
 
     const data = useSelector((state) => state.storage.mascotaById);
 
-    console.log(data, 'data')
-
     const User = useSelector((state) => state.storage.UserById);
 
     useMascotaById(id);

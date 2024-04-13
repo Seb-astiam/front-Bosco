@@ -7,6 +7,7 @@ export const CardsPrincipal = () => {
 
 
 
+
     const [numberPage, setNumberPage] = useState(1);
 
     useEffect( ()=> {
@@ -48,11 +49,21 @@ export const CardsPrincipal = () => {
                 <button onClick={nextPage} disabled={numberPage === totalPages} className=" bg-transparent ">❯</button>
             </div>
 
-            <div className="flex flex-wrap h-[95%] w-full gap-1 justify-center items-start">
-                {newArrAlojamientos.map((alojamiento) => {
-                    return <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
-                })}
-            </div>
+            {
+                newArrAlojamientos ? 
+                    <div className="flex flex-wrap h-[95%] w-full gap-1 justify-center items-start">
+                        {newArrAlojamientos.map((alojamiento) => {
+                            return <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
+                        })}
+                    </div>
+                 
+                        : 
+                
+                    <div>
+                        <h2>No hay coincidencias exactas</h2>
+                        <h4>Prueba cambiar o eliminar algunos filtros o ajustar la zona de búsqueda.</h4>
+                    </div>
+            }
         </div>
     )
 }

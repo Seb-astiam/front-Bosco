@@ -11,9 +11,8 @@ export const Cards = () => {
   useAlojamientoPrincipal();
 
   const alojamiento = useSelector((state) => state.storage.allAlojamientos)
-  
 
-  let data = alojamiento.slice(0, 4); 
+  let data = alojamiento?.slice(0, 4); 
 
     return (
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">
@@ -29,7 +28,9 @@ export const Cards = () => {
           </div>
   
         <div className="flex  justify-evenly gap-[7px]" >
-          {data.map((alojamiento) => (
+
+          
+          {data?.map((alojamiento) => (
               <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
           ))}
 
