@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
 import Swal from "sweetalert2";
-
 import { ValidateFormdata } from "./validate";
 import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import { useServices } from "../../../Hooks/useServices";
@@ -31,7 +30,7 @@ const HousingForm = () => {
     price: "",
     accommodationType: "",
     services: [],
-    square: 0,
+    square: "",
     images: [],
   });
 
@@ -65,7 +64,7 @@ const HousingForm = () => {
     } else {
       newValue = e.target.value;
     }
-
+    console.log(newValue);
     setFormData((prevData) => ({
       ...prevData,
       [name]: newValue,
@@ -180,9 +179,9 @@ const HousingForm = () => {
           <div>
             <label
               htmlFor="title"
-              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
+              className="flex flex-grow px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
-              <box-icon name="home-heart"></box-icon>
+              <box-icon name="home" title="Nombre del alojamiento"></box-icon>
               <input
                 placeholder="Nombre del alojamiento"
                 type="text"
@@ -190,92 +189,112 @@ const HousingForm = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-[225px] outline-none"
+                className={`w-[80%] ${errors.title ? "border-red-500" : ""
+                  }`}
               />
+              {!errors.title && formData.title && (
+                <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
+                  <span role="img" aria-label="check">
+                    {" "}
+                    ✔️{" "}
+                  </span>
+                </div>
+              )}
             </label>
+
+
+            {errors.title && (
+              <span className="text-red-500 text-sm">{errors.title}</span>
+            )}
           </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.title}
-          </p>
-          <div>
+
+          <div className="mb-4 relative">
             <label
-              htmlFor="provinces"
+              htmlFor="location"
               className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
-              <box-icon name="map-alt"></box-icon>
-              <select
-                name="provinces"
-                id="provinces"
-                onChange={handleChange}
-                value={formData.provinces}
-                className="w-[225px] outline-none"
-              >
-                <option value="" disabled selected>
-                  Selecciona una provincia
-                </option>
-                {provincias.map((provincia) => (
-                  <option value={provincia.nombre} key={provincia.id}>
-                    {provincia.nombre}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.provinces}
-          </p>
-          <div>
-            <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-              <box-icon name="map"></box-icon>
-              <select
-                id="cities"
-                value={formData.cities}
-                onChange={handleChange}
-                name="cities"
-                className="w-[225px] outline-none"
-              >
-                <option value="" disabled selected>
-                  Selecciona una localidad
-                </option>
-                {cities.map((localidad) => (
-                  <option value={localidad.name} key={localidad.id}>
-                    {localidad.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.cities}
-          </p>
+              <box-icon name="map" title="Ubicación"></box-icon>
 
-          <div className="flex flex-row">
+              <select
+                name="location"
+                id="location"
+                onChange={handleChange}
+                value={formData.location}
+                className={`border-none appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.location ? "border-red-500" : ""
+                  }`}
+              >
+                <option value="">Ubicación</option>
+                {provincias.map((provincia) => {
+                  return (
+                    <option value={provincia.nombre} key={provincia.id}>
+                      {provincia.nombre}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+            {!errors.location && formData.location && (
+              <div className="absolute inset-y-0 right-0 flex items-center mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
+            {errors.location && (
+              <span className="text-red-500 text-sm italic">
+                {errors.location}
+              </span>
+            )}
+          </div>
+
+          <div className="mb-4">
             <label
               htmlFor="datesAvailable"
-              className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-bl-[20px] rounded-tl-[20px]"
+              className="flex items-center relative px-[10px] bg-[white] rounded-[20px]"
             >
-              <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                {" "}
-                Fecha de inicio{" "}
-              </a>
+              <box-icon name="calendar-alt" title="Fecha de inicio"></box-icon>
+
+              <p className="m-[0px] px-2">
+
+                Inicio
+              </p>
               <input
+                placeholder="Fecha inicio"
                 type="date"
                 name="datesAvailable"
                 id="datesAvailable"
                 onChange={handleChange}
                 value={formData.datesAvailable}
                 max={formData.datesEnd}
-                className="outline-none"
+
+                className={`appearance-none border-none rounded w-full py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesAvailable ? "border-red-500" : ""
+                  }`
+                }
               />
             </label>
+            {!errors.datesAvailable && formData.datesAvailable && (
+              <div className="cursor-default mr-3 text-green-500">
+                <span role="img" aria-label="check" title="Todo correcto">
+                  ✔️
+                </span>
+              </div>
+            )}
+
+          </div>
+          <div className="mb-4">
+
+
+
             <label
               htmlFor="datesEnd"
-              className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-br-[20px] rounded-tr-[20px]"
+              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
-              <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
-                {" "}
-                Fecha de fin{" "}
-              </a>
+              <box-icon name="calendar-x" title="Fecha Fin"></box-icon>
+
+              <p className="m-[0px] px-2">
+
+                Fin
+              </p>
               <input
                 type="date"
                 name="datesEnd"
@@ -283,72 +302,110 @@ const HousingForm = () => {
                 onChange={handleChange}
                 value={formData.datesEnd}
                 min={formData.datesAvailable}
-                className="outline-none"
+                className={`appearance-none border-none  rounded w-full py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.datesEnd ? "border-red-500" : ""
+                  }`}
               />
             </label>
+            {!errors.datesEnd && formData.datesEnd && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  {" "}
+                  ✔️{" "}
+                </span>
+              </div>
+            )}
+            {errors.datesAvailable && (
+              <p className="text-red-500 text-xs italic">
+                {errors.datesAvailable}
+              </p>
+            )}
+            {errors.datesEnd && (
+              <p className="text-red-500 text-xs italic">{errors.datesEnd}</p>
+            )}
           </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.datesAvailable}
-          </p>
-          <div className="flex flex-row justify-between  gap-4">
+
+          <div className="mb-4">
             <label
               htmlFor="square"
-              className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "
+              className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
-              {" "}
-              Plazas
+              <box-icon type='solid' title="Cantidad de plazas" name='cat'></box-icon>
+
+              {/* <p className="m-[0px] w-[180px]">
+              Cantidad de plazas
+            </p> */}
               <input
                 placeholder="Cantidad de plazas"
                 type="number"
                 name="square"
                 id="square"
-                min="1"
-                max="20"
-                step="1"
                 onChange={handleChange}
                 value={formData.square}
-                className="w-[40px] outline-none ml-2"
+                className={`appearance-none border-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.square ? "border-red-500" : ""
+                  }`}
               />
             </label>
+            {!errors.square && formData.square > 0 && (
+              <div className="mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
+            {errors.square && (
+              <p className="text-red-500 text-xs italic">{errors.square}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
             <label
               htmlFor="price"
-              className="flex items-center px-[15px] py-[8.5px] bg-[white] rounded-[20px] font-custom font-semibold text-[12px] text-gray-500 "
+              className="relative flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
               {" "}
               $/noche
               <input
                 type="number"
                 name="price"
+                placeholder="Precio/hora"
                 id="price"
-                min="1000"
-                max="99000"
-                step="1000"
+                onClick={() => { setSelected(...selected, precioHora = true) }}
                 onChange={handleChange}
                 value={formData.price}
-                className="w-[55px] outline-none ml-2"
+                className={`appearance-none border-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-red-500" : ""
+                  }`}
               />
             </label>
+            {!errors.price && formData.price && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
+            {errors.price && (
+              <p className="text-red-500 text-xs italic">{errors.price}</p>
+            )}
           </div>
-          <div className="flex flex-row">
-            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-              {errors.square}
-            </p>
-            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-              {errors.price}
-            </p>
-          </div>
-          <div>
+
+          <div className="mb-4">
             <label
               htmlFor="accommodationType"
               className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]"
             >
-              <box-icon name="building-house"></box-icon>
+              <box-icon name='building-house' title="Tipo de alojamiento"></box-icon>
+
+              {/* <p className="m-[0px] w-[180px]">
+              Tipo de Alojamiento
+            </p> */}
+
               <select
                 name="accommodationType"
                 id="accommodationType"
                 onChange={handleChange}
                 value={formData.accommodationType}
-                className="w-[225px] outline-none"
+                className={`appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.accommodationType ? "border-red-500" : ""
+                  }`}
               >
                 <option value="" disabled selected>
                   Selecciona un tipo de alojamiento
@@ -362,21 +419,34 @@ const HousingForm = () => {
                 })}
               </select>
             </label>
+            {!errors.accommodationType && formData.accommodationType && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )}
+            {errors.accommodationType && (
+              <p className="text-red-500 text-xs italic">
+                {errors.accommodationType}
+              </p>
+            )}
           </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.square}
-          </p>
 
-          {show && (
-            <div className="bg-[white] rounded-[20px] py-2">
-              <label className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500">
-                Selecciona los servicios:
-              </label>
-              <div className="flex w-[270px] flex-wrap gap-2 justify-center">
+          <div className="mb-4">
+            <label className="block  text-gray-700 text-sm font-bold mb-2">
+              Servicios
+            </label>
+            <div
+              className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.services ? "border-red-500" : ""
+                }`}
+            >
+              <div>
                 {services &&
                   services.map((service) => (
                     <label
                       key={service.id}
+
                       className={`flex items-center w-[100px] px-2 py-1 font-custom font-semibold text-[12px] rounded-[20px] border border-solid border-[#e7e6e6] 
                       ${ formData.services.includes(service.id)
                           ? "bg-[#e7e6e6] border-none"
@@ -388,48 +458,73 @@ const HousingForm = () => {
                         name="services"
                         value={service.id}
                         onChange={handleServiceChange}
-                        className="form-checkbox h-3 w-3 text-gray-600 "
+                        className="form-checkbox h-5 w-5 text-gray-600"
                       />
-                      <span className="ml-2 text-gray-700 ">
-                        {service.type}
-                      </span>
+                      <span className="ml-2 text-gray-700">{service.type}</span>
                     </label>
                   ))}
               </div>
             </div>
-          )}
 
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.services}
-          </p>
+            {/* <div className="mt-2">
+              {formData.services.map((serviceId, index) => {
+                console.log("Selected service formdata:", formData.services);
+                const selectedService = servicesA.find(
+                  (service) => service.id === serviceId
+                );
+                console.log("Selected service:", selectedService);
+                return (
+                  <span
+                    key={index}
+                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+                  >
+                    {selectedService ? selectedService.type : ""}
+                  </span>
+                );
+              })}
+            </div> */}
+            {/* {!errors.services && formData.services.length > 0 && (
+              <div className=" mr-3 text-green-500">
+                <span role="img" aria-label="check">
+                  ✔️
+                </span>
+              </div>
+            )} */}
+          </div>
 
-          <div className="bg-[white] rounded-[20px] py-3">
+          <div className="mb-4">
             <label
               htmlFor="images"
-              className="flex items-center px-3 pb-3 font-custom font-semibold text-[12px] text-gray-500"
+              className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Imágenes
+              Imágenes (mínimo 3)
             </label>
+
             <input
               type="file"
               accept="image/*"
               name="images"
               id="images"
               onChange={handleChange}
-              className="ml-2 text-gray-700"
+              className="hidden"
               multiple
             />
+            <label
+              htmlFor="images"
+              className="flex justify-center relative px-4 bg-white rounded-lg cursor-pointer border border-gray-300 hover:border-gray-400 focus:border-blue-500 focus:outline-none"
+            >
+              <span className="m-2">Seleccionar archivos</span>
+
+            </label>
+
             {formData.images.length > 0 && (
-              <div className="">
-                <p className="flex items-center px-3 font-custom font-semibold text-[12px] text-gray-500">
-                  Previsualización de imágenes:
+              <div className="mb-4">
+                <p className="text-gray-700 text-sm font-bold mb-2">
+                  Previsualización de Imágenes:
                 </p>
-                <div className="flex justify-center">
+                <div className="flex">
                   {formData.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-beetwen gap-1"
-                    >
+                    <div key={index} className="flex items-center mr-2">
                       <div className="relative">
                         <img
                           src={URL.createObjectURL(image)}
@@ -439,7 +534,7 @@ const HousingForm = () => {
                         <button
                           type="button"
                           onClick={() => handleImageRemove(index)}
-                          className="absolute top-0 right-0 bg-gray-500 text-white font-bold py-1 px-2 rounded-full"
+                          className="absolute top-0 right-0 bg-red-500 text-white font-bold py-1 px-2 rounded-full"
                         >
                           X
                         </button>
@@ -451,7 +546,7 @@ const HousingForm = () => {
                       key={index}
                       className="h-16 w-16 border border-gray-300 flex items-center justify-center rounded-md mr-2"
                     >
-                      <span className="font-custom font-semibold text-[12px] text-gray-500">
+                      <span className="text-gray-400 text-xs">
                         Imagen {formData.images.length + index + 1}
                       </span>
                     </div>
@@ -459,26 +554,23 @@ const HousingForm = () => {
                 </div>
               </div>
             )}
-          </div>
-          <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">
-            {errors.images}
-          </p>
-          <div className="flex items-center justify-between">
+
+            {errors.images && (
+              <p className="text-red-500 text-xs italic">{errors.images}</p>
+            )}
             <button
               type="submit"
-              className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${
-                disableSubmit
-                  ? "bg-[transparent] text-black shadow-md"
-                  : "bg-[black] text-white shadow-md"
-              }`}
+              className="font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 bg-[black] text-white shadow-md"
               disabled={disableSubmit}
             >
               Enviar
             </button>
           </div>
+          <div className="">
+          </div>
         </form>
       </div>
-    </div>
+    </div >
   );
 };
 
