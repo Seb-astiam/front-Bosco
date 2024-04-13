@@ -1,6 +1,9 @@
 export const ValidateFormdata = (formdata) => {
   const {
     accommodationType,
+    hourly,
+    hourAvailable,
+    hourEnd,
     datesAvailable,
     datesEnd,
     images,
@@ -21,10 +24,6 @@ export const ValidateFormdata = (formdata) => {
   }
   if (!cities) {
     errors.cities = "Debes seleccionar una localidad";
-  }
-
-  if (!datesAvailable || !datesEnd) {
-    errors.datesAvailable = "Debe seleccionar las fechas de inicio y fin";
   }
 
   if (!accommodationType) {
@@ -48,14 +47,28 @@ export const ValidateFormdata = (formdata) => {
     errors.images = "Debe seleccionar al menos una imagen";
   }
 
-  //Cambiar esto en la nueva rama real
-  const startDate = new Date(datesAvailable);
-  const endDate = new Date(datesEnd);
+  if (hourly) {
+    if (!hourAvailable || !hourEnd) {
+      errors.hourAvailable = "Debe seleccionar las horas de inicio y fin";
+    }
 
-  if (startDate.getTime() > endDate.getTime()) {
-    errors.datesEnd =
-      "La fecha de fin debe ser posterior o igual a la fecha de inicio";
+    if (parseInt(hourAvailable) > parseInt(hourEnd)) {
+      errors.hourAvailable =
+        "La hora de fin debe ser posterior o igual a la hora de inicio";
+    }
+  } else {
+    if (!datesAvailable || !datesEnd) {
+      errors.datesAvailable = "Debe seleccionar las fechas de inicio y fin";
+    }
+
+    const startDate = new Date(datesAvailable);
+    const endDate = new Date(datesEnd);
+
+    if (startDate.getTime() > endDate.getTime()) {
+      errors.datesAvailable =
+        "La fecha de fin debe ser posterior o igual a la fecha de inicio";
+    }
   }
-  //-----------------------------------------------------------
+
   return errors;
 };

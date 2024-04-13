@@ -12,21 +12,27 @@ export const Nav = ({ pathname }) => {
   }
 
   return (
-    <div className="shadow-lg bg-[#f7ab5e] border-b-4 border-solid border-chocolate-100 w-screen flex flex-row items-start justify-start  box-border max-w-full text-left text-mini-8 text-midnightblue font-inter  mq1300:box-border ">
-      <div className=" flex flex-row items-center justify-between w-full pt-0 px-5">
-        <div
-          className="flex flex-col items-start justify-start pt-1 px-2  text-black hover:cursor-pointer"
-          onClick={() => {
-            if (pathname !== "/") navigate("/");
-          }}
-        >
-          <div className="relative leading-[10px] z-[3]">
-            <img
-              className="max-h-[80px] flex-1 py-1 relative rounded-xl max-w-full overflow-hidden object-cover "
-              loading="lazy"
-              alt=""
-              src={Isologotipo}
-            />
+    <div className="bg-orange-300 mt-[10px] ml-[10px] mr-[10px] rounded-lg">
+      <div className="relative flex h-16 items-center justify-between">
+        <div className="flex flex-col items-center justify-center   text-black hover:cursor-pointer" onClick={() => { if (pathname !== "/") navigate("/"); }}>
+          <img className="h-[80px] ml-[20px] mr-[100px]" loading="lazy" alt="" src={Isologotipo} />
+        </div>
+        
+      
+
+        {/* Enlaces del menú para resoluciones mayores a 1300px */}
+      {!isMobile && (
+        <div className="flex gap-6 items-center ">
+          <NavLink to="/ProfileHousing" className="  no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">Añadir Alojamiento</NavLink>
+          <NavLink to="/formMascota" className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b]  rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">Añadir Perfil de Mascota</NavLink>
+          <NavLink to="/historial-reservas" className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">Historial de Reservas</NavLink>
+          <NavLink to="/solicitud-reserva" className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b]  rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]">Solicitudes</NavLink>
+          <div className="ml-3">
+            
+          <div className="flex items-center">
+            <h1 className="text-white">{nameUsuario?.name}</h1>
+            <DropDown />
+
           </div>
         </div>
         {nameUsuario?.email && (

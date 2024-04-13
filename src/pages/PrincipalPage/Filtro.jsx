@@ -183,6 +183,8 @@ const handleFilterChange = async (e)=>{
     setFilteredProvincias(filtered);
   }, [searchProvinceText, provincias]);
  
+  console.log('filter:', filter)
+  
   const [filterOn, setFilterOn] = useState(false)
 
   const handleFilterOn = () => {
@@ -572,5 +574,4 @@ const [provinceClick, setProvinceClick] = useState(false)
     </div>
   );
 };
-
 

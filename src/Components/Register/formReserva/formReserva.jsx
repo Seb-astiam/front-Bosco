@@ -11,7 +11,7 @@ import caballo from "../../../assets/caballo.jpeg";
 import gecko from "../../../assets/gecko.webp";
 import axiosJwt from "../../../utils/axiosJwt";
 
-export const FormReserva = (id) => {
+export const FormReserva = ({ id, hourly }) => {
   const [open, setOpen] = useState(false);
 
   const email_usuario = JSON.parse(localStorage.getItem("user"));
@@ -20,10 +20,11 @@ export const FormReserva = (id) => {
   const pet = useSelector((state) => state.storage.MascotasUsuario);
 
   const mascota = pet;
-
   const [input, setInput] = useState({
     fechaInicio: "",
     fechaFin: "",
+    horaInicio: "",
+    horaFin: "",
   });
 
   const handleChange = (e) => {
@@ -40,14 +41,25 @@ export const FormReserva = (id) => {
 
     const { value } = e.target;
 
-    const body = {
-      fechaInicio: input.fechaInicio,
-      fechaFin: input.fechaFin,
+    let body = {
       email_usuario: email_usuario.email,
-      id_alojamiento: id.id,
+      id_alojamiento: id,
       UserMascotumId: value,
     };
-
+    if (hourly) {
+      body = {
+        ...body,
+        fechaInicio: input.fechaInicio,
+        horaInicio: input.horaInicio,
+        horaFin: input.horaFin,
+      };
+    } else {
+      body = {
+        ...body,
+        fechaInicio: input.fechaInicio,
+        fechaFin: input.fechaFin,
+      };
+    }
     const camposVacios = Object.values(body).some((value) => !value);
 
     if (camposVacios) {
@@ -82,14 +94,24 @@ export const FormReserva = (id) => {
   const handleClick = (e) => {
     e.preventDefault();
 
-    if (!input?.fechaInicio || !input?.fechaFin) {
-      return Swal.fire({
-        title: "ERROR",
-        text: "Te faltan llenar campos",
-        icon: "error",
-      });
+    if (hourly) {
+      if (!input?.fechaInicio || !input?.horaInicio || !input?.horaFin) {
+        console.log("aca");
+        return Swal.fire({
+          title: "ERROR",
+          text: "Te faltan llenar campos",
+          icon: "error",
+        });
+      }
+    } else {
+      if (!input?.fechaInicio || !input?.fechaFin) {
+        return Swal.fire({
+          title: "ERROR",
+          text: "Te faltan llenar campos",
+          icon: "error",
+        });
+      }
     }
-
     if (open) {
       setOpen(false);
     } else {
@@ -104,10 +126,47 @@ export const FormReserva = (id) => {
         <input type="date" name="fechaInicio" onChange={handleChange}></input>
       </label>
 
-      <label className="w-64 h-10 text-center flex items-center justify-center gap-5">
-        <box-icon name="calendar-edit"></box-icon>
-        <input type="date" name="fechaFin" onChange={handleChange}></input>
-      </label>
+      {hourly ? (
+        <div className="flex flex-row">
+          <label className="flex w-[110px] flex-col items-center px-[15px] py-[10px] ">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+              Hora de inicio
+            </a>
+            <input
+              type="number"
+              name="horaInicio"
+              id="horaInicio"
+              onChange={handleChange}
+              value={input.horaInicio}
+              min={0}
+              max={input.horaFin}
+              step={1}
+              className="outline-none w-12"
+            />
+          </label>
+          <label className="flex w-[110px] flex-col items-center px-[15px] py-[10px] ">
+            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
+              Hora de fin
+            </a>
+            <input
+              type="number"
+              name="horaFin"
+              id="horaFin"
+              onChange={handleChange}
+              value={input.horaFin}
+              min={input.horaInicio}
+              step={1}
+              max={24}
+              className="outline-none w-12"
+            />
+          </label>
+        </div>
+      ) : (
+        <label className="w-64 h-10 text-center flex items-center justify-center gap-5">
+          <box-icon name="calendar-edit"></box-icon>
+          <input type="date" name="fechaFin" onChange={handleChange}></input>
+        </label>
+      )}
 
       <button
         className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
@@ -132,15 +191,7 @@ export const FormReserva = (id) => {
                       <img
                         className="w-[230px] h-[240px]"
                         src={
-                          pet.type === "Cat"
-                            ? gato
-                            : pet.type === "Dog"
-                            ? perro
-                            : pet.type === "Caballo"
-                            ? caballo
-                            : pet.type === "Reptil"
-                            ? gecko
-                            : ""
+                          pet.image
                         }
                         alt="Imagen de mascota"
                       />
