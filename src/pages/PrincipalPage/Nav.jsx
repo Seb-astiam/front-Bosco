@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import pictureDefault from "../../assets/perfilPicture.webp"
 export const Nav = ({ pathname }) => {
   const navigate = useNavigate();
-
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
   let picture = pictureDefault
-  if (JSON.parse(localStorage.getItem("user")).picture) {
+  if (JSON.parse(localStorage.getItem("user"))) {
 
     picture = JSON.parse(localStorage.getItem("user")).picture
   }

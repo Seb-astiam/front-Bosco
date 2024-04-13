@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import {FormReserva } from "../Register/formReserva/formReserva"
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
-
-  const navigate = useNavigate()
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
@@ -27,15 +25,6 @@ const Detail = () => {
     Services,
     User
   } = card;
-
-
-  const handleClick = () => {
-      navigate('/formReserva', {
-        state: {
-            id: id
-        }
-    })
-  }
 
 
   const [activeImg, setActiveImage] = useState(images[0]);
@@ -113,27 +102,11 @@ const Detail = () => {
         <div className="flex flex-col">
         
         <div className="flex flex-row">
-          <label htmlFor="datesAvailable" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white] rounded-tl-[20px]">
-            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de inicio </a>
-              <input
-                type="date"
-                className="outline-none" />
-          </label>
-          <label htmlFor="datesEnd" className="flex w-[110px] flex-col items-center px-[15px] py-[10px] bg-[white]  rounded-tr-[20px]">
-            <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500"> Fecha de fin </a>
-            <input
-              type="date"
-              className="outline-none"/>
-             </label>
+         
+          <FormReserva id={id}/>
         </div>
 
-        <div className="flex items-center justify-center">
-          <button className="bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl"
-            onClick={handleClick}
-          >
-            Realiza tu reserva
-          </button>
-        </div>
+       
         </div>
       </div>
     </div>
