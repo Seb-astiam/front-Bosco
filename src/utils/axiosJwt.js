@@ -4,9 +4,9 @@ const axiosJwt = axios.create();
 
 axiosJwt.interceptors.request.use(
   (config) => {
-    const { token } = JSON.parse(localStorage.getItem("user"));
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
     }
     return config;
   },
@@ -17,6 +17,7 @@ axiosJwt.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error?.response?.status === 403) {
+      console.log("No hay token");
       return (window.location.href = "/login");
     }
     return Promise.reject(error);
