@@ -6,9 +6,11 @@ import pictureDefault from "../../assets/perfilPicture.webp"
 export const Navbar = () => {
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
   let picture = pictureDefault
-  if (localStorage.getItem("user")) {
-    picture = JSON.parse(localStorage.getItem("user")).picture
-    console.log(picture, 'image')
+
+  if (JSON.parse(localStorage.getItem("user"))) {
+    if(JSON.parse(localStorage.getItem("user")).picture) {
+      picture = JSON.parse(localStorage.getItem("user")).picture
+    }
   }
   return (
     <div className="w-full flex flex-row items-start justify-start pt-0 px-20 pb-[53.30000000000001px] box-border max-w-full text-left text-mini-8 text-midnightblue font-inter mq1300:pl-10 mq1300:pr-10 mq1300:box-border">

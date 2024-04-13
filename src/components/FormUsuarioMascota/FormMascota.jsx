@@ -68,6 +68,7 @@ export const FormMascota = () => {
         }else{
             newValues=value
         }
+
         setInput({
             ...input,
             [name]: newValues
@@ -100,7 +101,7 @@ export const FormMascota = () => {
             });
 
             formDataToSend.append('UserId', email_usuario.id);
-            
+
         const sendBack = await axios.post("http://localhost:3001/newMascota", formDataToSend);
 
         if (sendBack.status === 201) {
@@ -301,6 +302,7 @@ export const FormMascota = () => {
                         <img
                           src={URL.createObjectURL(image)}
                           alt={`Imagen ${index + 1}`}
+
                           className="h-16 w-16 object-cover mr-2"
                         />
                         <button
@@ -316,6 +318,7 @@ export const FormMascota = () => {
                   
                     <a onClick={reset} className="font-custom font-semibold flex justify-end cursor-pointer text-[12px] hover:underline">Limpiar formulario</a>
                     <button type="submit" className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${disabledSubmit ? 'bg-[transparent] text-black shadow-md' : 'bg-[black] text-white shadow-md'}`} disabled={disabledSubmit}>Submit</button>
+
 
 
                 </form>
