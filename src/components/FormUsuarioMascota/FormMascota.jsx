@@ -68,7 +68,6 @@ export const FormMascota = () => {
         }else{
             newValues=value
         }
-        console.log(input);
         setInput({
             ...input,
             [name]: newValues
@@ -99,11 +98,9 @@ export const FormMascota = () => {
                     formDataToSend.append(key, value);
                 }
             });
+
             formDataToSend.append('UserId', email_usuario.id);
-
-            console.log(formDataToSend.getAll('UserId'));
             
-
         const sendBack = await axios.post("http://localhost:3001/newMascota", formDataToSend);
 
         if (sendBack.status === 201) {

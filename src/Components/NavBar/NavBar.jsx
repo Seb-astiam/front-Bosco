@@ -7,8 +7,8 @@ export const Navbar = () => {
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
   let picture = pictureDefault
   if (localStorage.getItem("user")) {
-
     picture = JSON.parse(localStorage.getItem("user")).picture
+    console.log(picture, 'image')
   }
   return (
     <div className="w-full flex flex-row items-start justify-start pt-0 px-20 pb-[53.30000000000001px] box-border max-w-full text-left text-mini-8 text-midnightblue font-inter mq1300:pl-10 mq1300:pr-10 mq1300:box-border">
@@ -53,7 +53,7 @@ export const Navbar = () => {
                       to="/Profile/perfil"
                       className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
                     >
-                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
+                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={pictureDefault} alt="" />
                     </NavLink>
                   </button>
                 </  div>
