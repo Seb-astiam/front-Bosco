@@ -4,6 +4,7 @@ import "boxicons";
 import { useMascotas } from "../../../Hooks/useMascota";
 import { useSelector } from "react-redux";
 import axiosJwt from "../../../utils/axiosJwt";
+import { useNavigate } from "react-router";
 
 export const FormReserva = ({ id, hourly }) => {
   const [open, setOpen] = useState(false);
@@ -14,6 +15,8 @@ export const FormReserva = ({ id, hourly }) => {
   const pet = useSelector((state) => state.storage.MascotasUsuario);
 
   const mascota = pet;
+
+
   const [input, setInput] = useState({
     fechaInicio: "",
     fechaFin: "",
@@ -85,8 +88,26 @@ export const FormReserva = ({ id, hourly }) => {
     }
   };
 
+  const navigate = useNavigate();
+
   const handleClick = (e) => {
     e.preventDefault();
+
+    if(mascota.length === 0) {
+      Swal.fire({
+        title: "Atencion!",
+        text: "No tienes mascotas Registradas?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Registrar Mascota"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/formMascota");
+        }
+      });
+    }
 
     if (hourly) {
       if (!input?.fechaInicio || !input?.horaInicio || !input?.horaFin) {
@@ -170,7 +191,7 @@ export const FormReserva = ({ id, hourly }) => {
         Enviar reserva
       </button>
 
-      {open && (
+      {open && mascota.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
           <div className="bg-white p-5 rounded flex flex-col justify-center items-center">
             <button onClick={() => setOpen(false)} className="cursor-pointer">
