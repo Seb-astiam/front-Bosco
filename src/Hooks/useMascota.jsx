@@ -1,21 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getAllAlojamientos } from "../Redux/boscoSlice";
+import { getMascotas } from "../Redux/boscoSlice";
+// import axios from "axios";
 import axiosJwt from "../utils/axiosJwt";
 
-export const useAlojamientoPrincipal = () => {
+export const useMascotas = (id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const peticionBack = async () => {
       try {
         const responseBack = await axiosJwt.get(
-          "/profileHousing/allHousingslocation"
+          `/allMascotas/${id}`
         );
-
-        dispatch(getAllAlojamientos(responseBack.data));
+        dispatch(getMascotas(responseBack.data));
       } catch (error) {
-        console.error("Algo falló en la petición a mi Backend", error);
+        return Swal.fire({
+          title: "Error!",
+          text: error.response.data,
+          icon: "error",
+        });
       }
     };
 

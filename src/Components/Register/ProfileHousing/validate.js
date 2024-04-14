@@ -1,29 +1,29 @@
 export const ValidateFormdata = (formdata) => {
   const {
     accommodationType,
+    hourly,
+    hourAvailable,
+    hourEnd,
     datesAvailable,
     datesEnd,
     images,
-    location,
+    provinces,
+    cities,
     price,
     services,
     square,
     title,
   } = formdata;
 
-  console.log(title);
-  let errors = {
-    msgAd: "",
-  };
+  let errors = {};
   if (!title) {
     errors.title = "El nombre del alojamiento es requerido";
   }
-  if (!location) {
-    errors.location = "La ubicación es requerida";
+  if (!provinces) {
+    errors.provinces = "Debes seleccionar una provincia";
   }
-
-  if (!datesAvailable || !datesEnd) {
-    errors.datesAvailable = "Debe seleccionar las fechas de inicio y fin";
+  if (!cities) {
+    errors.cities = "Debes seleccionar una localidad";
   }
 
   if (!accommodationType) {
@@ -47,16 +47,28 @@ export const ValidateFormdata = (formdata) => {
     errors.images = "Debe seleccionar al menos una imagen";
   }
 
-  //Cambiar esto en la nueva rama real
-  const startDate = new Date(datesAvailable);
-  const endDate = new Date(datesEnd);
-  console.log(startDate.getTime());
-  console.log(endDate.getTime());
+  if (hourly) {
+    if (!hourAvailable || !hourEnd) {
+      errors.hourAvailable = "Debe seleccionar las horas de inicio y fin";
+    }
 
-  if (startDate.getTime() > endDate.getTime()) {
-    errors.datesEnd =
-      "La fecha de fin debe ser posterior o igual a la fecha de inicio";
+    if (parseInt(hourAvailable) > parseInt(hourEnd)) {
+      errors.hourAvailable =
+        "La hora de fin debe ser posterior o igual a la hora de inicio";
+    }
+  } else {
+    if (!datesAvailable || !datesEnd) {
+      errors.datesAvailable = "Debe seleccionar las fechas de inicio y fin";
+    }
+
+    const startDate = new Date(datesAvailable);
+    const endDate = new Date(datesEnd);
+
+    if (startDate.getTime() > endDate.getTime()) {
+      errors.datesAvailable =
+        "La fecha de fin debe ser posterior o igual a la fecha de inicio";
+    }
   }
-  //-----------------------------------------------------------
+
   return errors;
 };

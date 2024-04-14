@@ -1,4 +1,5 @@
-import { Card } from "../Card/Card"
+
+import { CardPrincipal } from '../../pages/PrincipalPage/Cards y Card/CardPrincipal'
 
 import React from 'react'
 import { NavLink } from 'react-router-dom';
@@ -11,18 +12,7 @@ export const Cards = () => {
 
   const alojamiento = useSelector((state) => state.storage.allAlojamientos)
 
-  let data = alojamiento.slice(0, 4); // Mostrar cuatro tarjetas
-  const containerRef = React.useRef(null);
-
-  // Calcular el ancho de cada tarjeta
-  const calculateCardWidth = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.clientWidth;
-      const numCards = alojamiento.length;
-      return `${containerWidth / numCards}px`;
-    }
-    return 'auto';
-  }
+  let data = alojamiento?.slice(0, 4); 
 
     return (
       <div className="mt-[70px] flex-col items-center justify-center gap-10 mx-auto max-w-full text-11xl">
@@ -32,15 +22,19 @@ export const Cards = () => {
             </div>
             <div>
               <NavLink to="/Principal" className=''>
-                <button className="font-custom pt-5 pb-5 pr-7 pl-8 bg-chocolate-100 rounded-xl hover:bg-chocolate-200 text-white font-medium cursor-pointer">Más</button>
+                <button className="font-custom pt-5 pb-5 pr-7 pl-8 bg-chocolate-100 rounded-[50px] hover:bg-chocolate-200 text-white font-medium cursor-pointer">Más</button>
               </NavLink>
             </div>
           </div>
   
-        <div className="flex flex-wrap justify-evenly mt-8 gap-4" style={{ marginTop: '-50px' }}>
-          {data.map((card) => (
-              <Card card={card} key={card.id}/>
+        <div className="flex  justify-evenly gap-[7px]" >
+
+          
+          {data?.map((alojamiento) => (
+              <CardPrincipal alojamiento={alojamiento} key={alojamiento.id}/>
           ))}
+
+
         </div>
       </div>
     );

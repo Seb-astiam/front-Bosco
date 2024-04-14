@@ -7,6 +7,7 @@ import { isValidPasswordConfirmation } from "../../Validations/validPasswordConf
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import bosco from "../../../assets/bosco-logo.jpeg"
+import { useGoogleLogin } from "@react-oauth/google";
 
 
 export const Register = () => {
@@ -109,8 +110,9 @@ export const Register = () => {
 
 
     /******************************** */
+    
     const [verificationSuccessful, setVerificationSuccessful]= useState(false)
-    console.log('verifiaction', verificationSuccessful)
+    // console.log('verification', verificationSuccessful)
     const handleSubmit = async (e) => {
         e.preventDefault();
       
@@ -133,6 +135,11 @@ export const Register = () => {
 
           //! acá debería verificar el correo!
           setVerificationSuccessful(true)
+          // Obtén los datos del usuario registrado
+          const userData = responseBack.data;
+
+          // Guarda la información del usuario en el localStorage
+          localStorage.setItem("user", JSON.stringify(userData));
 
           
         } catch (error) {
@@ -146,6 +153,148 @@ export const Register = () => {
         navigate('/');
       };
 
+      const handleCloseRegister = () => {
+        if(setIsAccountPrevRegister) {
+        setIsAccountPrevRegister(false) 
+        } else {
+            setIsAccountPrevRegister(true)
+        }
+      }
+
+      /**************************************** */
+      //!AUTENTICACIÓN
+
+    const [accessToken, setAcessToken] = useState([]);
+  // guarda entre otras cosas que no sirven, una propiedad access_token 
+  // que sirve para acceder a los datos del usuario
+
+  const [isAccountPrevRegister, setIsAccountPrevRegister] = useState(false)
+  
+  const register = useGoogleLogin({
+    onSuccess: (codeResponse) => {setAcessToken(codeResponse)
+    },
+    onError: (error) => console.log("Login Failed:", error)
+  });
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+        // Verifica si accessToken está definido y no es un arreglo vacío
+        if (accessToken && accessToken.access_token) {
+            try {
+                const token = accessToken.access_token;
+                console.log("token", token);
+                
+                // Realiza la solicitud al servidor para registrar al usuario
+                const userResponse = await axios.post("/auth/google-register", { token }
+                );
+
+                // Obtén los datos del usuario registrado
+                const userData = userResponse.data;
+
+                // Guarda la información del usuario en el localStorage
+                localStorage.setItem("user", JSON.stringify(userData));
+
+                // Redirige al usuario a la página principal
+                navigate('/principal');
+                
+            } catch (error) {
+                // Maneja cualquier error que ocurra durante la solicitud
+                if (error.response && error.response.status === 400) {
+                    setIsAccountPrevRegister(true);
+                } else {
+                    console.error("Error during registration:", error);
+                }
+            }
+        }
+    };
+
+    // Llama a fetchData solo cuando accessToken cambie y esté definido
+    if (accessToken && accessToken.access_token) {
+        fetchData();
+    }
+}, [accessToken]);
+
+/****************************************************/
+
+const appId = import.meta.env.VITE_APP_ID
+
+    const [tokenFB, setTokenFB] = useState(null)
+    const [userId, setUserId] = useState(null)
+
+    useEffect(() => {
+        // Inicializar el SDK de Facebook
+        window.fbAsyncInit = function() {
+            window.FB.init({
+                appId            : appId,
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v13.0'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/es_ES/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    }, []);
+
+    const handleFacebookRegister = () => {
+        window.FB.login((response) => {
+            if (response.status === 'connected') {
+                setTokenFB(response.authResponse.accessToken);
+                setUserId(response.authResponse.userID)
+            } else {
+                console.log("Inicio de sesión de Facebook fallido");
+            }
+        }, { scope: 'public_profile,email' });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (tokenFB) {
+                try {
+                    const token = tokenFB
+                    console.log("tokenFB", token);
+                    console.log("userIDFB", userId)
+                    
+                    if (token) {
+                        const userResponse = await axios.post(
+                            "/auth/facebook-register",
+                            { token, userId },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${tokenFB}`,
+                                    Accept: "application/json",
+                                },
+                            }
+                        );
+    
+                        const userData = userResponse.data;
+                        console.log("userData", userData)
+    
+                        localStorage.setItem("user", JSON.stringify(userData));
+    
+                        navigate('/principal');
+                    } else {
+                        console.log("Inicio de sesión fallido");
+                    }
+                } catch (error) {
+                    console.error("Error durante la solicitud:", error);
+                    setIsAccountPrevRegister(true);
+                }
+            }
+        };
+    
+        if (tokenFB) {
+            fetchData();
+        }
+    }, [tokenFB]);
+
+
     return (
 
         <div className=" w-screen h-screen flex justify-center items-center">
@@ -157,96 +306,123 @@ export const Register = () => {
 
                 <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
                     <h2 className='font-custom font-extrabold ' >Crear una cuenta</h2>
-                            <div className="flex flex-col  items-center">
-                            <label className='rounded-[50%] p-[15px] cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
-                            <box-icon size='30px' type='logo' name='google' ></box-icon>
-                            </label> 
-                            <p className="font-custom">o usa tu email para registrarte</p>
+                        <div className="flex flex-col  items-center">
+                            <div className='flex'>
+                        <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
+                            <box-icon size='30px' type='logo' name='google' onClick={register}></box-icon>
+                            </div> 
+                            <div className='rounded-[50%] p-[15px] flex items-center justify-center cursor-pointer mx-[10px] transition duration-300 ease-in-out shadow-md hover:bg-[#333] hover:text-[white]'>
+                            <box-icon size='30px' type='logo' name='facebook' onClick={handleFacebookRegister}></box-icon>
                             </div>
+                            </div>
+                            <p className="font-custom">o usa tu email para registrarte</p>
+                        </div>
 
                     <form className="flex flex-col items-center my-[0%] px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] w-[100%]" onSubmit={handleSubmit}>
-                                <div className="">
-                                    <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                                        <box-icon name='user' ></box-icon>
-                                        <input className= "w-[225px] outline-none" name= "name" value={input.name}  onChange={handleChange} placeholder="usuario"></input> 
-                                    </label>
-                                </div>
+                        <div className="">
+                            <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+                                <box-icon name='user' ></box-icon>
+                                <input className= "w-[225px] outline-none" name= "name" value={input.name}  onChange={handleChange} placeholder="usuario"></input> 
+                            </label>
+                        </div>
 
-                            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{inputError.name.error}</p>
-                                <div className="">
-                                    <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                                        <box-icon name='envelope'></box-icon>
-                                        <input className= "w-[225px] outline-none" name= "email" value={input.email}  onChange={handleChange} placeholder="correo electrónico"></input>
-                                    </label>
-                                </div>
+                        <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{inputError.name.error}</p>
+                            <div className="">
+                                <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+                                    <box-icon name='envelope'></box-icon>
+                                    <input className= "w-[225px] outline-none" name= "email" value={input.email}  onChange={handleChange} placeholder="correo electrónico"></input>
+                                </label>
+                            </div>
 
                             <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{inputError.email.error}</p>
-                                <div className=" items-center  flex flex-row ml-[25px]">
-                                    <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                                        <box-icon name='lock-alt' ></box-icon>
-                                        <input 
-                                        className= "w-[225px] outline-none"
-                                        name= "password"  
-                                        value={input.password}
-                                        onChange={handleChange} 
-                                        placeholder="contraseña"
-                                        type={showPassword ? 'text' : 'password'}
-                                        >
-                                        </input>
-                                    </label>
-                                        <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordVisibility} size= '30px'/>
-                                </div>
+
+                            <div className=" items-center  flex flex-row ml-[25px]">
+                                <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+                                    <box-icon name='lock-alt' ></box-icon>
+                                    <input 
+                                    className= "w-[225px] outline-none"
+                                    name= "password"  
+                                    value={input.password}
+                                    onChange={handleChange} 
+                                    placeholder="contraseña"
+                                    type={showPassword ? 'text' : 'password'}
+                                    >
+                                    </input>
+                                </label>
+                                <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordVisibility} size= '30px'/>
+                            </div>
 
                             <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{inputError.password.error}</p>
-                                <div className=" items-center  flex flex-row ml-[25px]">
-                                    <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                                        <box-icon name='lock-alt' ></box-icon>
-                                        <input 
-                                        className= "w-[225px] outline-none"
-                                        name = "passwordConfirmation" 
-                                        value={input.passwordConfirmation}  
-                                        onChange={handleChange} 
-                                        placeholder="repetir contraseña"
-                                        type={showPasswordConfirmation ? 'text' : 'password'}
-                                        >
-                                        </input>
-                                    </label>
-                                        <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordConfirmationVisibility} size= '30px' />
-                                </div>
+
+                            <div className=" items-center  flex flex-row ml-[25px]">
+                                <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+                                    <box-icon name='lock-alt' ></box-icon>
+                                    <input 
+                                    className= "w-[225px] outline-none"
+                                    name = "passwordConfirmation" 
+                                    value={input.passwordConfirmation}  
+                                    onChange={handleChange} 
+                                    placeholder="repetir contraseña"
+                                    type={showPasswordConfirmation ? 'text' : 'password'}
+                                    >
+                                    </input>
+                                </label>
+                                <Box-icon name={showPassword ? 'show' : 'low-vision'} onClick={handlePasswordConfirmationVisibility} size= '30px' />
+                            </div>
 
                             <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{inputError.passwordConfirmation.error}</p>
-                        <label className="flex">
-                            <input className="" type="checkbox" checked= {termsChecked} onChange={handleCheckboxChange}/>
-                            <p className= "font-custom text-[12px] my-[0px]"> Acepto los <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Términos y condiciones</a> y autorizo el uso de mis datos de acuerdo a la <a href="/declaration"  target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Declaración de Privacidad.</a>
-                            </p>
-                        </label>
-                        <label className="flex">
-                            <input className="check-input" type="checkbox"  />
-                            <p className= "font-custom text-[12px] my-[0px]">Quiero recibir notificaciones</p>
-                        </label>
+
+                            <label className="flex">
+                                <input className="" type="checkbox" checked= {termsChecked} onChange={handleCheckboxChange}/>
+                                <p className= "font-custom text-[12px] my-[0px]"> Acepto los <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Términos y condiciones</a> y autorizo el uso de mis datos de acuerdo a la <a href="/declaration"  target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Declaración de Privacidad.</a>
+                                </p>
+                            </label>
+
+                            <label className="flex">
+                                <input className="check-input" type="checkbox"  />
+                                <p className= "font-custom text-[12px] my-[0px]">Quiero recibir notificaciones</p>
+                            </label>
                         <button 
-                        className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${formValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`}>
-                        Registrarme </button>
+                            className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${formValid ? 
+                            'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`} disabled={!formValid}>
+                            Registrarme 
+                        </button>
 
                     </form>
-                    </div>
-                    
-                    
+                </div>
             </div>
+
             <div className={`${verificationSuccessful? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
-                            <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
-                                <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Verificá tu email
-                                    <span className= "cursor-pointer" onClick={handleClose}>&times;</span>
-                                </label>
-                                <label className="flex justify-center py-[15px]">
-                                    <box-icon name='check-shield' size='80px'></box-icon>
-                                </label>
-                                <h2 className="font-custom font-extrabold my-0">Hola {input.name}! </h2>
-                                <p className='font-custom font-semibold text-center mx-10 text-[15px]'>Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
-                                <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
-                                <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
-                            </div>
-                        </div>
+                <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>
+                        Verificá tu email
+                        <span className= "cursor-pointer" onClick={handleClose}>&times;</span>
+                    </label>
+                    <label className="flex justify-center py-[15px]">
+                        <box-icon name='check-shield' size='80px'></box-icon>
+                    </label>
+                    <h2 className="font-custom font-extrabold my-0">Hola {input.name}! </h2>
+                    <p className='font-custom font-semibold text-center mx-10 text-[15px]'>
+                    Confirmanos si esta realmente es tu dirección de email para ayudarnos a mantener tu cuenta segura. Este email tiene una caducidad de 24hs, fué enviado a: </p>
+                    <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
+                    <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="https://mail.google.com/mail/u/0" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }} >Confirmá tu email</a>
+                </div>
+            </div>
+
+            <div className={`${isAccountPrevRegister? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
+                <div className= {`${isAccountPrevRegister? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
+                        <span className= "cursor-pointer" onClick={handleCloseRegister}>&times;</span>
+                    </label>
+                    <label className="flex justify-center py-[15px]">
+                        <box-icon name='error' size='100px'></box-icon>
+                    </label>
+                    <h2 className="font-custom font-extrabold my-0">Email ya registrado </h2>
+                    <p className='font-custom font-semibold text-center mx-10 text-[15px]'>El email ingresado ya está en uso, por favor inicia sesión o intenta con otra cuenta. </p>
+                    <h3 className="font-custom font-extrabold my-0"> {input.email} </h3>
+                    <a className="font-bold font-custom outline-none text-center w-[200px] rounded-2xl py-[15px] my-[30px] bg-[black] text-white cursor-pointer transition duration-300 ease-in-out hover:bg-[transparent] hover:text-black hover:shadow-md" href="/login"  style={{ textDecoration: 'none' }} >Iniciar sesión</a>
+                </div>
+            </div>
         </div>       
     )
 }

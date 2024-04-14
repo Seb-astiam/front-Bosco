@@ -1,8 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Isologotipo from "../../assets/IsoLogotipoBosco.png";
+import pictureDefault from "../../assets/perfilPicture.webp"
 
 export const Navbar = () => {
+  const nameUsuario = JSON.parse(localStorage.getItem("user"));
+  let picture = pictureDefault
+
+  if (JSON.parse(localStorage.getItem("user"))) {
+    if(JSON.parse(localStorage.getItem("user")).picture) {
+      picture = JSON.parse(localStorage.getItem("user")).picture
+    }
+  }
   return (
     <div className="w-full flex flex-row items-start justify-start pt-0 px-20 pb-[53.30000000000001px] box-border max-w-full text-left text-mini-8 text-midnightblue font-inter mq1300:pl-10 mq1300:pr-10 mq1300:box-border">
       <div className="flex-1 flex flex-row items-end justify-between gap-[45px] max-w-full">
@@ -36,32 +45,41 @@ export const Navbar = () => {
           </nav>
 
           <div className="w-[164.6px] flex flex-row items-start justify-start gap-[0px_29.8px] mq900:hidden">
-            <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
-              <NavLink
-                to="/Profile/ff8f1f16-0594-4b07-b5fc-c846fe86d8c3"
-                className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
-              >
-                Perfil
-              </NavLink>
-            </button>
 
-            <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
-              <NavLink
-                to="/Register"
-                className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
-              >
-                Sign up
-              </NavLink>
-            </button>
+            {
+              nameUsuario?.email ?
+                <div>
 
-            <button className="cursor-pointer [border:none] py-3 pr-[20.799999999999955px] pl-[21px] bg-chocolate-100 flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-chocolate-200">
-              <NavLink
-                to="/login"
-                className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
-              >
-                Log In
-              </NavLink>
-            </button>
+                  <button className="flex flex-col items-start w-[45px] h-[45px] justify-start pt-[7.899999999999977px] px-0 pb-0">
+                    <NavLink
+                      to="/Profile/perfil"
+                      className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
+                    >
+                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={pictureDefault} alt="" />
+                    </NavLink>
+                  </button>
+                </  div>
+                :
+                <>
+                  <button className="flex flex-col items-start justify-start pt-[7.899999999999977px] px-0 pb-0">
+                    <NavLink
+                      to="/Register"
+                      className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
+                    >
+                      Sign up
+                    </NavLink>
+                  </button>
+
+                  <button className="cursor-pointer [border:none] py-3 pr-[20.799999999999955px] pl-[21px] bg-chocolate-100 flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-chocolate-200">
+                    <NavLink
+                      to="/login"
+                      className="cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-center"
+                    >
+                      Log In
+                    </NavLink>
+                  </button>
+
+                </>}
           </div>
         </div>
       </div>

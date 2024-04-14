@@ -2,10 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allAlojamientos: [],
-  AllLocation: [],
+  AllProvinces: [],
+  AllCities: [],
   AllService: [],
-  email: ''
+  email: '',
+  MascotasUsuario: [],
+  mascotaById: [],
+  UserById: [],
+  TipoAlojamientos: []
 };
+
+//! creo que no es necesario un estado local para provinces, cities y servicios. tema para resolver luego - ari
 
 const boscoSlice = createSlice({
   name: "storage",
@@ -13,10 +20,12 @@ const boscoSlice = createSlice({
   reducers: {
     getAllAlojamientos (state, action) {
         state.allAlojamientos = action.payload;
-        console.log(state.allAlojamientos)
     },
-    getAllLocation (state, action) {
-      state.AllLocation = action.payload
+    getAllProvinces (state, action) {
+      state.AllProvinces = action.payload
+    },
+    getAllCities (state, action) {
+      state.AllCities = action.payload
     },
     getAllService (state, action) {
       state.AllService = action.payload
@@ -24,9 +33,21 @@ const boscoSlice = createSlice({
     getAllUser (state, action) {
       state.email = action.payload
     },
+    getMascotas (state, action) {
+      state.MascotasUsuario = action.payload
+    },
+    getMascotaById (state, action) {
+      state.mascotaById = action.payload
+    },
+    getUserById (state, action) {
+      state.UserById = action.payload
+    },
+    getTiposAlojamientos (state, action) {
+      state.TipoAlojamientos = action.payload
+    }
   },
 });
 
-export const { getAllAlojamientos, getAllLocation, getAllService, getAllUser } = boscoSlice.actions;
+export const { getAllAlojamientos, getAllProvinces, getAllCities, getAllService, getAllUser, getMascotas, getMascotaById, getUserById, getTiposAlojamientos  } = boscoSlice.actions;
 
 export default boscoSlice.reducer;
