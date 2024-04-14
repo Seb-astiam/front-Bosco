@@ -183,7 +183,6 @@ export const Register = () => {
         if (accessToken && accessToken.access_token) {
             try {
                 const token = accessToken.access_token;
-                console.log("token", token);
                 
                 // Realiza la solicitud al servidor para registrar al usuario
                 const userResponse = await axios.post("/auth/google-register", { token }
