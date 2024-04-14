@@ -12,8 +12,8 @@ import axiosJwt from "./utils/axiosJwt.js";
 
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 
-axios.defaults.baseURL = 'https://back-bosco.up.railway.app/'
-axiosJwt.defaults.baseURL = 'https://back-bosco.up.railway.app/'
+axios.defaults.baseURL = 'https://back-bosco.up.railway.app'
+axiosJwt.defaults.baseURL = 'https://back-bosco.up.railway.app'
 // axiosJwt.defaults.baseURL = 'http://localhost:3001'
 // axios.defaults.baseURL = 'http://localhost:3001'
 
