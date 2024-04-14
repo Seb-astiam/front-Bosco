@@ -26,7 +26,8 @@ import Swal from 'sweetalert2'
 
 const App = () => {
   const { pathname } = useLocation();
-  const socket = io.connect("http://localhost:3001");
+  // const socket = io.connect("http://localhost:3001");
+  const socket = io.connect("https://back-bosco.up.railway.app");
 
   const [notificacion, setNotificacion] = useState('')
 
