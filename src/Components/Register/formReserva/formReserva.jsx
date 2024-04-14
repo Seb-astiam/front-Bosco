@@ -98,9 +98,7 @@ export const FormReserva = ({ id, hourly }) => {
         title: "Atencion!",
         text: "No tienes mascotas Registradas?",
         icon: "warning",
-        showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
         confirmButtonText: "Registrar Mascota"
       }).then((result) => {
         if (result.isConfirmed) {
