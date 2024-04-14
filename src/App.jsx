@@ -72,6 +72,7 @@ const App = () => {
   };
 
 
+        
 
   return (
     <>
@@ -80,18 +81,18 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Principal" element={<PrincipalPage />} />
-        <Route path="/ProfileHousing" element={<HousingForm />} />
+        <Route path="/ProfileHousing" element={userData ? <HousingForm /> : <Navigate to="/login" replace />} />
         <Route path="/RegisterCompany" element={<RegisterCompany />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Profile/*" element={<Profile />} />
-        <Route path="/formMascota" element={<FormMascota />} />
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/Profile/*" element={userData ? <Profile /> : <Navigate to="/login" replace />} />
+        <Route path="/formMascota" element={userData ? <FormMascota /> : <Navigate to="/login" replace />} />
+        <Route path="/detail/:id" element={userData ? <Detail /> : <Navigate to="/login" replace />} />
         <Route path="/terms" element={<Terms></Terms>} />
         <Route path="/declaration" element={<Declaration></Declaration>} />
         <Route path="/formReserva" element={<FormReserva />} />
-        <Route path="/historial-reservas" element={<HistorialReserva />} />
-        <Route path="/solicitud-reserva" element={<SolicitudReserva />} />
+        <Route path="/historial-reservas" element={userData ? <HistorialReserva /> : <Navigate to="/login" replace />} />
+        <Route path="/solicitud-reserva" element={userData ? <SolicitudReserva /> : <Navigate to="/login" replace />} />
         <Route path="/activate-account" element={<ActivateAccount />} />
         <Route path="/detail-mascota/:id" element={<DetalleMascota />} />
       </Routes>
