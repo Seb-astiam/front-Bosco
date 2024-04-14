@@ -3,7 +3,7 @@ import RegisterCompany from "./Components/Register/Company/RegisterCompany.jsx";
 import Detail from "./Components/Detail/Detail.jsx";
 import LoginPage from "./Components/Register/Login/login.jsx";
 import { Register } from "./Components/Register/Sign Up/Register.jsx";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { FormMascota } from "./Components/FormUsuarioMascota/FormMascota.jsx";
 
 import Home from "./pages/Home/Home";
@@ -20,6 +20,7 @@ import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccou
 import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+
 
 import Swal from 'sweetalert2'
 
