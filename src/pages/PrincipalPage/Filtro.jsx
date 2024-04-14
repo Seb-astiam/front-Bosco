@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useServices } from "../../Hooks/useServices";
 import useCities from "../../Hooks/useCities";
 import Switch from "react-switch";
-import axiosJwt from "../../utils/axiosJwt";
+// import axiosJwt from "../../utils/axiosJwt";
 export const Filtros = () => {
   const [opcionesAbiertas, setOpcionesAbiertas] = useState(false);
 
@@ -109,7 +109,7 @@ export const Filtros = () => {
 
   const fetchAlojamientos = async (queryParams) => {
     try {
-      const { data } = await axiosJwt.get(URL + queryParams);
+      const { data } = await axios.get(URL + queryParams);
       dispatch(getAllAlojamientos(data));
     } catch (error) {
       console.log(error);
