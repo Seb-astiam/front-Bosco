@@ -3,11 +3,6 @@ import { useSelector } from "react-redux";
 import { useMascotaById } from "../../Hooks/useMascotaById";
 import { useUser } from "../../Hooks/useUser";
 
-import perro from "../../assets/gestos-de-los-perros.jpg"
-import gato from "../../assets/gato.webp"
-import caballo from "../../assets/caballo.jpeg"
-import gecko from "../../assets/gecko.webp"
-
 
 export const DetalleMascota = () => {
     const { id } = useParams();

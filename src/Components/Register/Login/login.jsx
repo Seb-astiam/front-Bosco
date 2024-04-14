@@ -33,7 +33,7 @@ const LoginPage = ()=>{
   
     const handleVerification = async() => {
         try {
-            const response = await axios.post('http://localhost:3001/auth/login', { email, password })
+            const response = await axios.post('/auth/login', { email, password })
 
             if (response.status === 200) {
                  // Guardar la respuesta en el localStorage
@@ -193,7 +193,7 @@ const LoginPage = ()=>{
                     const token = tokenFB
                     if (token) {
                         const userResponse = await axios.post(
-                            "http://localhost:3001/auth/facebook-login",
+                            "/auth/facebook-login",
                             { token, userId },
                             {
                                 headers: {
@@ -242,14 +242,13 @@ const LoginPage = ()=>{
     const recoverPassword = async()=>{
        
         try {
-         const response = await axios.post(`http://localhost:3001/auth/password-reset/${emailRecover}`)
+            await axios.post(`/auth/password-reset/${emailRecover}`)
             handleAdviceRecover();
         } catch (error) {
             setEmailNotFound(true)
     }
     }
 
-    console.log('haveAccount', haveAccount)
 
     return (
         <div className="w-screen h-screen flex justify-center items-center absolute" >
@@ -353,6 +352,5 @@ const LoginPage = ()=>{
         </div>
     
     )
-// después validar número de teléfono e email!! 
 }
 export default LoginPage;

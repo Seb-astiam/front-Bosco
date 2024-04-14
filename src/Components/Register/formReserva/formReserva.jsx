@@ -1,14 +1,8 @@
 import { useState } from "react";
-// import axios from 'axios'
 import Swal from "sweetalert2";
 import "boxicons";
 import { useMascotas } from "../../../Hooks/useMascota";
 import { useSelector } from "react-redux";
-
-import perro from "../../../assets/gestos-de-los-perros.jpg";
-import gato from "../../../assets/gato.webp";
-import caballo from "../../../assets/caballo.jpeg";
-import gecko from "../../../assets/gecko.webp";
 import axiosJwt from "../../../utils/axiosJwt";
 
 export const FormReserva = ({ id, hourly }) => {
@@ -72,7 +66,7 @@ export const FormReserva = ({ id, hourly }) => {
 
     try {
       const { pet } = await axiosJwt.post(
-        "http://localhost:3001/reservation/newReservation",
+        "/reservation/newReservation",
         body
       );
       Swal.fire({

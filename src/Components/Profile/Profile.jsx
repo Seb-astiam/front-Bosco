@@ -31,7 +31,7 @@ export const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/profile/${userId}`);
+                const response = await axios.get(`/profile/${userId}`);
                 const userData = response.data;
                 setFormData({
                     ...formData,
@@ -54,7 +54,7 @@ export const Profile = () => {
     }, []);
     const handleUpdate = async () => {
         try {
-            await axios.put("http://localhost:3001/profile/", formData);
+            await axios.put("/profile/", formData);
             alert("User data updated successfully!");
         } catch (error) {
             console.error("Error updating user data:", error);
@@ -63,7 +63,7 @@ export const Profile = () => {
     };
     const handlePost = async () => {
         try {
-            await axios.post("http://localhost:3001/profile/", formData);
+            await axios.post("/profile/", formData);
             alert("User data updated successfully!");
         } catch (error) {
             console.error("Error updating user data:", error);

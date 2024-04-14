@@ -126,7 +126,7 @@ export const Register = () => {
         }
       
         try {
-          const responseBack = await axios.post("http://localhost:3001/user", input, {
+          const responseBack = await axios.post("/user", input, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -186,7 +186,7 @@ export const Register = () => {
                 console.log("token", token);
                 
                 // Realiza la solicitud al servidor para registrar al usuario
-                const userResponse = await axios.post("http://localhost:3001/auth/google-register", { token }
+                const userResponse = await axios.post("/auth/google-register", { token }
                 );
 
                 // Obtén los datos del usuario registrado
@@ -263,7 +263,7 @@ const appId = import.meta.env.VITE_APP_ID
                     
                     if (token) {
                         const userResponse = await axios.post(
-                            "http://localhost:3001/auth/facebook-register",
+                            "/auth/facebook-register",
                             { token, userId },
                             {
                                 headers: {

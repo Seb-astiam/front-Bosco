@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import axios from 'axios'
 import axiosJwt from "../../utils/axiosJwt";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
@@ -14,7 +13,7 @@ export const SolicitudReserva = () => {
     const solicitud = async () => {
       try {
         const { data } = await axiosJwt(
-          `http://localhost:3001/reservation/reservations/${email_usuario.id}`
+          `/reservation/reservations/${email_usuario.id}`
         );
         const response = data.flat().map((dataHousing) => {
           let obj;
@@ -53,7 +52,7 @@ export const SolicitudReserva = () => {
         };
 
         await axiosJwt.put(
-          `http://localhost:3001/reservation/estadoReserva`,
+          `/reservation/estadoReserva`,
           body
         );
 

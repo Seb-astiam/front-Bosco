@@ -11,7 +11,7 @@ export const useMascotaById = (id) => {
     const peticionBack = async () => {
       try {
         const responseBack = await axiosJwt.get(
-          `http://localhost:3001/getMascotaById/${id}`
+          `/getMascotaById/${id}`
         );
         dispatch(getMascotaById(responseBack.data));
       } catch (error) {
