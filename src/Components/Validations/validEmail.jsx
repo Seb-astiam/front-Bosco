@@ -15,11 +15,12 @@ export const isValidEmail = async (email) => {
       return { valid: false, error: "*El email no tiene un formato válido" };
     }
 
-    // Obtener todos los usuarios de la base de datos
-    const response = await axios.get("/user");
-    console.log(response.status, "aqui");
-    if (response === "No se encontraron usuarios") response.data = [];
-    const users = response.data;
+        // Obtener todos los usuarios de la base de datos
+        let response = await axios.get('/user');
+
+        if(response === "No se encontraron usuarios") response.data = []
+        const users = response.data;
+
 
     // Verificar si el email ya existe en la base de datos
     const emailExist = users.find((user) => user.email === email);
