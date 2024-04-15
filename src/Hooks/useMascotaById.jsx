@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getMascotaById } from "../Redux/boscoSlice";
-// import axios from "axios";
-import axiosJwt from "../utils/axiosJwt";
+import axios from "axios";
+// import axiosJwt from "../utils/axiosJwt";
 
 export const useMascotaById = (id) => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const useMascotaById = (id) => {
   useEffect(() => {
     const peticionBack = async () => {
       try {
-        const responseBack = await axiosJwt.get(
+        const responseBack = await axios.get(
           `/getMascotaById/${id}`
         );
         dispatch(getMascotaById(responseBack.data));
