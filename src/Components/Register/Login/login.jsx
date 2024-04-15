@@ -34,7 +34,11 @@ const LoginPage = ()=>{
                     localStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/principal")
             } else {
-                window.alert("Inicio de sesión fallido: Error en la solicitud");
+                Swal.fire({
+                    title: "Error en la solicitud",
+                    text: "Inicio de sesión fallido",
+                    icon: "error"
+                  });
             }
         } catch (error){
             if (error.response && error.response.status === 401) {
@@ -57,7 +61,6 @@ const LoginPage = ()=>{
     /********************************* */
 
     const handleSubmit = async (event) => {
-        console.log('verificando')
         event.preventDefault(); // Evitar que el formulario se envíe
         await handleVerification(); // Verificar credenciales antes de redirigir
     };
@@ -120,8 +123,6 @@ const LoginPage = ()=>{
         }
     }, [accessToken]);
     
-    console.log(accessToken, 'acces Google')
-
     //******************************************************* */
 
     const appId = import.meta.env.VITE_APP_ID
@@ -194,8 +195,6 @@ const LoginPage = ()=>{
             fetchData();
         }
     }, [tokenFB]);
-
-    console.log(tokenFB, 'tokenFB')
 
     /**************************************** */
 

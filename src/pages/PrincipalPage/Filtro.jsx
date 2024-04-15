@@ -250,7 +250,7 @@ export const Filtros = () => {
           {searchProvinceText ||
             (provinceClick && (
               <div className="mq900:hidden absolute z-10 mt-16 bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200 max-h-40 overflow-y-auto">
-                {filteredProvincias.slice(0, 5).map((provincia) => (
+                {filteredProvincias.map((provincia) => (
                   <div
                     key={provincia.id}
                     onClick={() => handleProvinceSelection(provincia.nombre)}
@@ -276,7 +276,7 @@ export const Filtros = () => {
           {searchCityText ||
             (cityClick && (
               <div className="absolute z-10 mt-16 w-[200px] max-h-40 overflow-y-auto bg-white shadow-xl p-4 rounded-[20px] border border-solid border-gray-200">
-                {filteredLocalidades.slice(0, 5).map((localidad) => (
+                {filteredLocalidades.map((localidad) => (
                   <div
                     key={localidad.id}
                     onClick={() => handleCitySelection(localidad.name)}
@@ -310,7 +310,7 @@ export const Filtros = () => {
 
               {searchProvinceText && (
                 <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
-                  {filteredProvincias.slice(0, 5).map((provincia) => (
+                  {filteredProvincias.map((provincia) => (
                     <div
                       key={provincia.id}
                       onClick={() => handleProvinceSelection(provincia.nombre)}
@@ -333,7 +333,7 @@ export const Filtros = () => {
 
               {searchCityText && (
                 <div className="z-10 ml-8 bg-white shadow-xl p-2 mb-2 rounded-[20px] border border-solid border-gray-200 max-h-[150px] overflow-y-auto">
-                  {filteredLocalidades.slice(0, 5).map((localidad) => (
+                  {filteredLocalidades.map((localidad) => (
                     <div
                       key={localidad.id}
                       onClick={() => handleCitySelection(localidad.name)}
