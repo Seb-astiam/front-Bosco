@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {FormReserva } from "../Register/formReserva/formReserva"
+import ReviewForm from "../ReviewAndComents/ReviewForm";
+import ReviewList from "../ReviewAndComents/ReviewList";
+
+
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
+  
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
 
   if (!card) {
@@ -73,6 +78,8 @@ const Detail = () => {
           <p>Email: {User?.email}</p>
         </div>
 
+        
+
         <div className="flex items-center justify-center gap-2 ">
           {Services.map((service) => {
             return (
@@ -95,7 +102,10 @@ const Detail = () => {
         </div>
 
         </div>
+        <div><ReviewForm/></div>
+          <div className="mt-[80px]"><ReviewList/></div>
 
+          
         <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
           <p className="text-3xl font-custom">{price},00 ARS /noche </p>
 

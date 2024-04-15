@@ -61,6 +61,7 @@ export const FormReserva = (id) => {
 
         try {
             const { pet } = await axios.post('http://localhost:3001/reservation/newReservation', body);
+            console.log(pet);
             Swal.fire({
                 icon: "success",
                 title: pet,
