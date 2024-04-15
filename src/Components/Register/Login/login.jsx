@@ -162,9 +162,6 @@ const LoginPage = ()=>{
             if (tokenFB) {
                 try {
                     const token = tokenFB
-                    console.log("tokenFB", token);
-                    console.log("userIDFB", userId)
-                    
                     if (token) {
                         const userResponse = await axios.post(
                             "http://localhost:3001/auth/facebook-login",
