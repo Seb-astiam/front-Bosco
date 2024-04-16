@@ -215,6 +215,7 @@ const appId = import.meta.env.VITE_APP_ID
             if (response.status === 'connected') {
                 setTokenFB(response.authResponse.accessToken);
                 setUserId(response.authResponse.userID)
+                console.log("me hicieron click")
             } else {
                 console.log("Inicio de sesión de Facebook fallido");
             }
