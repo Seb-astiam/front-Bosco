@@ -277,6 +277,7 @@ const LoginPage = ()=>{
                             <button 
                             className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${isFormValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`}
                             disabled={!isFormValid}
+                            onClick={navigate("/Principal")}
                             > Iniciar </button>
                     </form> 
                 </div>
