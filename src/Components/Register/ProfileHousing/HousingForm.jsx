@@ -393,10 +393,6 @@ const HousingForm = () => {
             >
               <box-icon name='building-house' title="Tipo de alojamiento"></box-icon>
 
-              {/* <p className="m-[0px] w-[180px]">
-              Tipo de Alojamiento
-            </p> */}
-
               <select
                 name="accommodationType"
                 id="accommodationType"
@@ -453,30 +449,6 @@ const HousingForm = () => {
               </div>
             </div>
 
-            {/* <div className="mt-2">
-              {formData.services.map((serviceId, index) => {
-                console.log("Selected service formdata:", formData.services);
-                const selectedService = servicesA.find(
-                  (service) => service.id === serviceId
-                );
-                console.log("Selected service:", selectedService);
-                return (
-                  <span
-                    key={index}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-                  >
-                    {selectedService ? selectedService.type : ""}
-                  </span>
-                );
-              })}
-            </div> */}
-            {/* {!errors.services && formData.services.length > 0 && (
-              <div className=" mr-3 text-green-500">
-                <span role="img" aria-label="check">
-                  ✔️
-                </span>
-              </div>
-            )} */}
           </div>
 
           <div className="mb-4">

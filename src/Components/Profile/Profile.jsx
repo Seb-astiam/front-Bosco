@@ -7,6 +7,9 @@ import axios from "axios";
 
 export const Profile = () => {
     const userId= JSON.parse(localStorage.getItem("user")).id
+    const [formHousing, setFormHousing] = useState({
+        userId
+      });
     const [formData, setFormData] = useState({
         userId,
         images:[],
@@ -22,6 +25,13 @@ export const Profile = () => {
     });
     const [nuevo,setrNuevo]=useState(true)
 
+    const handleChangeHousing = (e) => {
+        const { name, value } = e.target;
+        setFormHousing({
+          ...formHousing,
+          [name]: value,
+        });
+      };
     const handleChange = (e) => {
         const { id, value } = e.target;
        
@@ -32,7 +42,24 @@ export const Profile = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:3001/profile/${userId}`);
+                const housing = await axios.get(`http://localhost:3001/profileHousing/housingsById?id=${userId}`);
                 const userData = response.data;
+                const housingData = housing.data;
+                setFormHousing({
+                    ...formHousing,
+                    id: housingData.id || null,
+                    title: housingData.title || "",
+                    datesAvailable: housingData.datesAvailable || null,
+                    datesEnd: housingData.datesEnd || null,
+                    type: housingData.type || "",
+                    price: housingData.price || 0,
+                    provinces: housingData.provinces || "",
+                    cities: housingData.cities || "",
+                    square: housingData.square || 0,
+                    availability: housingData.availability || false,
+                    images: housingData.images || [],
+                    accommodationType: housingData.accommodationType || "",
+                });
                 setFormData({
                     ...formData,
                     name: userData.name || "",
@@ -106,7 +133,7 @@ export const Profile = () => {
                     } />
                     <Route path='alojamientos' element={
                         <div>
-                            <MyHousing/>
+                            <MyHousing handleChange={handleChangeHousing} formHousing={formHousing} />
                         </div> 
                     } />
                     <Route path='mascotas' element={
