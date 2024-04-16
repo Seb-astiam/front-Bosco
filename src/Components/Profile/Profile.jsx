@@ -44,6 +44,8 @@ export const Profile = () => {
                 const response = await axios.get(`http://localhost:3001/profile/${userId}`);
                 const housing = await axios.get(`http://localhost:3001/profileHousing/housingsById?id=${userId}`);
                 const userData = response.data;
+                console.log(response);
+                console.log(userData);
                 const housingData = housing.data;
                 setFormHousing({
                     ...formHousing,

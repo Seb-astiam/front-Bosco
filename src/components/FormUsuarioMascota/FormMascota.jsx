@@ -158,7 +158,7 @@ export const FormMascota = () => {
 
     return (
         <div className="w-screen h-[800px] my-[10px] flex justify-center items-center">
-            <div className={h-[90%] w-[80%] flex justify-center}>
+            <div className={"h-[90%] w-[80%] flex justify-center"}>
 
                 <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px]">
                     <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
@@ -303,7 +303,7 @@ export const FormMascota = () => {
                       <div className="relative">
                         <img
                           src={URL.createObjectURL(image)}
-                          alt={Imagen ${index + 1}}
+                          alt={`Imagen ${index + 1}`}
                           className="h-16 w-16 object-cover mr-2"
                         />
                         <button
@@ -318,7 +318,7 @@ export const FormMascota = () => {
                   ))}
                   
                     <a onClick={reset} className="font-custom font-semibold flex justify-end cursor-pointer text-[12px] hover:underline">Limpiar formulario</a>
-                    <button type="submit" className={font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${disabledSubmit ? 'bg-[transparent] text-black shadow-md' : 'bg-[black] text-white shadow-md'}} disabled={disabledSubmit}>Submit</button>
+                    <button type="submit" className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${disabledSubmit ? 'bg-[transparent] text-black shadow-md' : 'bg-[black] text-white shadow-md'}`} disabled={disabledSubmit}>Submit</button>
 
 
                 </form>
