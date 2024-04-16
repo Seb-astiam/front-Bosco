@@ -19,6 +19,7 @@ const HousingForm = () => {
   useTiposAlojamientos();
 
   const TiposHost = useSelector((state) => state.storage.TipoAlojamientos);
+  console.log("tipoHost", TiposHost)
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
 

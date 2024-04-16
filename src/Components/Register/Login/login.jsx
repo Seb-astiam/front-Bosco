@@ -26,8 +26,6 @@ const LoginPage = ()=>{
         }
     }
 
-    //********************************************************************************
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
@@ -36,14 +34,10 @@ const LoginPage = ()=>{
             const response = await axios.post('http://localhost:3001/auth/login', { email, password })
 
             if (response.status === 200) {
-                 // Guardar la respuesta en el localStorage
                     localStorage.setItem("user", JSON.stringify(response.data));
-                    // por favar agregar algo más para avisar que es exitoso y redirigir!
                     navigate("/principal")
-                    // window.alert("inicio de sesión exitoso");
                     
                 } else {
-                    // En caso de otros códigos de estado, mostrar un mensaje de error genérico
                     window.alert("Inicio de sesión fallido: Error en la solicitud");
                     
                 }
@@ -51,37 +45,26 @@ const LoginPage = ()=>{
         } catch (error) {
 
             if (error.response && error.response.status === 401) {
-                // El servidor respondió con un código de estado 400 (Bad Request)
-                // setIsNotUser(true)
-                setIsNotUser(true)
 
-                //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
+                setIsNotUser(true)
                 
             } if (error.response && error.response.status === 500) {
                 setIsNotUser(true)
-                //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
                 
             }
             
         }
     }
 
-    /****************************** */
-
-    const isEmailValid = /^\S+@\S+\.\S+$/.test(email); // Verifica el formato de email
-    const isPasswordValid = password.length >= 8; // Verifica la longitud de la contraseña
+    const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
+    const isPasswordValid = password.length >= 8;
 
     const isFormValid = email && password && isEmailValid && isPasswordValid;
 
-
-    /********************************* */
-
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Evitar que el formulario se envíe
-        await handleVerification(); // Verificar credenciales antes de redirigir
+        event.preventDefault(); 
+        await handleVerification();
       };
-
-      /************************************************************ */
 
         const [showPassword, setShowPassword] = useState(false);
       
@@ -89,7 +72,6 @@ const LoginPage = ()=>{
           setShowPassword(!showPassword);
         };
        
-       /******************************************** */ 
        const navigate = useNavigate();
        const [haveAccount, setHaveAccount] = useState(true)
        const handleHaveAccount = ()=>{ 
@@ -101,8 +83,6 @@ const LoginPage = ()=>{
        }
 
        const [accessToken, setAccessToken] = useState([]);
-       // guarda entre otras cosas que no sirven, una propiedad access_token 
-       // que sirve para acceder a los datos del usuario
        
        const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
@@ -112,26 +92,21 @@ const LoginPage = ()=>{
     });
     useEffect(() => {
         const fetchData = async () => {
-            // Verifica si accessToken está definido y no es un arreglo vacío
+ 
             if (accessToken && accessToken.access_token) {
                 try {
                     const token = accessToken.access_token;
                     
-                    // Realiza la solicitud al servidor para registrar al usuario
                     const userResponse = await axios.post("http://localhost:3001/auth/google-login", { token }
                     );
     
-                    // Obtén los datos del usuario registrado
                     const userData = userResponse.data;
     
-                    // Guarda la información del usuario en el localStorage
                     localStorage.setItem("user", JSON.stringify(userData));
     
-                    // Redirige al usuario a la página principal
                     navigate('/principal');
                     
                 } catch (error) {
-                    // Maneja cualquier error que ocurra durante la solicitud
                     if (error.response && error.response.status === 401) {
                         setHaveAccount(false);
                     } else {
@@ -141,14 +116,10 @@ const LoginPage = ()=>{
             }
         };
     
-        // Llama a fetchData solo cuando accessToken cambie y esté definido
         if (accessToken && accessToken.access_token) {
             fetchData();
         }
     }, [accessToken]);
-    
-
-    //******************************************************* */
 
     const appId = import.meta.env.VITE_APP_ID
 
@@ -156,7 +127,7 @@ const LoginPage = ()=>{
     const [userId, setUserId] = useState(null)
 
     useEffect(() => {
-        // Inicializar el SDK de Facebook
+
         window.fbAsyncInit = function() {
             window.FB.init({
                 appId            : appId,
@@ -205,7 +176,6 @@ const LoginPage = ()=>{
     
                         const userData = userResponse.data;
     
-                        // Guardar la información del usuario en el localStorage
                         localStorage.setItem("user", JSON.stringify(userData));
     
                         navigate('/principal');
@@ -223,8 +193,6 @@ const LoginPage = ()=>{
             fetchData();
         }
     }, [tokenFB]);
-
-    /**************************************** */
 
     const [adviceRecover, setAdviceRecover] = useState(false)
     const [emailRecover, setEmailRecover] = useState()
@@ -353,6 +321,5 @@ const LoginPage = ()=>{
         </div>
     
     )
-// después validar número de teléfono e email!! 
 }
 export default LoginPage;
