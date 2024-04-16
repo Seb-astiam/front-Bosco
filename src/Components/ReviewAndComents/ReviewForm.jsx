@@ -3,24 +3,26 @@ import { RadioGroup } from '@headlessui/react';
 import { BsStarFill } from 'react-icons/bs';
 import classNames from 'classnames';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
-const ReviewForm = () => {
+
+const ReviewForm = ( id ) => {
   const [comment, setComment] = useState("");
   const [valoracion, setValoracion] = useState("");
   const [error, setError] = useState("");
   const [showThanks, setShowThanks] = useState(false);
-  const { id } = useParams();
+  
+ 
+ console.log(id, "llego o no llego");
 
-  const handleSendReview = async (event) => {
+  const handleSendReview = async () => {
   
     const dateNow = new Date();
-  
+    
     try {
       const response = await axios.post('http://localhost:3001/review/newReview', {
         comentario: comment,
         valoracion: valoracion,
-        id_alojamiento: id,
+        id_alojamiento: id.id,
         fecha: dateNow
       });
   

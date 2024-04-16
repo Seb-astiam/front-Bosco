@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Modal from "react-modal";
+import axiosJwt from "../../utils/axiosJwt";
+import ReviewForm from "../ReviewAndComents/ReviewForm";
 
 Modal.setAppElement("#root");
 
@@ -13,10 +15,14 @@ export const HistorialReserva = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedReservationId, setSelectedReservationId] = useState(null);
 
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const [idAlojamiento, setIdAlojamiento] = useState();
+
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
-        const { data } = await axios(
+        const { data } = await axiosJwt(
           `http://localhost:3001/reservation/allReservation/${email_usuario.email}`
         );
         setHistorial(
@@ -24,6 +30,8 @@ export const HistorialReserva = () => {
             id: dataHousing.id,
             fechaInicio: dataHousing.fechaInicio,
             fechaFin: dataHousing.fechaFin,
+            horaInicio: dataHousing.horaInicio,
+            horaFin: dataHousing.horaFin,
             estatus: dataHousing.estatus,
             Housings: dataHousing.Housings,
           }))
@@ -36,6 +44,8 @@ export const HistorialReserva = () => {
     fetchHistorial();
   }, []);
 
+  console.log(historial);
+
   const createPreference = async (id) => {
     if (!loadingPreference) {
       setLoadingPreference(true);
@@ -44,7 +54,7 @@ export const HistorialReserva = () => {
       const reserv = historial.find((reserva) => reserva.id === id);
 
       try {
-        const response = await axios.post(
+        const response = await axiosJwt.post(
           "http://localhost:3001/pagos/create_preference",
           {
             title: reserv.Housings[0]?.title,
@@ -54,6 +64,7 @@ export const HistorialReserva = () => {
         );
 
         const { id } = response.data;
+
         setPreferenceId(id);
       } catch (error) {
         console.log(error);
@@ -73,6 +84,15 @@ export const HistorialReserva = () => {
     setPreferenceId(null);
   };
 
+  const openPopup = () => {
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Historial de Reservas</h1>
@@ -87,6 +107,12 @@ export const HistorialReserva = () => {
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Fecha de Fin
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Hora de Inicio
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Hora de Fin
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Estatus
@@ -115,6 +141,10 @@ export const HistorialReserva = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {reserva.fechaFin}
               </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {reserva.horaInicio}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">{reserva.horaFin}</td>
               <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {reserva.Housings[0]?.title}
@@ -125,7 +155,7 @@ export const HistorialReserva = () => {
               <td>
                 <button
                   className={`py-2 px-4 rounded ${
-                    reserva.estatus === "Pending"
+                    reserva.estatus !== "Success"
                       ? "bg-gray-400 text-gray-700 cursor-not-allowed"
                       : "bg-red-500 text-white"
                   } ${
@@ -137,14 +167,38 @@ export const HistorialReserva = () => {
                     reserva.estatus !== "Success"
                   }
                   onClick={() => createPreference(reserva.id)}
-                  style={{ cursor: reserva.estatus === "Pending" ? "not-allowed" : "pointer" }}
+                  style={{
+                    cursor:
+                      reserva.estatus !== "Success" ? "not-allowed" : "pointer",
+                  }}
                 >
                   Pagar
                 </button>
+
+
+                
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {reserva.Housings[0]?.provinces}
               </td>
+              <div>
+
+       <button onClick={openPopup}>calificar</button>
+
+            {isPopupOpen && (
+  <div className="ventana-popup">
+    <div className="contenido-popup">
+     
+                   <ReviewForm id={reserva.Housings[0]?.id}
+            
+                   />
+                   {console.log(reserva.Housings[0], "housingid")}
+     
+      <button onClick={closePopup}>Cerrar</button>
+    </div>
+  </div>
+)}
+</div>
             </tr>
           ))}
         </tbody>
@@ -188,6 +242,9 @@ export const HistorialReserva = () => {
           Cancelar
         </button>
       </Modal>
+
+     
+      
     </div>
   );
 };

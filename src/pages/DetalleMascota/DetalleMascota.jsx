@@ -14,7 +14,8 @@ export const DetalleMascota = () => {
 
     const data = useSelector((state) => state.storage.mascotaById);
 
-    console.log(data)
+    console.log(data, 'data')
+
     const User = useSelector((state) => state.storage.UserById);
 
     useMascotaById(id);
@@ -30,7 +31,7 @@ export const DetalleMascota = () => {
                   
                 <div className="felx items-center justify-center bg-slate-600">
                   <img className="w-[230px] h-[240px]"
-                  src={data.type === 'Cat' ? gato : data.type === 'Dog' ? perro : data.type === 'Caballo' ? caballo : data.type === 'Reptil' ? gecko : ''} alt="Imagen de mascota" 
+                  src={data.image} alt="Imagen de mascota" 
                   />
                 </div>
 
