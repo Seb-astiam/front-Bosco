@@ -18,12 +18,63 @@ import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
 import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccount.jsx";
 import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+import Swal from 'sweetalert2'
+
 
 const App = () => {
   const { pathname } = useLocation();
+  const socket = io.connect("http://localhost:3001");
+
+  const [notificacion, setNotificacion] = useState('')
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    socket.on("notificacion", receiveMessage);
+
+    if(userData?.email) socket.emit("join_room", userData.email);
+
+    return () => {
+      socket.off("notificacion", receiveMessage);
+    };
+  }, [socket]);
+  
+  const receiveMessage = (mensaje) => {
+
+    let timerInterval;
+    Swal.fire({
+      title: "Aceptado",
+      html: mensaje,
+      timer: 2000,
+      toast: true,
+      position: 'top-right',
+      width: '400px',
+      height: '400px',
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+  };
+
+
 
   return (
     <>
+    <span>{notificacion}</span>
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
         <Route path="/" element={<Home />} />
