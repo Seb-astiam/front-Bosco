@@ -36,6 +36,9 @@ export const Filtros = () => {
     square: null,
     minPrice: "",
     maxPrice: "",
+    hourly: false,
+    startHour: "",
+    endHour: "",
     startDate: "",
     endDate: "",
     orderBy: "price",
@@ -376,6 +379,8 @@ export const Filtros = () => {
                 minDate={filter.startDate}
                 className="outline-none mb-2 ml-8"
               />
+
+
 
               <label className="font-medium ml-8">Mascotas</label>
               <div className="relative">

@@ -13,6 +13,8 @@ export const HistorialReserva = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedReservationId, setSelectedReservationId] = useState(null);
 
+  
+
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
