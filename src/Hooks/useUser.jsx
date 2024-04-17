@@ -12,7 +12,7 @@ export const useUser = (id) => {
     const peticionBack = async () => {
       try {
         const responseBack = await axiosJwt.get(
-          `http://localhost:3001/user/UserById/${id}`
+          `/user/UserById/${id}`
         );
         dispatch(getUserById(responseBack.data));
       } catch (error) {

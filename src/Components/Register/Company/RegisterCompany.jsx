@@ -12,9 +12,6 @@ const RegistroEmpresa = () => {
     direccion: "",
   });
 
-  useEffect(() => {
-    console.log(empresa);
-  }, [empresa]);
 
   const [errors, setErrors] = useState({});
 
@@ -43,7 +40,6 @@ const RegistroEmpresa = () => {
     if (Object.keys(validationErrors).length === 0) {
       try {
         await axiosJwt.post("URL_DEL_BACKEND", empresa);
-        console.log("Registro exitoso");
       } catch (error) {
         console.error("Error al registrar la empresa:", error);
       }

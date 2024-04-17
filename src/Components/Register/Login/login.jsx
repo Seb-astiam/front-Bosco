@@ -8,18 +8,14 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 
 const LoginPage = ()=>{
-
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     const handleLogin = () => {
         if(!isLoggedIn) {
-        setIsLoggedIn(true);
+            setIsLoggedIn(true);
         }
     };
 
     const [isNotUser, setIsNotUser] = useState(false);
-
     const handleIsNotUser = () => {
         if (isNotUser) {
             setIsNotUser(false);
@@ -33,36 +29,24 @@ const LoginPage = ()=>{
   
     const handleVerification = async() => {
         try {
-            const response = await axios.post('http://localhost:3001/auth/login', { email, password })
-
+            const response = await axios.post('/auth/login', { email, password })
             if (response.status === 200) {
-                 // Guardar la respuesta en el localStorage
                     localStorage.setItem("user", JSON.stringify(response.data));
-                    // por favar agregar algo más para avisar que es exitoso y redirigir!
                     navigate("/principal")
-                    // window.alert("inicio de sesión exitoso");
-                    
-                } else {
-                    // En caso de otros códigos de estado, mostrar un mensaje de error genérico
-                    window.alert("Inicio de sesión fallido: Error en la solicitud");
-                    
-                }
-            
-        } catch (error) {
-
-            if (error.response && error.response.status === 401) {
-                // El servidor respondió con un código de estado 400 (Bad Request)
-                // setIsNotUser(true)
-                setIsNotUser(true)
-
-                //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
-                
-            } if (error.response && error.response.status === 500) {
-                setIsNotUser(true)
-                //window.alert("Usuario o contraseña incorrecto, intentelo nuevamente por favor.");
-                
+            } else {
+                Swal.fire({
+                    title: "Error en la solicitud",
+                    text: "Inicio de sesión fallido",
+                    icon: "error"
+                  });
             }
-            
+        } catch (error){
+            if (error.response && error.response.status === 401) {
+                setIsNotUser(true)
+            } 
+            if (error.response && error.response.status === 500) {
+                setIsNotUser(true)
+            }
         }
     }
 
@@ -79,59 +63,52 @@ const LoginPage = ()=>{
     const handleSubmit = async (event) => {
         event.preventDefault(); // Evitar que el formulario se envíe
         await handleVerification(); // Verificar credenciales antes de redirigir
-      };
+    };
 
       /************************************************************ */
 
-        const [showPassword, setShowPassword] = useState(false);
-      
-        const handlePasswordVisibility = () => {
-          setShowPassword(!showPassword);
-        };
+    const [showPassword, setShowPassword] = useState(false);
+    
+    const handlePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
        
        /******************************************** */ 
-       const navigate = useNavigate();
-       const [haveAccount, setHaveAccount] = useState(true)
-       const handleHaveAccount = ()=>{ 
+
+    const navigate = useNavigate();
+
+    const [haveAccount, setHaveAccount] = useState(true)
+
+    const handleHaveAccount = () => { 
         if (!haveAccount) {
             setHaveAccount(true)
         } else {
             setHaveAccount(false)
         }
-       }
+    }
 
-       const [accessToken, setAccessToken] = useState([]);
-       // guarda entre otras cosas que no sirven, una propiedad access_token 
-       // que sirve para acceder a los datos del usuario
-       
-       const login = useGoogleLogin({
+    const [accessToken, setAccessToken] = useState([]);
+    
+    const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             setAccessToken(codeResponse);
         },
         onError: (error) => console.log("Login Failed:", error)
     });
+
+
     useEffect(() => {
         const fetchData = async () => {
-            // Verifica si accessToken está definido y no es un arreglo vacío
             if (accessToken && accessToken.access_token) {
                 try {
                     const token = accessToken.access_token;
-                    
-                    // Realiza la solicitud al servidor para registrar al usuario
-                    const userResponse = await axios.post("http://localhost:3001/auth/google-login", { token }
+                    const userResponse = await axios.post("/auth/google-login", { token }
                     );
-    
-                    // Obtén los datos del usuario registrado
+
                     const userData = userResponse.data;
-    
-                    // Guarda la información del usuario en el localStorage
                     localStorage.setItem("user", JSON.stringify(userData));
-    
-                    // Redirige al usuario a la página principal
                     navigate('/principal');
-                    
                 } catch (error) {
-                    // Maneja cualquier error que ocurra durante la solicitud
                     if (error.response && error.response.status === 401) {
                         setHaveAccount(false);
                     } else {
@@ -141,13 +118,11 @@ const LoginPage = ()=>{
             }
         };
     
-        // Llama a fetchData solo cuando accessToken cambie y esté definido
         if (accessToken && accessToken.access_token) {
             fetchData();
         }
     }, [accessToken]);
     
-
     //******************************************************* */
 
     const appId = import.meta.env.VITE_APP_ID
@@ -156,7 +131,6 @@ const LoginPage = ()=>{
     const [userId, setUserId] = useState(null)
 
     useEffect(() => {
-        // Inicializar el SDK de Facebook
         window.fbAsyncInit = function() {
             window.FB.init({
                 appId            : appId,
@@ -193,7 +167,7 @@ const LoginPage = ()=>{
                     const token = tokenFB
                     if (token) {
                         const userResponse = await axios.post(
-                            "http://localhost:3001/auth/facebook-login",
+                            "/auth/facebook-login",
                             { token, userId },
                             {
                                 headers: {
@@ -205,9 +179,7 @@ const LoginPage = ()=>{
     
                         const userData = userResponse.data;
     
-                        // Guardar la información del usuario en el localStorage
                         localStorage.setItem("user", JSON.stringify(userData));
-    
                         navigate('/principal');
                     } else {
                         console.log("Inicio de sesión fallido");
@@ -242,14 +214,13 @@ const LoginPage = ()=>{
     const recoverPassword = async()=>{
        
         try {
-         const response = await axios.post(`http://localhost:3001/auth/password-reset/${emailRecover}`)
+            await axios.post(`/auth/password-reset/${emailRecover}`)
             handleAdviceRecover();
         } catch (error) {
             setEmailNotFound(true)
     }
     }
 
-    console.log('haveAccount', haveAccount)
 
     return (
         <div className="w-screen h-screen flex justify-center items-center absolute" >
@@ -353,6 +324,5 @@ const LoginPage = ()=>{
         </div>
     
     )
-// después validar número de teléfono e email!! 
 }
 export default LoginPage;

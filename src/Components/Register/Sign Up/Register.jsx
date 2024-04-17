@@ -34,8 +34,6 @@ export const Register = () => {
     const handleChange = async(e) => {
   
         const { name, value } = e.target;
-    
-            // Validar el nombre en tiempo real solo para el input de name
 
             if (name === 'name') {
                 const { valid, error } = isValidUsername(value);
@@ -78,7 +76,6 @@ export const Register = () => {
             }));
         }
     }
-    /***********************************/
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -92,13 +89,10 @@ export const Register = () => {
         setShowPasswordConfirmation(!showPasswordConfirmation);
     }
 
-    /*************************************************************** */
-
     const [termsChecked, setTermsChecked] = useState(false);
     const [formValid, setFormValid] = useState(false);
 
     useEffect(() => {
-        // Verificar si todos los campos son válidos y el checkbox está marcado
         const isValid = Object.values(inputError).every(field => field.valid) && termsChecked;
         setFormValid(isValid);
     }, [inputError, termsChecked]);
@@ -107,38 +101,29 @@ export const Register = () => {
     const handleCheckboxChange = () => {
         setTermsChecked(!termsChecked);
     }
-
-
-    /******************************** */
     
     const [verificationSuccessful, setVerificationSuccessful]= useState(false)
-    // console.log('verification', verificationSuccessful)
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
-        // Verificar si hay algún campo con valid: false
+
         const isValid = Object.values(inputError).every(field => field.valid);
       
         if (!isValid) {
-          // Mostrar mensaje de error
           window.alert('Por favor, complete todos los campos correctamente antes de enviar.');
           return;
         }
       
         try {
-          const responseBack = await axios.post("http://localhost:3001/user", input, {
+          const responseBack = await axios.post("/user", input, {
             headers: {
               'Content-Type': 'application/json',
             },
       
           });
 
-          //! acá debería verificar el correo!
           setVerificationSuccessful(true)
-          // Obtén los datos del usuario registrado
           const userData = responseBack.data;
 
-          // Guarda la información del usuario en el localStorage
           localStorage.setItem("user", JSON.stringify(userData));
 
           
@@ -146,10 +131,8 @@ export const Register = () => {
           window.alert('Error al crear usuario')
         }
       };
-      /************************** */
 
       const handleClose = () => {
-        // Realizar la redirección al presionar el botón de cierre
         navigate('/');
       };
 
@@ -161,61 +144,48 @@ export const Register = () => {
         }
       }
 
-      /**************************************** */
-      //!AUTENTICACIÓN
-
     const [accessToken, setAcessToken] = useState([]);
-  // guarda entre otras cosas que no sirven, una propiedad access_token 
-  // que sirve para acceder a los datos del usuario
 
-  const [isAccountPrevRegister, setIsAccountPrevRegister] = useState(false)
-  
-  const register = useGoogleLogin({
-    onSuccess: (codeResponse) => {setAcessToken(codeResponse)
-    },
-    onError: (error) => console.log("Login Failed:", error)
-  });
+    const [isAccountPrevRegister, setIsAccountPrevRegister] = useState(false)
+    
+    const register = useGoogleLogin({
+        onSuccess: (codeResponse) => {setAcessToken(codeResponse)
+        },
+        onError: (error) => console.log("Login Failed:", error)
+    });
 
 
   useEffect(() => {
     const fetchData = async () => {
-        // Verifica si accessToken está definido y no es un arreglo vacío
+
         if (accessToken && accessToken.access_token) {
             try {
                 const token = accessToken.access_token;
-                console.log("token", token);
                 
                 // Realiza la solicitud al servidor para registrar al usuario
-                const userResponse = await axios.post("http://localhost:3001/auth/google-register", { token }
+                const userResponse = await axios.post("/auth/google-register", { token }
                 );
 
-                // Obtén los datos del usuario registrado
                 const userData = userResponse.data;
 
-                // Guarda la información del usuario en el localStorage
                 localStorage.setItem("user", JSON.stringify(userData));
 
-                // Redirige al usuario a la página principal
                 navigate('/principal');
                 
             } catch (error) {
-                // Maneja cualquier error que ocurra durante la solicitud
                 if (error.response && error.response.status === 400) {
                     setIsAccountPrevRegister(true);
                 } else {
-                    console.error("Error during registration:", error);
+                    window.alert("Error during registration:", error);
                 }
             }
         }
     };
 
-    // Llama a fetchData solo cuando accessToken cambie y esté definido
     if (accessToken && accessToken.access_token) {
         fetchData();
     }
 }, [accessToken]);
-
-/****************************************************/
 
 const appId = import.meta.env.VITE_APP_ID
 
@@ -223,7 +193,6 @@ const appId = import.meta.env.VITE_APP_ID
     const [userId, setUserId] = useState(null)
 
     useEffect(() => {
-        // Inicializar el SDK de Facebook
         window.fbAsyncInit = function() {
             window.FB.init({
                 appId            : appId,
@@ -247,6 +216,7 @@ const appId = import.meta.env.VITE_APP_ID
             if (response.status === 'connected') {
                 setTokenFB(response.authResponse.accessToken);
                 setUserId(response.authResponse.userID)
+                console.log("me hicieron click")
             } else {
                 console.log("Inicio de sesión de Facebook fallido");
             }
@@ -258,12 +228,9 @@ const appId = import.meta.env.VITE_APP_ID
             if (tokenFB) {
                 try {
                     const token = tokenFB
-                    console.log("tokenFB", token);
-                    console.log("userIDFB", userId)
-                    
                     if (token) {
                         const userResponse = await axios.post(
-                            "http://localhost:3001/auth/facebook-register",
+                            "/auth/facebook-register",
                             { token, userId },
                             {
                                 headers: {
@@ -274,7 +241,6 @@ const appId = import.meta.env.VITE_APP_ID
                         );
     
                         const userData = userResponse.data;
-                        console.log("userData", userData)
     
                         localStorage.setItem("user", JSON.stringify(userData));
     
@@ -297,14 +263,14 @@ const appId = import.meta.env.VITE_APP_ID
 
     return (
 
-        <div className=" w-screen h-screen flex justify-center items-center">
-            <div className={`${verificationSuccessful? '' : ''} h-[90%] w-[80%] flex justify-center`}>
+        <div className=" w-screen h-screen flex justify-center items-center ">
+            <div className={`${verificationSuccessful? '' : ''} h-[90%] w-[80%] flex justify-center items-center mq900:flex-col mq900:w-[100%]`}>
 
-                <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px]">
-                    <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover" />
+                <div className="h-[100%] w-[50%] rounded-bl-[20px] rounded-tl-[20px] max-w-[400px] mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-[95%] mq900:max-w-[95%] mq900:mt-[20px]">
+                    <img src={bosco} alt="bosco" className="rounded-bl-[20px] rounded-tl-[20px] w-full h-full object-cover mq900:rounded-bl-[0px] mq900:rounded-tr-[20px] mq900:h-[200px] mq900:w-[100%] mq900:max-w-[100%]" />
                 </div>
 
-                <div className="flex flex-col items-center px-[5%] justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px]">
+                <div className="flex flex-col items-center px-[5%] mq900:px-0 justify-center rounded-br-[20px] rounded-tr-[20px] h-[100%] w-[50%] !bg-[#FEB156] max-w-[400px] mq900:w-[95%] mq900:max-w-[95%] mq900:rounded-tr-[0px] mq900:rounded-bl-[20px] mq900:mb-[20px]">
                     <h2 className='font-custom font-extrabold ' >Crear una cuenta</h2>
                         <div className="flex flex-col  items-center">
                             <div className='flex'>
@@ -393,8 +359,8 @@ const appId = import.meta.env.VITE_APP_ID
             </div>
 
             <div className={`${verificationSuccessful? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
-                <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
-                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>
+                <div className= {`${verificationSuccessful? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px] mq900:w-[95%] mq900:max-w-[95%]`}>
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center mq900:w-[95%] mq900:px-[2.5%]'>
                         Verificá tu email
                         <span className= "cursor-pointer" onClick={handleClose}>&times;</span>
                     </label>
@@ -410,8 +376,8 @@ const appId = import.meta.env.VITE_APP_ID
             </div>
 
             <div className={`${isAccountPrevRegister? 'bg-[rgba(0,_0,_0,_0.5)] ' : '-translate-y-[500%]'} w-screen h-screen flex justify-center items-center absolute`}>
-                <div className= {`${isAccountPrevRegister? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]`}>
-                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center'>Aviso
+                <div className= {`${isAccountPrevRegister? '' : '-translate-y-[500%]'} flex flex-col items-center rounded-[20px] absolute h-[450px] w-[400px] text-xl bg-[#eee] max-w-[450px]  mq900:w-[95%] mq900:max-w-[95%]`}>
+                    <label className='bg-[#d14d12] w-[340px] h-[60px] px-[30px] rounded-tr-[20px] rounded-tl-[20px] font-custom font-extrabold flex justify-between items-center mq900:w-[95%] mq900:px-[2.5%]'>Aviso
                         <span className= "cursor-pointer" onClick={handleCloseRegister}>&times;</span>
                     </label>
                     <label className="flex justify-center py-[15px]">
@@ -427,4 +393,3 @@ const appId = import.meta.env.VITE_APP_ID
     )
 }
 
-//! HANDLE CLOSE, REVISAR SPAN LOGIN

@@ -10,7 +10,7 @@ export const useTiposAlojamientos = () => {
     useEffect(() => {  
         const peticionBack = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3001/housingtype/alltypes");
+                const { data } = await axios.get("/housingtype/alltypes");
                 dispatch(getTiposAlojamientos(data));
             } 
             catch (error) {

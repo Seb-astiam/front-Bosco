@@ -3,18 +3,12 @@ import { useSelector } from "react-redux";
 import { useMascotaById } from "../../Hooks/useMascotaById";
 import { useUser } from "../../Hooks/useUser";
 
-import perro from "../../assets/gestos-de-los-perros.jpg"
-import gato from "../../assets/gato.webp"
-import caballo from "../../assets/caballo.jpeg"
-import gecko from "../../assets/gecko.webp"
-
 
 export const DetalleMascota = () => {
     const { id } = useParams();
 
     const data = useSelector((state) => state.storage.mascotaById);
 
-    console.log(data)
     const User = useSelector((state) => state.storage.UserById);
 
     useMascotaById(id);
@@ -30,7 +24,7 @@ export const DetalleMascota = () => {
                   
                 <div className="felx items-center justify-center bg-slate-600">
                   <img className="w-[230px] h-[240px]"
-                  src={data.type === 'Cat' ? gato : data.type === 'Dog' ? perro : data.type === 'Caballo' ? caballo : data.type === 'Reptil' ? gecko : ''} alt="Imagen de mascota" 
+                  src={data.image} alt="Imagen de mascota" 
                   />
                 </div>
 

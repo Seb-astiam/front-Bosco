@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from 'axios'
 
 export const MyPets = () => {
@@ -10,18 +9,14 @@ export const MyPets = () => {
     const [showImage, setShowImage] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/allMascotas/${userId}`).then(({ data }) => {
+        axios.get(`/allMascotas/${userId}`).then(({ data }) => {
             console.log(data);
             setPets(data)
         })
     }, [])
     const handleChange = (e) => {
         const { name, value, type, checked,files } = e.target;
-        console.log(selectedPet);
-        console.log("petString");
-        console.log(typeof selectedPet.image);
         let newValue;
-        console.log(selectedPet);
         if (name === "images") {
             newValue = [
                 ...showImage,
@@ -57,7 +52,7 @@ export const MyPets = () => {
                 }
             });
 
-            await axios.put(`http://localhost:3001/mascota/${selectedPet.id}`, formDataToSend);
+            await axios.put(`/mascota/${selectedPet.id}`, formDataToSend);
             alert("User data updated successfully!");
         } catch (error) {
             console.error("Error updating user data:", error);

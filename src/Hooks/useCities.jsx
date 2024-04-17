@@ -10,7 +10,7 @@ const useCities = (provinceId) => {
     useEffect(() => {
         const getCities = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/location/cities?provincia=${provinceId}`);
+                const response = await axios.get(`/location/cities?provincia=${provinceId}`);
                 const formattedCities = response.data.map((city) => ({
                     id: city.id,
                     name: city.nombre,

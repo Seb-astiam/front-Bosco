@@ -12,7 +12,7 @@ const ActivateAccount = () => {
     try {
       const token = searchParams.get("token");
       const { data } = await axios.post(
-        `http://localhost:3001/auth/activate-account/${token}`
+        `/auth/activate-account/${token}`
       );
       Swal.fire({
         title: "Bienvenido a Bosco!",

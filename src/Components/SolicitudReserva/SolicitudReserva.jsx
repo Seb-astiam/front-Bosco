@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-// import axios from 'axios'
 import axiosJwt from "../../utils/axiosJwt";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import { io } from "socket.io-client";
+import { ClassNames } from "@emotion/react";
 
 export const SolicitudReserva = () => {
   const email_usuario = JSON.parse(localStorage.getItem("user"));
@@ -14,15 +14,16 @@ export const SolicitudReserva = () => {
     const solicitud = async () => {
       try {
         const { data } = await axiosJwt(
-          `http://localhost:3001/reservation/reservations/${email_usuario.id}`
+          `/reservation/reservations/${email_usuario.id}`
         );
-
         const response = data.flat().map((dataHousing) => {
           let obj;
           return (obj = {
             id: dataHousing.id,
             fechaInicio: dataHousing.fechaInicio,
             fechaFin: dataHousing.fechaFin,
+            horaInicio: dataHousing.horaInicio,
+            horaFin: dataHousing.horaFin,
             estatus: dataHousing.estatus,
             Housings: dataHousing.Housings[0]?.title,
             UserEmail: dataHousing.Users[0]?.email,
@@ -52,7 +53,7 @@ export const SolicitudReserva = () => {
         };
 
         await axiosJwt.put(
-          `http://localhost:3001/reservation/estadoReserva`,
+          `/reservation/estadoReserva`,
           body
         );
 
@@ -67,7 +68,7 @@ export const SolicitudReserva = () => {
         });
       }
     };
-    
+
     Swal.fire({
       title: "Confirmas esta reserva?",
       showDenyButton: true,
@@ -86,63 +87,143 @@ export const SolicitudReserva = () => {
     });
   };
 
+  const [openReservas, setOpenReservas] = useState({});
+
+  const toggleDropdown = (reservaId) => {
+    setOpenReservas({
+      ...openReservas,
+      [reservaId]: !openReservas[reservaId] 
+    });
+  };
+
+  useEffect(() => {
+    const initialOpenReservas = solicitudes.reduce((acc, reserva) => {
+      return { ...acc, [reserva.id]: false };
+    }, {});
+    
+    setOpenReservas(initialOpenReservas);
+  }, [solicitudes]);
+
   return (
-    <div>
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Fecha de Inicio
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Fecha de Fin
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Estatus
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Nombre Alojamiento
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+    
+      <div className="w-full font-custom flex flex-col m-[10px]">
+        <div className="w-[95%] flex justify-evenly items-center">
+         
+            <a className="mq900:hidden w-[20%] p-4 py-2 text-left font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px]">
+              Check-In
+            </a>
+            <a className="mq900:hidden w-[20%] px-4 py-2 text-left font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px]">
+              Check-Out
+            </a>
+            <a className=" px-4  py-2 w-[10%] mq900:w-[25%] text-left  font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px]">
+              Estado
+            </a>
+            <a className="px-4 py-2 w-[15%] mq900:w-[45%]  text-left font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px]">
+              Alojamiento
+            </a>
+            <a className="px-4 py-2 w-[15%] mq900:w-[25%] text-left font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px] mq900:mr-8">
               Cliente
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            </a>
+            <a className="mq900:hidden px-4 w-[15%] py-2 text-left font-medium text-cantaloupe border-cantaloupe border-solid border-2 rounded-[20px]">
               Email
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+            </a>
+          
+        </div> 
+        <div className="flex flex-col  my-3 text-gray-700 w-[95%]">
+          
           {solicitudes.map((reserva) => (
-            <tr key={reserva.id}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {reserva.fechaInicio}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {reserva.fechaFin}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">{reserva.estatus}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
+            <div key={reserva.id} className="flex flex-col ">
+              <div className=" flex flex-row items-center text-start">
+              <a className=" mq900:hidden px-2 py-4 w-[20%]" >
+              { reserva.horaInicio !== null
+                ? `${reserva.fechaInicio}, ${reserva.horaInicio}hs`
+                : `${reserva.fechaInicio}`}
+              </a>
+              <a className=" mq900:hidden px-2 py-4 w-[20%] ">
+              { reserva.horaFin !== null
+                ? `${reserva.fechaInicio}, ${reserva.horaFin}hs`
+                : `${reserva.fechaFin}`}
+              </a>
+              <a 
+                className={`px-2 py-4 mq900:w-[25%] w-[10%]  ${
+                reserva.estatus === 'Pending'
+                  ? 'text-yellow-500'
+                  : reserva.estatus === 'Success'
+                  ? 'text-green-500'
+                  : reserva.estatus === 'Reject'
+                  ? 'text-red-500'
+                  : ''
+              }`}>
+              {reserva.estatus}
+              </a>
+              <a className="px-2 py-4 mq900:w-[35%] w-[15%]">
                 <button
                   onClick={handleClick}
-                  className="cursor-pointer"
+                  className=" py-1 cursor-pointer font-custom text-sm bg-transparent text-gray-700 hover:bg-gray-100 hover:rounded-[20px]"
                   value={reserva.UserEmail}
                   name={reserva.id}
                 >
                   {reserva.Housings}
                 </button>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <NavLink to={`/detail-mascota/${reserva.idMascota}`}>
+              </a>
+              <a className="px-2 py-4 mq900:w-[25%] w-[15%]">
+                <NavLink to={`/detail-mascota/${reserva.idMascota}`} className='no-underline hover:underline'> 
                   {reserva.UserName}
                 </NavLink>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              </a>
+              
+              <a className="mq900:hidden px-2 py-4 w-[15%]">
                 {reserva.UserEmail}
-              </td>
-            </tr>
+              </a>
+              <a value= {reserva.id} className="mq900:block mq1300:hidden mq1650:hidden" onClick={() => toggleDropdown(reserva.id)}>
+              { openReservas[reserva.id]? `↓` : `↑` }
+              </a>
+              </div>
+              
+              { openReservas[reserva.id] && (
+                
+                  <div className="py-1 flex nowrap w-full">
+                    <div className="flex flex-col">
+                      <a className="px-4 py-2 text-left font-medium text-cantaloupe ">
+                        Check-In
+                      </a>
+                      <a className="px-4 py-2 text-left font-medium text-cantaloupe ">
+                      Check-out
+                    </a>
+                    <a className="px-4 py-2 text-left font-medium text-cantaloupe ">
+                          Email
+                      </a>
+                      
+                    </div>
+                    <div className="flex flex-col">
+                    <a className="px-4 py-2 hover:bg-gray-100 ">
+                        { reserva.horaInicio !== null
+                        ? `${reserva.fechaInicio}, ${reserva.horaInicio}hs`
+                        : `${reserva.fechaInicio}`}
+                      </a>
+                    
+                    <a className="px-4 py-2 hover:bg-gray-100 ">
+                      { reserva.horaFin !== null
+                      ? `${reserva.fechaInicio}, ${reserva.horaFin}hs`
+                      : `${reserva.fechaFin}`}
+                    </a>
+                    <a className="px-4 py-2 hover:bg-gray-100 ">
+                        {reserva.UserEmail}
+                      </a>
+                    </div>
+                   
+                  </div>
+                  
+              )}
+            </div>
           ))}
-        </tbody>
-      </table>
-    </div>
+          
+        </div>
+        
+      </div>
+    
   );
 };
+
+
+

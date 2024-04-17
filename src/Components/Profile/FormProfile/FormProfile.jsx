@@ -13,7 +13,7 @@ export const FormProfile = (params) => {
 
     const [img, setImg] = useState(null)
     useEffect(() => {
-        axios.get(`http://localhost:3001/user/${email}`).then(({ data }) => {
+        axios.get(`/user/${email}`).then(({ data }) => {
             // Obtener el objeto del localStorage
             const userLocal = JSON.parse(localStorage.getItem("user"));
 
@@ -35,7 +35,7 @@ export const FormProfile = (params) => {
 
         try {
             const response = await axios.put(
-                `http://localhost:3001/user/pictureUser?email=${email}`,
+                `/user/pictureUser?email=${email}`,
                 formDataToSend
             );
 
