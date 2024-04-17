@@ -14,6 +14,8 @@ export const DetalleMascota = () => {
     useMascotaById(id);
     useUser(data?.UserId);
 
+    console.log(data, "data");
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-orange-100 to-blue-200 flex flex-col items-center justify-center px-4 gap-2">
 
