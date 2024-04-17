@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Modal from "react-modal";
 import axiosJwt from "../../utils/axiosJwt";
+import ReviewForm from "../ReviewAndComents/ReviewForm";
 
 Modal.setAppElement("#root");
 
@@ -13,7 +14,9 @@ export const HistorialReserva = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedReservationId, setSelectedReservationId] = useState(null);
 
-  
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const [idAlojamiento, setIdAlojamiento] = useState();
 
   useEffect(() => {
     const fetchHistorial = async () => {
@@ -40,6 +43,8 @@ export const HistorialReserva = () => {
     fetchHistorial();
   }, []);
 
+  console.log(historial);
+
   const createPreference = async (id) => {
     if (!loadingPreference) {
       setLoadingPreference(true);
@@ -58,6 +63,7 @@ export const HistorialReserva = () => {
         );
 
         const { id } = response.data;
+
         setPreferenceId(id);
       } catch (error) {
         console.log(error);
@@ -76,6 +82,15 @@ export const HistorialReserva = () => {
     setModalIsOpen(false);
     setPreferenceId(null);
   };
+
+  const openPopup = () => {
+    setPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
 
   return (
     <div>
@@ -158,10 +173,31 @@ export const HistorialReserva = () => {
                 >
                   Pagar
                 </button>
+
+
+                
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {reserva.Housings[0]?.provinces}
               </td>
+              <div>
+
+       <button onClick={openPopup}>calificar</button>
+
+            {isPopupOpen && (
+  <div className="ventana-popup">
+    <div className="contenido-popup">
+     
+                   <ReviewForm id={reserva.Housings[0]?.id}
+            
+                   />
+                   {console.log(reserva.Housings[0], "housingid")}
+     
+      <button onClick={closePopup}>Cerrar</button>
+    </div>
+  </div>
+)}
+</div>
             </tr>
           ))}
         </tbody>
@@ -205,6 +241,9 @@ export const HistorialReserva = () => {
           Cancelar
         </button>
       </Modal>
+
+     
+      
     </div>
   );
 };

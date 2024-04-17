@@ -24,7 +24,7 @@ export const DetalleMascota = () => {
                   
                 <div className="felx items-center justify-center bg-slate-600">
                   <img className="w-[230px] h-[240px]"
-                  src={data.image} alt="Imagen de mascota" 
+                  src={data?.image} alt="Imagen de mascota" 
                   />
                 </div>
 
