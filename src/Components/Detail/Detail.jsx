@@ -34,17 +34,47 @@ const Detail = () => {
     setActiveImage(image);
   };
 
+  const [indexImage, setIndexImage] = useState(0);
+
+    const changeImage = (direccion) => {
+        if (direccion === 'anterior') {
+            setIndexImage((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+        } else {
+            setIndexImage((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+        }
+      };
+
   return (
     <div className="flex flex-col lg:flex-row gap-16 lg:items-center rounded-xl py-5 w-full justify-center bg-white">
-      <div className="flex flex-row justify-center items-center h-[525px] px-[20px]">
-        <div className="flex w-full lg:w-[60%] gap-6 py-6 mr-[20px]">
+      <div className="flex flex-row justify-center items-center h-[525px] mq900:max-h-[300px] mq900:h-auto px-[20px]">
+            <div className="mq1300:hidden w-[95%] mq1650:hidden mq900:block relative pt-2" >
+               
+                    <button onClick={() => changeImage("anterior")}
+                    className=" absolute top-1/2 transform -translate-y-1/2 left-4 rounded-[50%] bg-white bg-opacity-70 hover:bg-white hover:bg-opacity-100 cursor-pointer z-10"
+                    >❮</button>
+               
+                    <button onClick={() => changeImage("siguiente")}
+                    className=" absolute top-1/2 transform -translate-y-1/2 right-4 rounded-[50%] bg-white bg-opacity-70 hover:bg-white hover:bg-opacity-100 cursor-pointer z-10"
+                    >❯</button>
+              
+
+                <img className=" w-full h-[auto] rounded-[20px]" src={images[indexImage]} alt={`Imagen ${indexImage + 1}`} />
+           
+                <div className=" absolute bottom-4 left-0 right-0 flex justify-center">
+                    {images.map((image, idx) => (
+                        <span key={idx} onClick={() => setIndexImage(idx)} className={`mx-1 w-3 h-3 rounded-full cursor-pointer ${idx === indexImage ? 'bg-white' : 'bg-gray-300'}`}></span>
+                    ))}
+                </div>
+            </div>
+        <div className="mq900:hidden flex w-full lg:w-[60%] gap-6 py-6 mr-[20px]">
+
           <img
             src={activeImg}
             alt=""
-            className="w-full h-[500px] bg-cover rounded-tl-xl rounded-bl-xl"
+            className=" mq900:hidden w-full h-[500px] bg-cover rounded-tl-xl rounded-bl-xl"
           />
         </div>
-        <div className="flex flex-col w-[40%] gap-6 py-6">
+        <div className="mq900:hidden flex flex-col w-[40%] gap-6 py-6">
           {secondaryImages.map((image, index) => (
             <img
               key={index}
@@ -62,18 +92,17 @@ const Detail = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-row justify-center items-start px-[20px]">
-        {/* ABOUT */}
-        <div className="flex flex-col lg:w-2/4 w-full justify-start items-start px-[20px] ">
-          <div className="flex flex-col items-start justify-start w-[60%]">
-            <h1 className="font-custom font-bold m-0">{title}</h1>
-            <h2 className="font-bold font-custom m-0 text-gray-700">
+      <div className="flex flex-row mq900:flex-col justify-center items-start px-[20px]">
+        <div className="flex flex-col lg:w-2/4 w-full justify-start items-start px-[20px] mq900:mb-6 ">
+          <div className="flex flex-col items-start justify-start w-[60%] mq900:w-full">
+            <h1 className="font-custom font-bold m-0 text-gray-700">{title}</h1>
+            <h2 className="font-semibold font-custom m-0 text-gray-500">
               {accommodationType}, en {cities}, {provinces}
             </h2>
           </div>
 
-          <div className="flex gap-7">
-            <p>Nombre del Anfitrion: {User?.name}</p>
+          <div className="flex font-custom text-gray-700 font-semibold">
+            <p className="mr-2">Nombre del anfitrión: {User?.name}</p>
             <p>Email: {User?.email}</p>
           </div>
 
@@ -82,7 +111,7 @@ const Detail = () => {
               return (
                 <p
                   key={service.id}
-                  className={`shadow w-[50%] font-custom text-[20px] font-semibold text-gray-700 rounded-[50px] p-3 flex items-center justify-center bg-cantaloupe }`}
+                  className={`shadow w-[50%] font-custom text-[15px] font-semibold text-white rounded-[50px] py-2 px-4 flex items-center justify-center bg-chocolate-100 }`}
                 >
                   {" "}
                   {service.type}{" "}
@@ -90,7 +119,7 @@ const Detail = () => {
               );
             })}
           </div>
-          <div className="font-custom">
+          <div className="font-custom text-gray-700 mt-4 mq900:w-[95%] mq900:flex mq900:items-center mq900:justify-center">
             En nuestro refugio para perros, nos dedicamos a proporcionar un
             entorno seguro y acogedor donde los perros puedan sentirse como en
             casa mientras están lejos de sus familias. Contamos con amplias
@@ -107,14 +136,14 @@ const Detail = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
-          <p className="text-3xl font-custom">{price},00 ARS /noche </p>
+        <div className="flex flex-col justify-center items-center w-[40%] mq900:w-[95%] mq900:mx-[10px] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
+          <p className="font-semibold font-custom text-[20px] text-gray-700">${price},00 ARS /noche </p>
 
-          <div className="flex flex-col">
-            <div className="flex flex-row">
+          
+            <div className="flex flex-row mq900:justify-center mq900:items-center">
               <FormReserva id={id} hourly={hourly} />
             </div>
-          </div>
+          
         </div>
       </div>
     </div>

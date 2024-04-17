@@ -1,14 +1,7 @@
 import { useState } from "react";
-// import axios from 'axios'
 import Swal from "sweetalert2";
-import "boxicons";
 import { useMascotas } from "../../../Hooks/useMascota";
 import { useSelector } from "react-redux";
-
-import perro from "../../../assets/gestos-de-los-perros.jpg";
-import gato from "../../../assets/gato.webp";
-import caballo from "../../../assets/caballo.jpeg";
-import gecko from "../../../assets/gecko.webp";
 import axiosJwt from "../../../utils/axiosJwt";
 
 export const FormReserva = ({ id, hourly }) => {
@@ -30,10 +23,11 @@ export const FormReserva = ({ id, hourly }) => {
   const handleChange = (e) => {
     const { value, name } = e.target;
 
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
+      setInput((prevInput) => ({
+        ...prevInput,
+        [name]: value,
+      }));
+    
   };
 
   const handleSubmit = async (e) => {
@@ -60,6 +54,7 @@ export const FormReserva = ({ id, hourly }) => {
         fechaFin: input.fechaFin,
       };
     }
+    
     const camposVacios = Object.values(body).some((value) => !value);
 
     if (camposVacios) {
@@ -96,7 +91,7 @@ export const FormReserva = ({ id, hourly }) => {
 
     if (hourly) {
       if (!input?.fechaInicio || !input?.horaInicio || !input?.horaFin) {
-        console.log("aca");
+       
         return Swal.fire({
           title: "ERROR",
           text: "Te faltan llenar campos",
@@ -119,11 +114,12 @@ export const FormReserva = ({ id, hourly }) => {
     }
   };
 
+  
+
   return (
-    <form className="flex flex-col items-center justify-center gap-8">
-      <label className="w-64 h-10 text-center flex items-center justify-center gap-5">
-        <box-icon name="calendar-edit"></box-icon>
-        <input type="date" name="fechaInicio" onChange={handleChange}></input>
+    <form className="flex flex-col items-center justify-center">
+      <label className="py-2 px-6 rounded-[20px] bg-white text-center flex items-center justify-center mb-4">
+        <input type="date" name="fechaInicio" onChange={handleChange } className="focus:outline-none"></input>
       </label>
 
       {hourly ? (
@@ -132,44 +128,47 @@ export const FormReserva = ({ id, hourly }) => {
             <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
               Hora de inicio
             </a>
+            <a className="bg-white py-2 px-6 rounded-[20px] items-center flex justify-center">
             <input
               type="number"
               name="horaInicio"
               id="horaInicio"
               onChange={handleChange}
               value={input.horaInicio}
-              min={0}
-              max={input.horaFin}
+              min={1}
+              max={input.horaFin ? input.horaFin - 1 : 23}
               step={1}
-              className="outline-none w-12"
+              className="outline-none w-10"
             />
+            </a>
           </label>
-          <label className="flex w-[110px] flex-col items-center px-[15px] py-[10px] ">
+          <label className="flex w-[110px] flex-col items-center px-[15px] py-[10px]">
             <a className="font-custom font-semibold text-[12px] mb-[10px] text-gray-500">
               Hora de fin
             </a>
+            <a className="bg-white py-2 px-6 rounded-[20px] items-center flex justify-center">
             <input
               type="number"
               name="horaFin"
               id="horaFin"
               onChange={handleChange}
               value={input.horaFin}
-              min={input.horaInicio}
+              min={parseInt(input.horaInicio) + 1}
               step={1}
               max={24}
-              className="outline-none w-12"
+              className="outline-none w-10"
             />
+            </a>
           </label>
         </div>
       ) : (
-        <label className="w-64 h-10 text-center flex items-center justify-center gap-5">
-          <box-icon name="calendar-edit"></box-icon>
-          <input type="date" name="fechaFin" onChange={handleChange}></input>
+        <label className="py-2 px-6 rounded-[20px] bg-white text-center flex items-center justify-center mb-4">
+          <input type="date" name="fechaFin" onChange={handleChange} className="focus:outline-none"></input>
         </label>
       )}
 
       <button
-        className="cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] flex-1 rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
+        className="cursor-pointer border-none py-3 px-6 font-semibold text-[15px] mt-2 text-white  bg-chocolate-100 flex-1 rounded-[50px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-chocolate-200"
         onClick={handleClick}
         disabled={open}
       >
@@ -177,68 +176,70 @@ export const FormReserva = ({ id, hourly }) => {
       </button>
 
       {open && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-          <div className="bg-white p-5 rounded flex flex-col justify-center items-center">
-            <button onClick={() => setOpen(false)} className="cursor-pointer">
-              X
+        <div className="fixed inset-0 z-10 mq900:overflow-auto  bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+          <div className="bg-white mq900:overflow-auto h-full mq900:max-w-full px-5 pt-0 pb-4 rounded flex flex-col justify-center items-center">
+            <div className="mq900:mt-4 flex flex-row w-full items-center justify-between">
+            <button onClick={() => setOpen(false)} className="  cursor-pointer flex items-center justify-start bg-whiteseñales rounded-[50px] px-3 py-3 max-h-[35px] mq900:ml-3">
+            ✖
             </button>
-            <h1 className="font-custom">Cual mascota alojaras?</h1>
-            <div className="flex gap-5">
+            <h1 className=" font-custom text-[25px] text-gray-700 mq900:mr-3">¿Qué mascota alojarás?</h1>
+            </div>
+            <div className="flex mq900:flex-col gap-5 mq900:overflow-auto ">
               {mascota?.map((pet) => {
                 return (
-                  <div className="max-w-lg w-full bg-white shadow-md rounded-lg overflow-hidden font-custom">
-                    <div className="felx items-center justify-center bg-slate-600">
+                  <div className="mq900:overflow-auto  max-w-lg w-full bg-white shadow-md rounded-lg overflow-hidden font-custom">
+                    <div className="flex items-center justify-center bg-slate-600">
                       <img
-                        className="w-[230px] h-[240px]"
+                        className="w-[230px] h-[220px]"
                         src={
                           pet.image
                         }
                         alt="Imagen de mascota"
                       />
                     </div>
-                    <div className="p-6">
-                      <h2 className="text-3xl font-bold mb-2 text-gray-800">
+                    <div className="px-6 py-1">
+                      <h2 className="text-3xl font-bold mb-2 text-gray-700">
                         {pet.name}
                       </h2>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Tipo:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Tipo:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.type}
                         </span>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Edad:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Edad:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.age} años
                         </span>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Agresividad:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Agresividad:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.aggressiveness ? "Sí" : "No"}
                         </span>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Género:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Género:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.genre}
                         </span>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Raza:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Raza:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.raze}
                         </span>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-600 mr-2">Tamaño:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center mb-2 text-[15px]">
+                        <span className="text-gray-500 mr-2">Tamaño:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.size}
                         </span>
                       </div>
-                      <div className="flex items-center">
-                        <span className="text-gray-600 mr-2">Convivencia:</span>
-                        <span className="text-gray-800 font-semibold">
+                      <div className="flex items-center text-[15px]">
+                        <span className="text-gray-500 mr-2">Convivencia:</span>
+                        <span className="text-gray-700 font-semibold">
                           {pet.coexistence ? "Sí" : "No"}
                         </span>
                       </div>
@@ -246,7 +247,7 @@ export const FormReserva = ({ id, hourly }) => {
                       <button
                         onClick={handleSubmit}
                         value={pet.id}
-                        className="text-gray-800 font-semibold cursor-pointer p-2 bg-orange-500 hover:bg-pink-100"
+                        className="text-white mt-4 font-semibold cursor-pointer px-4 py-2 bg-chocolate-100 hover:bg-chocolate-200 rounded-[20px]"
                       >
                         Selecionar
                       </button>
