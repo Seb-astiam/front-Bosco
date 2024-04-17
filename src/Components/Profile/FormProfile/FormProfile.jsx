@@ -9,11 +9,10 @@ export const FormProfile = (params) => {
         picture = JSON.parse(localStorage.getItem("user")).picture
     }
     const email = JSON.parse(localStorage.getItem("user")).email
-    const [updatePicture_, setUpdatePicture] = useState(null)
 
     const [img, setImg] = useState(null)
     useEffect(() => {
-        axios.get(`/user/${email}`).then(({ data }) => {
+        axios.get(`http://localhost:3001/user/${email}`).then(({ data }) => {
             // Obtener el objeto del localStorage
             const userLocal = JSON.parse(localStorage.getItem("user"));
 
