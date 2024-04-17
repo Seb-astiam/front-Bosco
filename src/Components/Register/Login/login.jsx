@@ -22,6 +22,8 @@ const LoginPage = ()=>{
         }
     }
 
+    //********************************************************************************
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
@@ -48,10 +50,15 @@ const LoginPage = ()=>{
         }
     }
 
-    const isEmailValid = /^\S+@\S+\.\S+$/.test(email);
-    const isPasswordValid = password.length >= 8;
+    /****************************** */
+
+    const isEmailValid = /^\S+@\S+\.\S+$/.test(email); // Verifica el formato de email
+    const isPasswordValid = password.length >= 8; // Verifica la longitud de la contraseña
 
     const isFormValid = email && password && isEmailValid && isPasswordValid;
+
+
+    /********************************* */
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Evitar que el formulario se envíe
@@ -66,9 +73,13 @@ const LoginPage = ()=>{
         setShowPassword(!showPassword);
     };
        
-       const navigate = useNavigate();
-       const [haveAccount, setHaveAccount] = useState(true)
-       const handleHaveAccount = ()=>{ 
+       /******************************************** */ 
+
+    const navigate = useNavigate();
+
+    const [haveAccount, setHaveAccount] = useState(true)
+
+    const handleHaveAccount = () => { 
         if (!haveAccount) {
             setHaveAccount(true)
         } else {
@@ -185,6 +196,8 @@ const LoginPage = ()=>{
         }
     }, [tokenFB]);
 
+    /**************************************** */
+
     const [adviceRecover, setAdviceRecover] = useState(false)
     const [emailRecover, setEmailRecover] = useState()
     const [emailNotFound, setEmailNotFound] = useState(false)
@@ -264,7 +277,6 @@ const LoginPage = ()=>{
                             <button 
                             className={`font-bold font-custom cursor-pointer outline-none rounded-2xl m-2 px-5 py-3 ${isFormValid ? 'bg-[black] text-white shadow-md' : 'bg-[transparent] text-black shadow-md'}`}
                             disabled={!isFormValid}
-                            onClick={navigate("/Principal")}
                             > Iniciar </button>
                     </form> 
                 </div>
