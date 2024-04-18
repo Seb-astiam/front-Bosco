@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { CardPrincipal } from "./CardPrincipal";
 import { useEffect, useState } from "react";
+import { NotFound } from "../../../Components/404 NotFound/notFound";
 
 export const CardsPrincipal = () => {
     const Alojamientos = useSelector((state) => state.storage.allAlojamientos);
@@ -47,6 +48,8 @@ export const CardsPrincipal = () => {
                 ))}
                 <button onClick={nextPage} disabled={numberPage === totalPages} className=" bg-transparent ">❯</button>
             </div>
+
+            {newArrAlojamientos.length < 1 && <NotFound />} 
 
             <div className="flex flex-wrap h-[95%] w-full gap-1 justify-center items-start">
                 {newArrAlojamientos.map((alojamiento) => {

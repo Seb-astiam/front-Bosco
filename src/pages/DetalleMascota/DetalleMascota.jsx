@@ -14,6 +14,8 @@ export const DetalleMascota = () => {
     useMascotaById(id);
     useUser(data?.UserId);
 
+    console.log(data, "data");
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-orange-100 to-blue-200 flex flex-col items-center justify-center px-4 gap-2">
 
@@ -24,7 +26,7 @@ export const DetalleMascota = () => {
                   
                 <div className="felx items-center justify-center bg-slate-600">
                   <img className="w-[230px] h-[240px]"
-                  src={data.image} alt="Imagen de mascota" 
+                  src={data?.image} alt="Imagen de mascota" 
                   />
                 </div>
 

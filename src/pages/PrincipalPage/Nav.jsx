@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@react-hook/media-query";
 import DropDown from "./DropDown";
 import { TfiAlignRight } from "react-icons/tfi";
-import { Filtros } from "./Filtro";
 
 export const Nav = ({ pathname }) => {
   const navigate = useNavigate();

@@ -20,8 +20,12 @@ import ActivateAccount from "./Components/Register/ActivateAccount/ActivateAccou
 import { DetalleMascota } from "./pages/DetalleMascota/DetalleMascota.jsx";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { NotFound } from "./Components/404 NotFound/notFound.jsx";
 
 import Swal from "sweetalert2";
+import PagoAprobado from "./pages/pagos/pagoAprobado.jsx";
+import PagoRechazado from "./pages/pagos/pagoRechazado.jsx";
+import PagoPendiente from "./pages/pagos/pagoPendiente.jsx";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -116,6 +120,11 @@ const App = () => {
         />
         <Route path="/activate-account" element={<ActivateAccount />} />
         <Route path="/detail-mascota/:id" element={<DetalleMascota />} />
+        <Route path="/success" element={<PagoAprobado />} />
+        <Route path="/failure" element={<PagoRechazado />} />
+        <Route path="/pending" element={<PagoPendiente />} />
+        <Route path="*" element={<Navigate to="/404" />} />
+        <Route path="/404" element={<NotFound />} />
       </Routes>
     </>
   );
