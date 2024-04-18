@@ -20,7 +20,7 @@ export const DetalleMascota = () => {
             <div className="flex mq900:my-0 flex-row mq900:flex-col w-[70%] mq900:w-[95%] mq900:max-h-full max-h-[400px] bg-white shadow-md rounded-[50px] overflow-hidden font-custom">
                   
                 <div className="felx items-center justify-center bg-slate-600">
-                  <img className="w-[230px] h-[240px]"
+                  <img className="w-[230px] h-full"
                   src={data?.image} alt="Imagen de mascota" 
                   />
                 </div>
