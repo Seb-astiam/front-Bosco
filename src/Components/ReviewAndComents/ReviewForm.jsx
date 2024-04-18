@@ -5,21 +5,23 @@ import classNames from 'classnames';
 import axios from 'axios';
 
 
-const ReviewForm = ( id ) => {
+const ReviewForm = ({idReserva}) => {
   const [comment, setComment] = useState("");
   const [valoracion, setValoracion] = useState("");
   const [error, setError] = useState("");
   const [showThanks, setShowThanks] = useState(false);
   
   const handleSendReview = async () => {
+
+
   
     const dateNow = new Date();
-    
+
     try {
       const response = await axios.post('/review/newReview', {
         comentario: comment,
         valoracion: valoracion,
-        id_alojamiento: id.id,
+        id_alojamiento: idReserva,
         fecha: dateNow
       });
   
@@ -70,7 +72,6 @@ const ReviewForm = ( id ) => {
     handleSendReview();
     setComment('');
     setValoracion('');
-    setValue(null);
     setShowThanks(true);
     setError('');
   };

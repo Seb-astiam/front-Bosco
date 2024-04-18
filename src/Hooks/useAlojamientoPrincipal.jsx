@@ -14,7 +14,6 @@ export const useAlojamientoPrincipal = () => {
         );
 
         dispatch(getAllAlojamientos(responseBack.data));
-        console.log(responseBack.data, "dataValue22")
       } catch (error) {
         console.error("Algo falló en la petición a mi Backend", error);
       }

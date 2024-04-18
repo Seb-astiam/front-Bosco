@@ -10,7 +10,6 @@ const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
 
   const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
-  
   const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
 
   if (!card) {
@@ -114,7 +113,7 @@ const Detail = () => {
           </div>
         </div>
        
-          <div className="mt-[80px]"><ReviewList/></div>
+          <div className="mt-[80px]"><ReviewList /></div>
 
           
         <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">

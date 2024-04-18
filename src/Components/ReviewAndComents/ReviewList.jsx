@@ -12,7 +12,8 @@ const ReviewList = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/review/allReview/${id}`);
+        
+        const response = await axios.get(`/review/allReviewHousing/${id}`);
         setReviews(response.data);
       } catch (error) {
         setError('Error al obtener las revisiones');
