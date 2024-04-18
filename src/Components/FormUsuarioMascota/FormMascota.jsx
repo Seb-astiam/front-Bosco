@@ -100,12 +100,10 @@ export const FormMascota = () => {
       }
     });
 
+    console.log(email_usuario, "hace algo");
     formDataToSend.append("UserId", email_usuario.id);
 
-    const sendBack = await axiosJwt.post(
-      "/newMascota",
-      formDataToSend
-    );
+    const sendBack = await axiosJwt.post("/newMascota", formDataToSend);
 
     if (sendBack.status === 201) {
       Swal.fire({
