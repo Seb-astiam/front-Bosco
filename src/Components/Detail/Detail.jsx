@@ -1,90 +1,48 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import {FormReserva } from "../Register/formReserva/formReserva"
+import { FormReserva } from "../Register/formReserva/formReserva";
 
 import ReviewList from "../ReviewAndComents/ReviewList";
-
+import axios from "axios";
+import DetailImages from "./DetailImages";
 
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
+  const [housing, setHousing] = useState({});
 
-  const Alojamiento = useSelector((state) => state.storage.allAlojamientos);
-  const card = Alojamiento.find((card) => card.id === parseInt(id)); // Busca la tarjeta correspondiente en los datos
+  useEffect(() => {
+    const loadHousing = async () => {
+      try {
+        const { data } = await axios(`/profileHousing/getHousingId/${id}`);
+        setHousing(data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    loadHousing();
+  }, [id]);
 
-  if (!card) {
-    return <div>No se encontró la tarjeta</div>; // Maneja el caso en que no se encuentre la tarjeta
-  }
-  const {
-    accommodationType,
-    hourly,
-    datesAvailable,
-    datesEnd,
-    images,
-    provinces,
-    cities,
-    price,
-    square,
-    title,
-    Services,
-    User,
-  } = card;
-
-  const [activeImg, setActiveImage] = useState(images[0]);
-  const secondaryImages = images.filter((image) => image !== activeImg);
-
-  const handleImageClick = (image) => {
-    // Establecer la nueva imagen como activa
-    setActiveImage(image);
-  };
-
-  return (
+  return housing?.title ? (
     <div className="flex flex-col lg:flex-row gap-16 lg:items-center rounded-xl py-5 w-full justify-center bg-white">
-      <div className="flex flex-row justify-center items-center h-[525px] px-[20px]">
-        <div className="flex w-full lg:w-[60%] gap-6 py-6 mr-[20px]">
-          <img
-            src={activeImg}
-            alt=""
-            className="w-full h-[500px] bg-cover rounded-tl-xl rounded-bl-xl"
-          />
-        </div>
-        <div className="flex flex-col w-[40%] gap-6 py-6">
-          {secondaryImages.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt=""
-              className={`w-full h-[235px] object-cover cursor-pointer ${
-                index === 0
-                  ? "rounded-tr-xl"
-                  : index === 1
-                  ? "rounded-br-xl"
-                  : ""
-              }`}
-              onClick={() => handleImageClick(image)}
-            />
-          ))}
-        </div>
-      </div>
+      <DetailImages images={housing.images} />
       <div className="flex flex-row justify-center items-start px-[20px]">
         {/* ABOUT */}
         <div className="flex flex-col lg:w-2/4 w-full justify-start items-start px-[20px] ">
           <div className="flex flex-col items-start justify-start w-[60%]">
-            <h1 className="font-custom font-bold m-0">{title}</h1>
+            <h1 className="font-custom font-bold m-0">{housing.title}</h1>
             <h2 className="font-bold font-custom m-0 text-gray-700">
-              {accommodationType}, en {cities}, {provinces}
+              {housing.accommodationType}, en {housing.cities},{" "}
+              {housing.provinces}
             </h2>
           </div>
 
-        <div className="flex gap-7">
-          <p>Nombre del Anfitrion: {User?.name}</p>
-          <p>Email: {User?.email}</p>
-        </div>
-
-        
+          <div className="flex gap-7">
+            <p>Nombre del Anfitrion: {housing.User?.name}</p>
+            <p>Email: {housing.User?.email}</p>
+          </div>
 
           <div className="flex items-center justify-center gap-2 ">
-            {Services.map((service) => {
+            {housing.Services.map((service) => {
               return (
                 <p
                   key={service.id}
@@ -112,20 +70,27 @@ const Detail = () => {
             felices y seguros.
           </div>
         </div>
-       
-          <div className="mt-[80px]"><ReviewList /></div>
 
-          
+        <div className="mt-[80px]">
+          <ReviewList />
+        </div>
+
         <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
-          <p className="text-3xl font-custom">{price},00 ARS /noche </p>
+          <p className="text-3xl font-custom">{housing.price},00 ARS /noche </p>
 
           <div className="flex flex-col">
             <div className="flex flex-row">
-              <FormReserva id={id} hourly={hourly} />
+              <FormReserva id={id} hourly={housing.hourly} />
             </div>
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="w-full h-full flex items-center justify-center">
+      <p className="font-bold italic text-40xl-5 font-custom text-yellow-500">
+        Cargando...
+      </p>
     </div>
   );
 };
