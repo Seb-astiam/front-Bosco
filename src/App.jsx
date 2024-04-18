@@ -29,7 +29,9 @@ import PagoRechazado from "./pages/pagos/pagoRechazado.jsx";
 import PagoPendiente from "./pages/pagos/pagoPendiente.jsx";
 
 
+
 const App = () => {
+
   const { pathname } = useLocation();
   // const socket = io.connect("http://localhost:3001");
   const socket = io.connect("https://back-bosco.up.railway.app");

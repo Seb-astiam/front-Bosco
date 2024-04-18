@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 export const CardPrincipal = ({alojamiento}) => {
     const [indexImage, setIndexImage] = useState(0);
     const [hover, setHover] = useState(false);
+
 
     const { accommodationType, datesAvailable, datesEnd, images, provinces, cities, price, square, title, Services } = alojamiento;
     
@@ -13,7 +14,7 @@ export const CardPrincipal = ({alojamiento}) => {
         } else {
             setIndexImage((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
         }
-      };
+    };
 
     return (
         
