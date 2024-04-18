@@ -14,6 +14,8 @@ export const DetalleMascota = () => {
     useMascotaById(id);
     useUser(data?.UserId);
 
+    console.log(data, "data");
+
     return (
         <div className="h-screen mq900:h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-chocolate-300 ">
 
@@ -21,6 +23,7 @@ export const DetalleMascota = () => {
                   
                 <div className="felx items-center justify-center bg-slate-600">
                   <img className="w-[230px] h-full"
+
                   src={data?.image} alt="Imagen de mascota" 
                   />
                 </div>
