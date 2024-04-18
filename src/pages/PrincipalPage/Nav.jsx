@@ -21,7 +21,7 @@ export const Nav = ({ pathname }) => {
   };
 
   return (
-    <div className="bg-orange-300 mt-[10px] ml-[10px] mr-[10px] rounded-lg">
+    <div className="bg-orange-300 mt-[10px] ml-[10px] mr-[10px] rounded-lg shadow-lg">
       <div className="relative flex h-16 items-center justify-between">
         <div
           className="flex flex-col items-center justify-center   text-black hover:cursor-pointer"

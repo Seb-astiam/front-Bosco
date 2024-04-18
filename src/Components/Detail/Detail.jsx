@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FormReserva } from "../Register/formReserva/formReserva";
+import {FormReserva } from "../Register/formReserva/formReserva"
+
+import ReviewList from "../ReviewAndComents/ReviewList";
+
+
 const Detail = () => {
   const { id } = useParams(); // Obtén el ID de la URL
 
@@ -72,10 +76,12 @@ const Detail = () => {
             </h2>
           </div>
 
-          <div className="flex gap-7">
-            <p>Nombre del Anfitrion: {User?.name}</p>
-            <p>Email: {User?.email}</p>
-          </div>
+        <div className="flex gap-7">
+          <p>Nombre del Anfitrion: {User?.name}</p>
+          <p>Email: {User?.email}</p>
+        </div>
+
+        
 
           <div className="flex items-center justify-center gap-2 ">
             {Services.map((service) => {
@@ -106,7 +112,10 @@ const Detail = () => {
             felices y seguros.
           </div>
         </div>
+       
+          <div className="mt-[80px]"><ReviewList /></div>
 
+          
         <div className="flex flex-col justify-center items-center w-[40%] rounded-[20px] shadow-lg py-4 bg-whiteseñales">
           <p className="text-3xl font-custom">{price},00 ARS /noche </p>
 
