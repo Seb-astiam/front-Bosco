@@ -4,13 +4,13 @@ import { FormProfile } from "./FormProfile/FormProfile";
 import { MyPets } from "./MyPets/MyPets";
 import { MyHousing } from "./MyHousing/MyHousing";
 import axios from "axios";
+import { MyHousings } from "./MyHousings/MyHousings";
 
 export const Profile = () => {
     const userId = JSON.parse(localStorage.getItem("user")).id
     const userEmail = JSON.parse(localStorage.getItem("user")).email
-    const [formHousing, setFormHousing] = useState({
-        userId
-    });
+    const [formHousing, setFormHousing] = useState([]);
+
     const [formData, setFormData] = useState({
         userId,
         images: [],
@@ -38,14 +38,6 @@ export const Profile = () => {
     });
 
     const [nuevo, setrNuevo] = useState(true)
-
-    const handleChangeHousing = (e) => {
-        const { name, value } = e.target;
-        setFormHousing({
-            ...formHousing,
-            [name]: value,
-        });
-    };
 
 
     const validate = (input) => {
@@ -91,38 +83,24 @@ export const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/profile/${userEmail}`);
-                const housing = await axios.get(`http://localhost:3001/profileHousing/housingsById?id=${userId}`);
-                const userData = response.data;
-                console.log(response);
-                console.log(userData);
-                const housingData = housing.data;
-                setFormHousing({
-                    ...formHousing,
-                    id: housingData.id || null,
-                    title: housingData.title || "",
-                    datesAvailable: housingData.datesAvailable || null,
-                    datesEnd: housingData.datesEnd || null,
-                    type: housingData.type || "",
-                    price: housingData.price || 0,
-                    provinces: housingData.provinces || "",
-                    cities: housingData.cities || "",
-                    square: housingData.square || 0,
-                    availability: housingData.availability || false,
-                    images: housingData.images || [],
-                    accommodationType: housingData.accommodationType || "",
+                await axios.get(`http://localhost:3001/profile/${userEmail}`).then(({ data }) => {
+
+                    const userData = data;
+                    setFormData({
+                        ...formData,
+                        name: userData.name || "",
+                        surname: userData.surname || "",
+                        genre: userData.genre || "",
+                        province: userData.province || "",
+                        city: userData.city || "",
+                        address: userData.address || "",
+                        phone: userData.phone || "",
+                        balance: userData.balance || 0
+                    });
                 });
-                console.log(userData);
-                setFormData({
-                    ...formData,
-                    name: userData.name || "",
-                    surname: userData.surname || "",
-                    genre: userData.genre || "",
-                    province: userData.province || "",
-                    city: userData.city || "",
-                    address: userData.address || "",
-                    phone: userData.phone || "",
-                    balance: userData.balance || 0
+                await axios.get(`http://localhost:3001/profileHousing/allHousingsUser/${userEmail}`).then(({ data }) => {
+                    const housingData = data;
+                    setFormHousing(housingData);
                 });
                 setrNuevo(false)
             } catch (error) {
@@ -187,7 +165,7 @@ export const Profile = () => {
                     } />
                     <Route path='alojamientos' element={
                         <div>
-                            <MyHousing handleChange={handleChangeHousing} formHousing={formHousing} />
+                            <MyHousings formHousing={formHousing} />
                         </div>
                     } />
                     <Route path='mascotas' element={
