@@ -27,11 +27,12 @@ import Swal from 'sweetalert2'
 import PagoAprobado from "./pages/pagos/pagoAprobado.jsx";
 import PagoRechazado from "./pages/pagos/pagoRechazado.jsx";
 import PagoPendiente from "./pages/pagos/pagoPendiente.jsx";
+import { useServices } from "./Hooks/useServices.jsx";
 
 
 
 const App = () => {
-
+  useServices();
   const { pathname } = useLocation();
   // const socket = io.connect("http://localhost:3001");
   const socket = io.connect("https://back-bosco.up.railway.app");
