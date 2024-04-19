@@ -6,8 +6,6 @@ import { NotFound } from "../../../Components/404 NotFound/notFound";
 export const CardsPrincipal = () => {
     const Alojamientos = useSelector((state) => state.storage.allAlojamientos);
 
-
-
     const [numberPage, setNumberPage] = useState(1);
 
     useEffect( ()=> {

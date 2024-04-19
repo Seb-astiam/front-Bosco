@@ -9,7 +9,7 @@ const initialState = {
   MascotasUsuario: [],
   mascotaById: [],
   UserById: [],
-  TipoAlojamientos: []
+  TipoAlojamientos: [],
 };
 
 //! creo que no es necesario un estado local para provinces, cities y servicios. tema para resolver luego - ari
@@ -44,10 +44,10 @@ const boscoSlice = createSlice({
     },
     getTiposAlojamientos (state, action) {
       state.TipoAlojamientos = action.payload
-    }
+    },
   },
 });
 
-export const { getAllAlojamientos, getAllProvinces, getAllCities, getAllService, getAllUser, getMascotas, getMascotaById, getUserById, getTiposAlojamientos  } = boscoSlice.actions;
+export const { getAllAlojamientos, getAllProvinces, getAllCities, getAllService, getAllUser, getMascotas, getMascotaById, getUserById, getTiposAlojamientos, idDetail } = boscoSlice.actions;
 
 export default boscoSlice.reducer;
