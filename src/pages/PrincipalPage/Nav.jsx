@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Isologotipo from "../../assets/IsoLogotipoBosco.png";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@react-hook/media-query";
@@ -11,6 +11,9 @@ export const Nav = ({ pathname }) => {
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
   const isMobile = useMediaQuery("(max-width: 1200px)");
   const [menuOpen, setMenuOpen] = useState(false);
+  const path = useLocation();
+
+  console.log(path, 'pa')
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -40,30 +43,40 @@ export const Nav = ({ pathname }) => {
         {/* Enlaces del menú para resoluciones mayores a 1300px */}
         {!isMobile && (
           <div className="flex gap-6 items-center ">
-            <NavLink
+            { path.pathname !== '/Principal' && <NavLink
+              to="/Principal"
+              className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+            >
+              Inicio
+            </NavLink>}
+
+            { path.pathname !== '/ProfileHousing' && <NavLink
               to="/ProfileHousing"
-              className="  no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
+              className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
             >
               Añadir Alojamiento
-            </NavLink>
-            <NavLink
+            </NavLink>}
+
+            { path.pathname !== '/formMascota' && <NavLink
               to="/formMascota"
-              className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b]  rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
+              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
             >
-              Añadir Perfil de Mascota
-            </NavLink>
-            <NavLink
+              Registro Mascota
+            </NavLink>}
+
+            {path.pathname !== '/historial-reservas' && <NavLink
               to="/historial-reservas"
-              className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b] rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
+              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
             >
-              Historial de Reservas
-            </NavLink>
-            <NavLink
+              Historial Reservas
+            </NavLink>}
+
+            { path.pathname !== '/solicitud-reserva' && <NavLink
               to="/solicitud-reserva"
-              className=" no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente cursor-pointer border-none py-3 pr-[20.799999999999955px] pl-[21px] bg-[#eb662b]  rounded-181xl flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:bg-[#d14d12]"
+              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
             >
               Solicitudes
-            </NavLink>
+            </NavLink>}
             <div className="ml-3">
               <div className="flex items-center">
                 <h1 className="text-white">{nameUsuario?.name}</h1>
@@ -105,25 +118,25 @@ export const Nav = ({ pathname }) => {
           <div className="bg-orange-300 rounded-lg flex flex-row items-center mx-1 p-4">
             <NavLink
               to="/ProfileHousing"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
             >
               Añadir Alojamiento
             </NavLink>
             <NavLink
               to="/formMascota"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
             >
-              Añadir Perfil de Mascota
+              Registrar Mascota
             </NavLink>
             <NavLink
               to="/historial-reservas"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
             >
-              Historial de Reservas
+              Historial Reservas
             </NavLink>
             <NavLink
               to="/solicitud-reserva"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-medium font-inter text-white text-cente block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
             >
               Solicitudes
             </NavLink>

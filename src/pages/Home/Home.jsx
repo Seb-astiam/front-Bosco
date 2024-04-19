@@ -1,5 +1,5 @@
 import React from "react";
-import { DateSearch } from "../../Components/DateSearch/DateSearch";
+// import { DateSearch } from "../../Components/DateSearch/DateSearch";
 import SocialFooter from "../../Components/Footer/SocialFooter";
 import { Navbar } from "../../Components/NavBar/NavBar";
 import {Cards} from "../../Components/Cards/Cards"
@@ -40,8 +40,10 @@ const Home = () => {
                 </p>
               </span>
             </div>
+
+            
            
-            <DateSearch />
+            {/* <DateSearch /> */}
           </div>
          
         </div> 
