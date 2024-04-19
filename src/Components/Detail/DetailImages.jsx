@@ -41,4 +41,5 @@ const DetailImages = ({ images }) => {
   );
 };
 
+
 export default DetailImages;
