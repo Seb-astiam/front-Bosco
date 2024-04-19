@@ -2,20 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios'
 
 export const MyPets = () => {
-    const userId = JSON.parse(localStorage.getItem("user")).id
+    const email = JSON.parse(localStorage.getItem("user")).email
     const [pets, setPets] = useState([])
     const [selectedPet, setSelectedPet] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [showImage, setShowImage] = useState([]);
 
     useEffect(() => {
-        axios.get(`/allMascotas/${userId}`).then(({ data }) => {
-            console.log(data);
+        axios.get(`/allMascotas/${email}`).then(({ data }) => {
             setPets(data)
         })
     }, [])
     const handleChange = (e) => {
-        const { name, value, type, checked,files } = e.target;
+        const { name, value, type, checked, files } = e.target;
         let newValue;
         if (name === "images") {
             newValue = [
@@ -23,8 +22,8 @@ export const MyPets = () => {
                 ...Array.from(files).slice(0, 1 - showImage.length),
             ];
         } else {
-            newValue =value;
-          }
+            newValue = value;
+        }
         setSelectedPet(prevState => ({
             ...prevState,
             [name]: type === 'checkbox' ? checked : newValue
@@ -39,13 +38,18 @@ export const MyPets = () => {
 
     const handleUpdate = async (event) => {
         event.preventDefault();
+        // Uso de la función
+
         try {
             const formDataToSend = new FormData();
             Object.entries(selectedPet).forEach(([key, value]) => {
+
                 if (key === "images") {
+                    console.log(value);
                     // Si el campo es "images", agregamos cada archivo al FormData
-                    
-                    value.forEach((image) => formDataToSend.append("images", image));
+                    if (value) {
+                        value.forEach((image) => formDataToSend.append("images", image));
+                    }
                 } else {
                     // Para otros campos del formulario, simplemente los agregamos al FormData
                     formDataToSend.append(key, value);
@@ -59,6 +63,13 @@ export const MyPets = () => {
             alert("Failed to update user data. Please try again.");
         }
     };
+    function urlToFile(url, filename, mimeType) {
+        return fetch(url)
+            .then(response => response.blob())
+            .then(blob => new File([blob], filename, { type: mimeType }));
+    }
+
+
     return (
         <div className="flex flex-row-reverse gap-[15px]">
             <div >
@@ -68,10 +79,10 @@ export const MyPets = () => {
                         <form className="flex flex-col gap-[15px]">
                             <div>
                                 {
-                                    (!selectedPet.images)?
-                                    <img className="w-[150px]" src={selectedPet.image} alt="" />
-                                    :
-                                    <img className="w-[150px]" src={URL.createObjectURL(selectedPet.images[0])} alt="" />
+                                    (!selectedPet.images) ?
+                                        <img className="w-[150px]" src={selectedPet.image} alt="" />
+                                        :
+                                        <img className="w-[150px]" src={URL.createObjectURL(selectedPet.images[0])} alt="" />
                                 }
                             </div>
                             <div >

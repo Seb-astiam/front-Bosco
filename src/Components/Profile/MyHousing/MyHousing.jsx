@@ -12,12 +12,10 @@ export const MyHousing = (param) => {
   useCities();
   useTiposAlojamientos();
 
-  const { formHousing } = param
-  console.log(formHousing);
+  const { formHousing ,selectedHousing} = param
   const TiposHost = useSelector((state) => state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
-
   const [formData, setFormData] = useState({
     title: "",
     provinces: "",
@@ -30,14 +28,18 @@ export const MyHousing = (param) => {
     square: "",
     images: [],
   });
+  console.log(formHousing.Services.map((e)=>{return e.id;}));
   const [disableSubmitHousing, setDisableSubmitHousing] = useState(true);
   const [errorsHousing, setErrorsHousing] = useState({});
   useEffect(() => {
     setFormData({
       ...formData
-      , ...formHousing
+      , ...formHousing,
+      services:formHousing.Services.map((e)=>{return e.id;}) 
+      
     })
-  }, [])
+  }, [selectedHousing])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

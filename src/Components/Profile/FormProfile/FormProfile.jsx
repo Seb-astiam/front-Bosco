@@ -3,7 +3,8 @@ import axios from "axios";
 import pictureDefault from "../../../assets/perfilPicture.webp"
 
 export const FormProfile = (params) => {
-    const { formData, handlePost, handleUpdate, nuevo, handleChange } = params
+    const { formData, handlePost, handleUpdate, nuevo, handleChange, formDataErrors } = params
+    console.log(formData);
     let picture = pictureDefault
     if (JSON.parse(localStorage.getItem("user")).picture) {
         picture = JSON.parse(localStorage.getItem("user")).picture
@@ -12,7 +13,8 @@ export const FormProfile = (params) => {
 
     const [img, setImg] = useState(null)
     useEffect(() => {
-        axios.get(`http://localhost:3001/user/${email}`).then(({ data }) => {
+        axios.get(`/user/${email}`).then(({ data }) => {
+            console.log(data);
             // Obtener el objeto del localStorage
             const userLocal = JSON.parse(localStorage.getItem("user"));
 
@@ -107,8 +109,12 @@ export const FormProfile = (params) => {
                     </div>
                     <div>
                         <label htmlFor="genre" className="text-sm">Sexo:</label>
-                        <input type="text" id="genre" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.genre} onChange={handleChange} />
+                        <select id="genre" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.genre} onChange={handleChange}>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
+                        </select>
                     </div>
+
                 </div>
             </div>
             <div className="flex flex-col border-4 w-[500px] p-5 border-black space-y-4">

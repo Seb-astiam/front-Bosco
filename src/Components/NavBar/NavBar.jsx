@@ -55,7 +55,7 @@ export const Navbar = () => {
                       to="/Profile/perfil"
                       className="cursor-pointer relative leading-[28.13px] whitespace-nowrap z-[3] no-underline"
                     >
-                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={pictureDefault} alt="" />
+                          <img className="w-full h-full p-0 border rounded-md bg-slate-300 " src={picture} alt="" />
                     </NavLink>
                   </button>
                 </  div>

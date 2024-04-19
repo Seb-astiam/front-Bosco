@@ -7,12 +7,11 @@ import axios from "axios";
 import { MyHousings } from "./MyHousings/MyHousings";
 
 export const Profile = () => {
-    const userId = JSON.parse(localStorage.getItem("user")).id
     const userEmail = JSON.parse(localStorage.getItem("user")).email
     const [formHousing, setFormHousing] = useState([]);
 
     const [formData, setFormData] = useState({
-        userId,
+        userEmail,
         images: [],
         name: "",
         surname: "",
@@ -41,7 +40,7 @@ export const Profile = () => {
 
 
     const validate = (input) => {
-        setErrors((prevErrors) => {
+        setFormDataErrors((prevErrors) => {
             return {
                 ...prevErrors,
                 name: input.name === "" ? "No has registrado un nombre!" : "",
@@ -55,7 +54,7 @@ export const Profile = () => {
             };
         });
         const valid = Object.values({
-            ...errors,
+            ...formDataErrors,
             name: input.name === "" ? "No has registrado un nombre!" : "",
             type: input.type === "" ? "Selecciona un tipo" : "",
             age: input.age === "" ? "debe colocar la edad" : "",
@@ -83,7 +82,7 @@ export const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://localhost:3001/profile/${userEmail}`).then(({ data }) => {
+                await axios.get(`/profile/${userEmail}`).then(({ data }) => {
 
                     const userData = data;
                     setFormData({
@@ -98,7 +97,7 @@ export const Profile = () => {
                         balance: userData.balance || 0
                     });
                 });
-                await axios.get(`http://localhost:3001/profileHousing/allHousingsUser/${userEmail}`).then(({ data }) => {
+                await axios.get(`/profileHousing/allHousingsUser/${userEmail}`).then(({ data }) => {
                     const housingData = data;
                     setFormHousing(housingData);
                 });
@@ -143,12 +142,12 @@ export const Profile = () => {
                     </p>
                 </Link>
 
-                <Link to={"alojamientos"} className="flex-1 relative leading-[20px] no-underline">
+                {/* <Link to={"alojamientos"} className="flex-1 relative leading-[20px] no-underline">
                     <p className="font-bold shadow-md m-[5px] hover:bg-slate-300">
 
                         Alojamienos
                     </p>
-                </Link>
+                </Link> */}
                 <Link to={"mascotas"} className="flex-1 relative leading-[20px] no-underline">
                     <p className="font-bold shadow-md m-[5px] hover:bg-slate-300">
                         Mis mascotas
@@ -161,13 +160,13 @@ export const Profile = () => {
 
                 <Routes>
                     <Route path='perfil' element={
-                        <FormProfile nuevo={nuevo} handlePost={handlePost} handleUpdate={handleUpdate} handleChange={handleChange} formData={formData} />
+                        <FormProfile nuevo={nuevo} handlePost={handlePost} handleUpdate={handleUpdate} handleChange={handleChange} formData={formData} formDataErrors={formDataErrors} />
                     } />
-                    <Route path='alojamientos' element={
+                    {/* <Route path='alojamientos' element={
                         <div>
                             <MyHousings formHousing={formHousing} />
                         </div>
-                    } />
+                    } /> */}
                     <Route path='mascotas' element={
                         <div>
                             <MyPets />
