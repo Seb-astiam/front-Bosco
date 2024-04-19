@@ -22,43 +22,40 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { NotFound } from "./Components/404 NotFound/notFound.jsx";
 
-
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import PagoAprobado from "./pages/pagos/pagoAprobado.jsx";
 import PagoRechazado from "./pages/pagos/pagoRechazado.jsx";
 import PagoPendiente from "./pages/pagos/pagoPendiente.jsx";
 
-
 const App = () => {
   const { pathname } = useLocation();
-  // const socket = io.connect("http://localhost:3001");
-  const socket = io.connect("https://back-bosco.up.railway.app");
+  const socket = io.connect("http://localhost:3001");
+  // const socket = io.connect("https://back-bosco.up.railway.app");
 
-  const [notificacion, setNotificacion] = useState('')
+  const [notificacion, setNotificacion] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     socket.on("notificacion", receiveMessage);
 
-    if(userData?.email) socket.emit("join_room", userData.email);
+    if (userData?.email) socket.emit("join_room", userData.email);
 
     return () => {
       socket.off("notificacion", receiveMessage);
     };
   }, [socket]);
-  
-  const receiveMessage = (mensaje) => {
 
+  const receiveMessage = (mensaje) => {
     let timerInterval;
     Swal.fire({
       title: "Aceptado",
       html: mensaje,
       timer: 2000,
       toast: true,
-      position: 'top-right',
-      width: '400px',
-      height: '400px',
+      position: "top-right",
+      width: "400px",
+      height: "400px",
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
@@ -68,7 +65,7 @@ const App = () => {
       },
       willClose: () => {
         clearInterval(timerInterval);
-      }
+      },
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log("I was closed by the timer");
@@ -76,36 +73,58 @@ const App = () => {
     });
   };
 
-
-        
-
   return (
     <>
-    <span>{notificacion}</span>
+      <span>{notificacion}</span>
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Principal" element={<PrincipalPage />} />
-        <Route path="/ProfileHousing" element={userData ? <HousingForm /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/ProfileHousing"
+          element={
+            userData ? <HousingForm /> : <Navigate to="/login" replace />
+          }
+        />
         <Route path="/RegisterCompany" element={<RegisterCompany />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Profile/*" element={userData ? <Profile /> : <Navigate to="/login" replace />} />
-        <Route path="/formMascota" element={userData ? <FormMascota /> : <Navigate to="/login" replace />} />
-        <Route path="/detail/:id" element={userData ? <Detail /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/Profile/*"
+          element={userData ? <Profile /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/formMascota"
+          element={
+            userData ? <FormMascota /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/detail/:id"
+          element={userData ? <Detail /> : <Navigate to="/login" replace />}
+        />
         <Route path="/terms" element={<Terms></Terms>} />
         <Route path="/declaration" element={<Declaration></Declaration>} />
         <Route path="/formReserva" element={<FormReserva />} />
-        <Route path="/historial-reservas" element={userData ? <HistorialReserva /> : <Navigate to="/login" replace />} />
-        <Route path="/solicitud-reserva" element={userData ? <SolicitudReserva /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/historial-reservas"
+          element={
+            userData ? <HistorialReserva /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/solicitud-reserva"
+          element={
+            userData ? <SolicitudReserva /> : <Navigate to="/login" replace />
+          }
+        />
         <Route path="/activate-account" element={<ActivateAccount />} />
         <Route path="/detail-mascota/:id" element={<DetalleMascota />} />
         <Route path="/success" element={<PagoAprobado />} />
         <Route path="/failure" element={<PagoRechazado />} />
         <Route path="/pending" element={<PagoPendiente />} />
-        <Route path="*" element={<Navigate to="/404"/> } />
+        <Route path="*" element={<Navigate to="/404" />} />
         <Route path="/404" element={<NotFound />} />
-
       </Routes>
     </>
   );
