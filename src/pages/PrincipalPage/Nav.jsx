@@ -13,8 +13,6 @@ export const Nav = ({ pathname }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const path = useLocation();
 
-  console.log(path, 'pa')
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -43,43 +41,55 @@ export const Nav = ({ pathname }) => {
         {/* Enlaces del menú para resoluciones mayores a 1300px */}
         {!isMobile && (
           <div className="flex gap-6 items-center ">
-            { path.pathname !== '/Principal' && <NavLink
-              to="/Principal"
-              className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
-            >
-              Inicio
-            </NavLink>}
+            {path.pathname !== "/Principal" && (
+              <NavLink
+                to="/Principal"
+                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+              >
+                Inicio
+              </NavLink>
+            )}
 
-            { path.pathname !== '/ProfileHousing' && <NavLink
-              to="/ProfileHousing"
-              className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
-            >
-              Añadir Alojamiento
-            </NavLink>}
+            {path.pathname !== "/ProfileHousing" && (
+              <NavLink
+                to="/ProfileHousing"
+                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+              >
+                Añadir Alojamiento
+              </NavLink>
+            )}
 
-            { path.pathname !== '/formMascota' && <NavLink
-              to="/formMascota"
-              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
-            >
-              Registro Mascota
-            </NavLink>}
+            {path.pathname !== "/formMascota" && (
+              <NavLink
+                to="/formMascota"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+              >
+                Registro Mascota
+              </NavLink>
+            )}
 
-            {path.pathname !== '/historial-reservas' && <NavLink
-              to="/historial-reservas"
-              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
-            >
-              Historial Reservas
-            </NavLink>}
+            {path.pathname !== "/historial-reservas" && (
+              <NavLink
+                to="/historial-reservas"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+              >
+                Historial Reservas
+              </NavLink>
+            )}
 
-            { path.pathname !== '/solicitud-reserva' && <NavLink
-              to="/solicitud-reserva"
-              className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
-            >
-              Solicitudes
-            </NavLink>}
+            {path.pathname !== "/solicitud-reserva" && (
+              <NavLink
+                to="/solicitud-reserva"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+              >
+                Solicitudes
+              </NavLink>
+            )}
             <div className="ml-3">
               <div className="flex items-center">
-                <h1 className="text-white">{nameUsuario?.name}</h1>
+                <p className="font-custom font-bold text-[#eb662b] mr-2">
+                  {nameUsuario?.name}
+                </p>
                 <DropDown />
               </div>
             </div>
@@ -95,16 +105,25 @@ export const Nav = ({ pathname }) => {
             </div>
           ) : (
             <div className="hidden lg:flex gap-6">
-              <NavLink to="/ProfileHousing" className=" text-white">
+              <NavLink
+                to="/ProfileHousing"
+                className=" font-custom font-bold text-base"
+              >
                 Añadir Alojamiento
               </NavLink>
-              <NavLink to="/formMascota" className="text-white">
+              <NavLink to="/formMascota" className="font-custom font-bold">
                 Añadir Perfil de Mascota
               </NavLink>
-              <NavLink to="/historial-reservas" className="text-white">
+              <NavLink
+                to="/historial-reservas"
+                className="font-custom font-bold"
+              >
                 Historial de Reservas
               </NavLink>
-              <NavLink to="/solicitud-reserva" className="text-white">
+              <NavLink
+                to="/solicitud-reserva"
+                className="font-custom font-bold"
+              >
                 Solicitudes
               </NavLink>
             </div>
@@ -118,31 +137,33 @@ export const Nav = ({ pathname }) => {
           <div className="bg-orange-300 rounded-lg flex flex-row items-center mx-1 p-4">
             <NavLink
               to="/ProfileHousing"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative font-custom font-bold text-mini-3 leading-[20px] text-white text-center block my-2"
             >
               Añadir Alojamiento
             </NavLink>
             <NavLink
               to="/formMascota"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center block my-2"
             >
               Registrar Mascota
             </NavLink>
             <NavLink
               to="/historial-reservas"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center block my-2"
             >
               Historial Reservas
             </NavLink>
             <NavLink
               to="/solicitud-reserva"
-              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-sans text-white text-center block my-2"
+              className="bg-orange-300 cursor-pointer no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center block my-2"
             >
               Solicitudes
             </NavLink>
 
             <div className="flex items-center">
-              <h1 className="text-white">{nameUsuario?.name}</h1>
+              <p className="font-custom font-bold text-[#eb662b] mr-2">
+                {nameUsuario?.name}
+              </p>
               <DropDown />
             </div>
           </div>
