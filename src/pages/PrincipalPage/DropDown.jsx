@@ -39,7 +39,7 @@ export default function DropDown() {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <a
                   href="/Profile/perfil"
@@ -51,7 +51,8 @@ export default function DropDown() {
                   Account settings
                 </a>
               )}
-            </Menu.Item>
+
+            </Menu.Item> */}
             {/* <Menu.Item>
               {({ active }) => (
                 <a
