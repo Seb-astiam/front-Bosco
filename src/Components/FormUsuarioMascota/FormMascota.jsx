@@ -2,8 +2,10 @@ import { useState } from "react";
 import bosco from "../../assets/bosco-logo.jpeg";
 import Swal from "sweetalert2";
 import axiosJwt from "../../utils/axiosJwt";
+import { useNavigate } from "react-router-dom";
 
 export const FormMascota = () => {
+  const navigate = useNavigate();
   const email_usuario = JSON.parse(localStorage.getItem("user"));
 
   const [input, setInput] = useState({
@@ -108,9 +110,11 @@ export const FormMascota = () => {
       Swal.fire({
         title: "Excelente",
         text: sendBack.data,
-        icon: "success", 
+        icon: "success",
         confirmButtonColor: "#3085d6",
-        confirmButtonText: "ir a Inicio?"
+        confirmButtonText: "Ir a Inicio?",
+        showCancelButton: true,
+        cancelButtonText: "Quedarme aqui",
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/Principal");
@@ -427,7 +431,7 @@ export const FormMascota = () => {
             }`}
             disabled={disabledSubmit}
           >
-            Submit
+            Registrar
           </button>
         </form>
       </div>
