@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import bosco from "../../../assets/bosco-logo.jpeg"
 import { useGoogleLogin } from "@react-oauth/google";
+import Swal from 'sweetalert2'
 
 
 const LoginPage = ()=>{
@@ -109,6 +110,12 @@ const LoginPage = ()=>{
                     localStorage.setItem("user", JSON.stringify(userData));
                     navigate('/principal');
                 } catch (error) {
+                    if(error.response && error.response.status === 400) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Cuenta Bloqueada",
+                        });
+                    }
                     if (error.response && error.response.status === 401) {
                         setHaveAccount(false);
                     } else {

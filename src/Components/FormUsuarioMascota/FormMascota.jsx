@@ -102,7 +102,6 @@ export const FormMascota = () => {
       }
     });
 
-    console.log(email_usuario, "hace algo");
     formDataToSend.append("UserId", email_usuario.id);
 
     const sendBack = await axiosJwt.post("/newMascota", formDataToSend);
@@ -136,8 +135,6 @@ export const FormMascota = () => {
       console.error("Error al enviar datos al servidor", sendBack.data);
     }
   };
-
-  // const [verificationSuccessful, setVerificationSuccessful]= useState(false)
 
   const reset = () => {
     setInput({
@@ -180,14 +177,6 @@ export const FormMascota = () => {
           <h1 className="font-custom font-extrabold text-[20px] mb-[20px]">
             Contanos sobre tu mascota!
           </h1>
-
-          {/* <div className="">
-                <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                <box-icon name='camera'></box-icon>
-                <input className="w-[225px] outline-none" name="image" placeholder="imagen" value={input.image} onChange={handleChange}></input>
-                </label>   
-            </div>   
-            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.image}</p> */}
 
           <div className="">
             <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
