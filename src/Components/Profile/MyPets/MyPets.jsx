@@ -63,11 +63,6 @@ export const MyPets = () => {
             alert("Failed to update user data. Please try again.");
         }
     };
-    function urlToFile(url, filename, mimeType) {
-        return fetch(url)
-            .then(response => response.blob())
-            .then(blob => new File([blob], filename, { type: mimeType }));
-    }
 
 
     return (
@@ -104,7 +99,7 @@ export const MyPets = () => {
                                 </label>
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Name:</label>
+                                <label>Nombre:</label>
                                 <input
                                     type="text"
                                     value={selectedPet.name}
@@ -113,25 +108,36 @@ export const MyPets = () => {
                                 />
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Type:</label>
-                                <input
-                                    type="text"
-                                    value={selectedPet.type}
-                                    name="type"
-                                    onChange={handleChange}
-                                />
+                                <label className="rounded-[20px] bg-gray-50 py-[5px] px-[10px] flex items-center">
+                                    <select
+                                        className="w-[225px] outline-none"
+                                        name="type"
+                                        value={selectedPet.type}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="" disabled select>
+                                            Qué mascota tienes?
+                                        </option>
+                                        <option value="Dog">Perro</option>
+                                        <option value="Cat">Gato</option>
+                                        <option value="Reptil">Reptil</option>
+                                        <option value="Caballo">Caballo</option>
+                                    </select>
+                                </label>
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Age:</label>
+                                <label>Edad:</label>
                                 <input
                                     type="number"
                                     value={selectedPet.age}
                                     name="age"
+                                    min="1"
+                                    max="15"
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Aggressiveness:</label>
+                                <label>Es agresivo?:</label>
                                 <input
                                     type="checkbox"
                                     checked={selectedPet.aggressiveness}
@@ -140,7 +146,7 @@ export const MyPets = () => {
                                 />
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Genre:</label>
+                                <label>Genero:</label>
                                 <select
                                     value={selectedPet.genre}
                                     name="genre"
@@ -152,7 +158,7 @@ export const MyPets = () => {
                             </div>
 
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Raze:</label>
+                                <label>Raza:</label>
                                 <input
                                     type="text"
                                     value={selectedPet.raze}
@@ -161,16 +167,26 @@ export const MyPets = () => {
                                 />
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Size:</label>
-                                <input
-                                    type="text"
-                                    value={selectedPet.size}
-                                    name="size"
-                                    onChange={handleChange}
-                                />
+                                <label>Tamaño:</label>
+                                <label className="rounded-[20px] bg-gray-50 py-[5px] px-[10px] flex items-center">
+
+                                    <select
+                                        className="w-[225px] outline-none"
+                                        name="size"
+                                        value={selectedPet.size}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="" disabled select>
+                                            Tamaño de tu mascota
+                                        </option>
+                                        <option value="Grande">Grande</option>
+                                        <option value="Mediano">Mediano</option>
+                                        <option value="Pequeño">Pequeño</option>
+                                    </select>
+                                </label>
                             </div>
                             <div className="border rounded-md p-2 m-2 bg-slate-200">
-                                <label>Coexistence:</label>
+                                <label>Es territorial?:</label>
                                 <input
                                     type="checkbox"
                                     checked={selectedPet.coexistence}

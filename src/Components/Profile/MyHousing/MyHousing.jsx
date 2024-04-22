@@ -2,20 +2,17 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { ValidateFormdata } from "../../Register/ProfileHousing/validate";
-import { useServices } from "../../../Hooks/useServices";
-import { useLocationProvincias } from "../../../Hooks/useLocationProvincias";
 import useCities from "../../../Hooks/useCities";
-import { useTiposAlojamientos } from "../../../Hooks/useTiposAlojamientos";
-export const MyHousing = (param) => {
-  useServices();
-  useLocationProvincias();
-  useCities();
-  useTiposAlojamientos();
+import axios from "axios";
 
-  const { formHousing ,selectedHousing} = param
+export const MyHousing = (param) => {
+
+
+  const { formHousing, selectedHousing } = param
   const TiposHost = useSelector((state) => state.storage.TipoAlojamientos);
   const provincias = useSelector((state) => state.storage.AllProvinces);
   const services = useSelector((state) => state.storage.AllService);
+
   const [formData, setFormData] = useState({
     title: "",
     provinces: "",
@@ -28,15 +25,14 @@ export const MyHousing = (param) => {
     square: "",
     images: [],
   });
-  console.log(formHousing.Services.map((e)=>{return e.id;}));
   const [disableSubmitHousing, setDisableSubmitHousing] = useState(true);
   const [errorsHousing, setErrorsHousing] = useState({});
   useEffect(() => {
     setFormData({
       ...formData
       , ...formHousing,
-      services:formHousing.Services.map((e)=>{return e.id;}) 
-      
+      services: formHousing.Services.map((e) => { return e.id; })
+
     })
   }, [selectedHousing])
 
@@ -76,6 +72,56 @@ export const MyHousing = (param) => {
   };
   const selectedProvince = formData.provinces;
   const cities = useCities(selectedProvince ? selectedProvince : null);
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+  
+    const formDataToSend = new FormData();
+    try {
+      Object.entries(formData).forEach(async([key, value]) => {
+        if (key === "images") {
+          if (value) {
+            value.forEach(async (image) => {
+              if (typeof image === "string") {
+                try {
+                  const response = await fetch(image);
+                  const blob = await response.blob();
+                  const file = new File([blob], 'sample.jpg', { type: 'image/jpeg' });
+                  await formDataToSend.append("images", file);
+                  console.log("images");
+                  console.log(formDataToSend.get("images"));
+                } catch (error) {
+                  console.error('Error al obtener el archivo:', error);
+                }
+              } else {
+                formDataToSend.append("images", image);
+              }
+            });
+          }
+        } else {
+          formDataToSend.append(key, value);
+        }
+      });
+  
+      const formDataObject = {};
+      for (const [key, value] of formDataToSend.entries()) {
+        formDataObject[key] = value;
+      }
+  
+      console.log(formDataObject);
+      await axios.put(`/profileHousing/update/${formData.id}`, formDataToSend);
+      alert("User data updated successfully!");
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      alert("Failed to update user data. Please try again.");
+    }
+  };
+  
+  function urlToFile(url, filename, mimeType) {
+    return fetch(url)
+      .then(response => response.blob())
+      .then(blob => new File([blob], filename, { type: mimeType }));
+  }
 
   return (
     <div>
@@ -373,6 +419,9 @@ export const MyHousing = (param) => {
         </p>
 
       </div>
+      <button onClick={handleUpdate} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Actualizar
+      </button> :
     </div>
   );
 

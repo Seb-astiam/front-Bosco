@@ -5,8 +5,15 @@ import { MyPets } from "./MyPets/MyPets";
 import { MyHousing } from "./MyHousing/MyHousing";
 import axios from "axios";
 import { MyHousings } from "./MyHousings/MyHousings";
-
+import { useServices } from "../../Hooks/useServices";
+import { useLocationProvincias } from "../../Hooks/useLocationProvincias";
+import useCities from "../../Hooks/useCities";
+import { useTiposAlojamientos } from "../../Hooks/useTiposAlojamientos";
 export const Profile = () => {
+    useServices();
+    useLocationProvincias();
+    useCities();
+    useTiposAlojamientos();
     const userEmail = JSON.parse(localStorage.getItem("user")).email
     const [formHousing, setFormHousing] = useState([]);
 
@@ -83,7 +90,6 @@ export const Profile = () => {
         const fetchData = async () => {
             try {
                 await axios.get(`/profile/${userEmail}`).then(({ data }) => {
-
                     const userData = data;
                     setFormData({
                         ...formData,

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import pictureDefault from "../../../assets/perfilPicture.webp"
+import { useSelector } from "react-redux";
+import useCities from "../../../Hooks/useCities";
 
 export const FormProfile = (params) => {
+    const provincias = useSelector((state) => state.storage.AllProvinces);
     const { formData, handlePost, handleUpdate, nuevo, handleChange, formDataErrors } = params
-    console.log(formData);
+    const selectedProvince = formData.province;
+    const cities = useCities(selectedProvince ? selectedProvince : null);
     let picture = pictureDefault
-    if (JSON.parse(localStorage.getItem("user")).picture) {
+    if ((localStorage.getItem("user"))) {
         picture = JSON.parse(localStorage.getItem("user")).picture
     }
     const email = JSON.parse(localStorage.getItem("user")).email
@@ -14,7 +18,6 @@ export const FormProfile = (params) => {
     const [img, setImg] = useState(null)
     useEffect(() => {
         axios.get(`/user/${email}`).then(({ data }) => {
-            console.log(data);
             // Obtener el objeto del localStorage
             const userLocal = JSON.parse(localStorage.getItem("user"));
 
@@ -58,8 +61,6 @@ export const FormProfile = (params) => {
     const createFormDataWithPicture = (picture) => {
         const formData = new FormData();
         formData.append("picture", picture);
-        console.log(picture);
-        console.log(formData);
         return formData;
     };
 
@@ -119,24 +120,57 @@ export const FormProfile = (params) => {
             </div>
             <div className="flex flex-col border-4 w-[500px] p-5 border-black space-y-4">
                 <div>
-                    <label htmlFor="province" className="text-sm">Province:</label>
-                    <input type="text" id="province" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.province} onChange={handleChange} />
+                    <label
+                        htmlFor="provinces"
+                        className="flex  bg-[white] rounded-[20px]"
+                    >
+                        Provincia:
+                    </label>
+                    <select
+                        name="provinces"
+                        id="province"
+                        onChange={handleChange}
+                        value={formData.province}
+                        className="w-[225px] outline-none"
+                    >
+                        <option value="" disabled selected>
+                            Selecciona una provincia
+                        </option>
+                        {provincias.map((provincia) => (
+                            <option value={provincia.nombre} key={provincia.id}>
+                                {provincia.nombre}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
-                    <label htmlFor="city" className="text-sm">City:</label>
-                    <input type="text" id="city" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.city} onChange={handleChange} />
+                    <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
+                        Ciudad:
+                    </label>
+                    <select
+                        id="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        name="city"
+                        className="w-[225px] outline-none"
+                    >
+                        <option value="" disabled selected>
+                            Selecciona una localidad
+                        </option>
+                        {cities.map((localidad) => (
+                            <option value={localidad.name} key={localidad.id}>
+                                {localidad.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
-                    <label htmlFor="address" className="text-sm">Address:</label>
+                    <label htmlFor="address" className="text-sm">Dirección:</label>
                     <input type="text" id="address" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.address} onChange={handleChange} />
                 </div>
                 <div>
-                    <label htmlFor="phone" className="text-sm">Phone:</label>
+                    <label htmlFor="phone" className="text-sm">Celular:</label>
                     <input type="text" id="phone" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.phone} onChange={handleChange} />
-                </div>
-                <div>
-                    <label htmlFor="balance" className="text-sm">Balance:</label>
-                    <input type="text" id="balance" className="border border-gray-300 rounded-md px-3 py-2 w-full" value={formData.balance} onChange={handleChange} />
                 </div>
             </div>
 
