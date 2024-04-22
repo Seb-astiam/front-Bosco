@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import defaultProfile from "../../assets/perfilPicture.webp";
@@ -8,17 +8,21 @@ function classNames(...classes) {
 }
 
 export default function DropDown() {
-  const usuario = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem("user"));
+    setUser(usuario);
+  }, []);
+  // console.log(usuario);
   const navigate = useNavigate();
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-          <span className="absolute -inset-1.5" />
-          <span className="sr-only">Open user menu</span>
+        <Menu.Button className="h-8 w-8 relative flex rounded-full text-sm m-0 p-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <img
             className="h-8 w-8 rounded-full"
-            src={usuario?.picture || defaultProfile}
+            src={user?.picture?.picture || defaultProfile}
             alt=""
           />
         </Menu.Button>
@@ -35,10 +39,10 @@ export default function DropDown() {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <a
-                  href="#"
+                  href="/Profile/perfil"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
@@ -47,8 +51,9 @@ export default function DropDown() {
                   Account settings
                 </a>
               )}
-            </Menu.Item>
-            <Menu.Item>
+
+            </Menu.Item> */}
+            {/* <Menu.Item>
               {({ active }) => (
                 <a
                   href="#"
@@ -60,8 +65,8 @@ export default function DropDown() {
                   Support
                 </a>
               )}
-            </Menu.Item>
-            <Menu.Item>
+            </Menu.Item> */}
+            {/* <Menu.Item>
               {({ active }) => (
                 <a
                   href="#"
@@ -73,7 +78,7 @@ export default function DropDown() {
                   License
                 </a>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
               {({ active }) => (
                 <button

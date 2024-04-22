@@ -105,7 +105,8 @@ export const SolicitudReserva = () => {
   }, [solicitudes]);
 
   return (
-    
+    <div className="mt-2">
+      <a className="font-custom ml-3 text-chocolate-200 font-bold mq900:text-[25px] text-[35px]">Historial de Solicitudes</a>
       <div className="w-full font-custom flex flex-col m-[10px]">
         <div className="w-[95%] flex justify-evenly items-center">
          
@@ -220,6 +221,7 @@ export const SolicitudReserva = () => {
           
         </div>
         
+      </div>
       </div>
     
   );

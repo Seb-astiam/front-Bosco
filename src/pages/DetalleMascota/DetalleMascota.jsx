@@ -14,67 +14,64 @@ export const DetalleMascota = () => {
     useMascotaById(id);
     useUser(data?.UserId);
 
+    console.log(data, "data");
+
     return (
-        <div className="min-h-screen bg-gradient-to-b from-orange-100 to-blue-200 flex flex-col items-center justify-center px-4 gap-2">
+        <div className="h-screen mq900:h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-chocolate-300 ">
 
-            <h1 className="font-custom">Mascota</h1>
-
-
-            <div className="max-w-lg w-full bg-white shadow-md rounded-lg overflow-hidden font-custom">
+            <div className="flex mq900:my-0 flex-row mq900:flex-col w-[70%] mq900:w-[95%] mq900:max-h-full max-h-[400px] bg-white shadow-md rounded-[50px] overflow-hidden font-custom">
                   
                 <div className="felx items-center justify-center bg-slate-600">
-                  <img className="w-[230px] h-[240px]"
-                  src={data.image} alt="Imagen de mascota" 
+                  <img className="w-[230px] h-full"
+
+                  src={data?.image} alt="Imagen de mascota" 
                   />
                 </div>
 
-                  
+                <div className="px-16 py-8 flex flex-col">
 
-                  <div className="p-6 gap-1">
-
-                  <div className="flex items-center gap-3">
-                      <span className="text-gray-600 mr-2">Mi dueño es:</span>
-                      <span className="text-gray-800 font-semibold">{User?.name}</span>
-                      <span className="text-gray-800 font-semibold">{User?.email}</span>
-                    </div>
-
-                    <h2 className="text-3xl font-bold mb-2 text-gray-800">{data.name}</h2>
+                      <div className="flex flex-col justify-center">
+                        <span className="text-gray-700 font-bold text-[30px] mq900:text-[25px">Hola! Mi nombre es {data.name}</span>
+                        <span className="text-gray-700 font-semibold text-[20px] my-1">Estos son mis datos:</span>
+                      </div>
+                    
                     <div className="flex items-center mb-2">
-                      <span className="text-gray-600 mr-2">Tipo:</span>
-                      <span className="text-gray-800 font-semibold">{data.type}</span>
+                      <span className="text-gray-600 mr-2 mt-2">Tipo:</span>
+                      <span className="text-gray-700 font-semibold  mt-2">{data.type}</span>
                     </div>
                     <div className="flex items-center mb-2">
                       <span className="text-gray-600 mr-2">Edad:</span>
-                      <span className="text-gray-800 font-semibold">{data.age} años</span>
+                      <span className="text-gray-700 font-semibold">{data.age} años</span>
                     </div>
                     <div className="flex items-center mb-2">
                       <span className="text-gray-600 mr-2">Agresividad:</span>
-                      <span className="text-gray-800 font-semibold">{data.aggressiveness ? 'Sí' : 'No'}</span>
+                      <span className="text-gray-700 font-semibold">{data.aggressiveness ? 'Sí' : 'No'}</span>
                     </div>
                     <div className="flex items-center mb-2">
                       <span className="text-gray-600 mr-2">Género:</span>
-                      <span className="text-gray-800 font-semibold">{data.genre}</span>
+                      <span className="text-gray-700 font-semibold">{data.genre}</span>
                     </div>
                     <div className="flex items-center mb-2">
                       <span className="text-gray-600 mr-2">Raza:</span>
-                      <span className="text-gray-800 font-semibold">{data.raze}</span>
+                      <span className="text-gray-700 font-semibold">{data.raze}</span>
                     </div>
                     <div className="flex items-center mb-2">
                       <span className="text-gray-600 mr-2">Tamaño:</span>
-                      <span className="text-gray-800 font-semibold">{data.size}</span>
+                      <span className="text-gray-700 font-semibold">{data.size}</span>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center mb-3">
                       <span className="text-gray-600 mr-2">Convivencia:</span>
-                      <span className="text-gray-800 font-semibold">{data.coexistence ? 'Sí' : 'No'}</span>
+                      <span className="text-gray-700 font-semibold">{data.coexistence ? 'Sí' : 'No'}</span>
                     </div>
+                    <span className="font-semibold text-gray-700">Mi dueño es {User?.name} y podes contactarlo en {User?.email}</span>
 
-                    <div className="gap-2">
-                      <NavLink to='/solicitud-reserva' className='text-black font-custom bg-orange-300 hover:bg-orange-700 hover:text-white p-1 rounded cursor-pointer'>Back</NavLink>
-                    </div>
                   </div>
+                    <div className="absolute mt-8 max-w-[100px] flex justify-center items-center font-custom bg-chocolate-100 hover:bg-chocolate-200  py-2 px-4 rounded-[20px] cursor-pointer">
+                          <NavLink to='/solicitud-reserva' className='text-white no-underline '>Back</NavLink>
+                    </div> 
+                  
                 </div>
-
-    
+                
         </div>
     )
 }

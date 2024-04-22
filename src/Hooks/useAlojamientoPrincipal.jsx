@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllAlojamientos } from "../Redux/boscoSlice";
-import axiosJwt from "../utils/axiosJwt";
+import axios from "axios";
 
 export const useAlojamientoPrincipal = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export const useAlojamientoPrincipal = () => {
   useEffect(() => {
     const peticionBack = async () => {
       try {
-        const responseBack = await axiosJwt.get(
+        const responseBack = await axios.get(
           "/profileHousing/allHousingslocation"
         );
 

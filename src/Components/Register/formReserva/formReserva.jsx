@@ -76,6 +76,12 @@ export const FormReserva = ({ id, hourly }) => {
         icon: "success",
         title: pet,
         text: "Esperando aceptación",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "ir a Historial?"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/historial-reservas");
+        }
       });
 
       setOpen(false);

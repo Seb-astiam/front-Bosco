@@ -2,8 +2,10 @@ import { useState } from "react";
 import bosco from "../../assets/bosco-logo.jpeg";
 import Swal from "sweetalert2";
 import axiosJwt from "../../utils/axiosJwt";
+import { useNavigate } from "react-router-dom";
 
 export const FormMascota = () => {
+  const navigate = useNavigate();
   const email_usuario = JSON.parse(localStorage.getItem("user"));
 
   const [input, setInput] = useState({
@@ -102,16 +104,21 @@ export const FormMascota = () => {
 
     formDataToSend.append("UserId", email_usuario.id);
 
-    const sendBack = await axiosJwt.post(
-      "/newMascota",
-      formDataToSend
-    );
+    const sendBack = await axiosJwt.post("/newMascota", formDataToSend);
 
     if (sendBack.status === 201) {
       Swal.fire({
         title: "Excelente",
         text: sendBack.data,
         icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ir a Inicio?",
+        showCancelButton: true,
+        cancelButtonText: "Quedarme aqui",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/Principal");
+        }
       });
       setInput({
         images: [],
@@ -128,8 +135,6 @@ export const FormMascota = () => {
       console.error("Error al enviar datos al servidor", sendBack.data);
     }
   };
-
-  // const [verificationSuccessful, setVerificationSuccessful]= useState(false)
 
   const reset = () => {
     setInput({
@@ -172,14 +177,6 @@ export const FormMascota = () => {
           <h1 className="font-custom font-extrabold text-[20px] mb-[20px]">
             Contanos sobre tu mascota!
           </h1>
-
-          {/* <div className="">
-                <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
-                <box-icon name='camera'></box-icon>
-                <input className="w-[225px] outline-none" name="image" placeholder="imagen" value={input.image} onChange={handleChange}></input>
-                </label>   
-            </div>   
-            <p className="font-custom font-semibold w-[100%] text-center text-[12px] text-[#852727]">{errors.image}</p> */}
 
           <div className="">
             <label className="flex items-center px-[10px] py-[5px] bg-[white] rounded-[20px]">
@@ -434,7 +431,7 @@ export const FormMascota = () => {
             }`}
             disabled={disabledSubmit}
           >
-            Submit
+            Registrar
           </button>
         </form>
       </div>
