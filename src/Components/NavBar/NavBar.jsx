@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Isologotipo from "../../assets/IsoLogotipoBosco.png";
 import pictureDefault from "../../assets/perfilPicture.webp";
 
 export const Navbar = () => {
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
-  let picture = pictureDefault;
+  const [picture,setPicture]=useState(pictureDefault)
+  useEffect(()=>{
+      if (localStorage.getItem("user")) {
+        const img = JSON.parse(localStorage.getItem("user")).picture;
+        setPicture(img)
+        console.log(picture);
 
-  if (JSON.parse(localStorage.getItem("user"))) {
-    if (JSON.parse(localStorage.getItem("user")).picture) {
-      picture = nameUsuario.picture.picture;
     }
-  }
+
+  },[])
   return (
     <div className="w-full flex flex-row items-start justify-start pt-0 px-20 pb-[53.30000000000001px] box-border max-w-full text-left text-mini-8 text-midnightblue font-inter mq1300:pl-10 mq1300:pr-10 mq1300:box-border">
       <div className="flex-1 flex flex-row items-end justify-between gap-[45px] max-w-full">

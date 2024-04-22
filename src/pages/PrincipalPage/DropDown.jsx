@@ -9,7 +9,16 @@ function classNames(...classes) {
 
 export default function DropDown() {
   const [user, setUser] = useState({});
+  const [picture,setPicture]=useState(defaultProfile)
+  useEffect(()=>{
+      if (localStorage.getItem("user")) {
+        const img = JSON.parse(localStorage.getItem("user")).picture;
+        setPicture(img)
+        console.log(picture);
 
+    }
+
+  },[])
   useEffect(() => {
     const usuario = JSON.parse(localStorage.getItem("user"));
     setUser(usuario);
@@ -22,7 +31,7 @@ export default function DropDown() {
         <Menu.Button className="h-8 w-8 relative flex rounded-full text-sm m-0 p-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <img
             className="h-8 w-8 rounded-full"
-            src={user?.picture?.picture || defaultProfile}
+            src={picture}
             alt=""
           />
         </Menu.Button>

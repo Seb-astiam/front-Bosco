@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Isologotipo from "../../assets/IsoLogotipoBosco.png";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@react-hook/media-query";
 import DropDown from "./DropDown";
 import { TfiAlignRight } from "react-icons/tfi";
-import pictureDefault from "../../assets/perfilPicture.webp"
 export const Nav = ({ pathname }) => {
   const navigate = useNavigate();
   const nameUsuario = JSON.parse(localStorage.getItem("user"));
@@ -20,13 +19,7 @@ export const Nav = ({ pathname }) => {
   const closeMenu = () => {
     setMenuOpen(false);
   };
-  let picture = pictureDefault
 
-  if (JSON.parse(localStorage.getItem("user"))) {
-    if(JSON.parse(localStorage.getItem("user")).picture) {
-      picture = JSON.parse(localStorage.getItem("user")).picture
-    }
-  }
   return (
     <div className="bg-orange-300 mt-[10px] ml-[10px] mr-[10px] rounded-lg shadow-lg">
       <div className="relative flex h-16 items-center justify-between">
