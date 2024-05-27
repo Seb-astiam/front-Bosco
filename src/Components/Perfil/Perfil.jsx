@@ -1,5 +1,6 @@
 import { CiEdit } from "react-icons/ci";
 import CantMascotas from "./CantMascotas";
+import { CantAlojamiento } from "./CantAlojamientos";
 
 export const Perfil = () => {
   const usuario = JSON.parse(localStorage.getItem("user"));
@@ -24,7 +25,10 @@ export const Perfil = () => {
         </div>
       </div>
 
-      <div className={`${div} col-span-2`}>2</div>
+      <div className={`${div} col-span-2 flex items-center justify-start`}>
+        <CantAlojamiento email={usuario.email} />
+      </div>
+
       <div className={`${div} `}>3</div>
       <div className={`${div} col-span-2`}>
         <CantMascotas userId={usuario.id} />

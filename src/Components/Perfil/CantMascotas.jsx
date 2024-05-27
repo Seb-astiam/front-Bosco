@@ -44,16 +44,18 @@ const CantMascotas = ({ userId }) => {
   return (
     <div>
       <h2>Mascotas</h2>
-      <Carousel responsive={responsive}>
+      <Carousel
+        responsive={responsive}
+        infinite={true}
+        // autoPlay={true}
+        // autoPlaySpeed={1000}
+      >
         {pets.map((pet) => (
           <PetCard pet={pet} />
         ))}
-        <div className={`aspect-video w-80 bg-cover `}></div>
-        <div className={`aspect-video w-80 bg-cover `}></div>
-        <div className={`aspect-video w-80 bg-cover `}></div>
-        <div className={`aspect-video w-80 bg-cover `}></div>
-        <div className={`aspect-video w-80 bg-cover `}></div>
-        <div className={`aspect-video w-80 bg-cover `}></div>
+        <div className={`aspect-video w-80 bg-cover `}>1</div>
+        <div className={`aspect-video w-80 bg-cover `}>2</div>
+        <div className={`aspect-video w-80 bg-cover `}>3</div>
       </Carousel>
     </div>
   );
