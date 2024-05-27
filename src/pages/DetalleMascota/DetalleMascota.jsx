@@ -14,8 +14,6 @@ export const DetalleMascota = () => {
     useMascotaById(id);
     useUser(data?.UserId);
 
-    console.log(data, "data");
-
     return (
         <div className="h-screen mq900:h-screen flex items-center justify-center px-4 bg-gradient-to-b from-white to-chocolate-300 ">
 

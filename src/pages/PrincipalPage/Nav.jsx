@@ -13,6 +13,7 @@ export const Nav = ({ pathname }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const path = useLocation();
 
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };

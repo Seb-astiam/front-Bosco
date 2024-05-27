@@ -5,6 +5,8 @@ import axiosJwt from "../../utils/axiosJwt";
 import ReviewForm from "../ReviewAndComents/ReviewForm";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
+import axios from 'axios'
+import { BsStarFill } from "react-icons/bs";
 
 Modal.setAppElement("#root");
 
@@ -15,7 +17,10 @@ export const HistorialReserva = () => {
   const [loadingPreference, setLoadingPreference] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedReservationId, setSelectedReservationId] = useState(null);
+  const [reviewStatuses, setReviewStatuses] = useState({});
 
+
+  console.log(email_usuario, 'usuario ')
 
   useEffect(() => {
     const fetchHistorial = async () => {
@@ -42,23 +47,6 @@ export const HistorialReserva = () => {
 
     fetchHistorial();
   }, []);
-
-
-
-
-  // const [reviews, setReviews] = useState([]);
-
-  //   const fetchReviews = async () => {
-  //     try {
-        
-  //       const response = await axios.get(`/review/allReviewHousing/${id}`);
-  //       setReviews(response.data);
-  //     } catch (error) {
-  //       setError('Error al obtener las revisiones');
-  //       console.error(error);
-  //     }
-  //   };
-
 
   const createPreference = async (id) => {
     if (!loadingPreference) {
@@ -162,9 +150,32 @@ export const HistorialReserva = () => {
     }
   };
 
+ 
+  const tieneComentario = async (idReserva) => {
+    try {
+      const { data } = await axios(`/review/allReview/${idReserva}`);
+      setReviewStatuses((prevStatuses) => ({
+        ...prevStatuses,
+        [idReserva]: data[0] || null,
+      }));
+    } catch (error) {
+      console.error('Error fetching review:', error);
+      setReviewStatuses((prevStatuses) => ({
+        ...prevStatuses,
+        [idReserva]: null,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    historial.forEach((reserva) => {
+      tieneComentario(reserva.id);
+    });
+  }, [historial]);
+
   return (
 
-  <div className="mt-2 mq900:mt-4">
+  <div className="mt-2 mq900:mt-4 w-full">
   <a className="font-custom ml-3 text-chocolate-200 font-bold mq900:text-[25px]  text-[35px]">Historial de Reservas</a>
   <div className="w-full font-custom flex flex-col m-[10px]">
     <div className="w-[95%] flex justify-evenly items-center">
@@ -192,7 +203,7 @@ export const HistorialReserva = () => {
     </div>
     <div className="flex flex-col my-3 text-gray-700 w-[95%]">
       {historial.map((reserva) => (
-        <div key={reserva.id} className="flex flex-col">
+        <div key={reserva.id} className="flex flex-col h-[100px]  bg-slate-200 border border-black border-solid ">
           <div className="flex flex-row items-center text-start">
             <a className="mq900:hidden px-2 py-4 w-[15%]">
               {reserva.horaInicio !== null
@@ -258,18 +269,40 @@ export const HistorialReserva = () => {
               {reserva.Housings[0]?.provinces}
             </a>
             <a className="mq900:hidden px-2 py-4 w-[20%]">
-              <div>
-                <button value={reserva.id} onClick={(e) => openPopup(e)} 
-                  className={`py-2 px-4 rounded-[20px] w-[50%] ml-5 mq900:ml-3 text-black ${reserva.estatus !== "Success" ? 'bg-gray-400' : 'bg-yellow-400'}`} 
-                  >calificar</button>
-                {selectedReviewReservationId == reserva.id && (
-                  <div className="ventana-popup">
-                    <div className="contenido-popup">
-                        <ReviewForm idReserva={reserva.id}
-                        />
-                      <button onClick={closePopup}>Cerrar</button>
-                    </div>
+
+            <div>
+                {reviewStatuses[reserva.id] ? (
+                  <div>
+
+                    <p>{reviewStatuses[reserva.id].comentario}</p>
+                    {[...Array(reviewStatuses[reserva.id].valoracion)].map((_, index) => (
+                      <BsStarFill
+                        key={index}
+                        className="text-yellow-500"
+                        style={{ fontSize: "24px" }}
+                      />
+                    ))}
                   </div>
+                ) : (
+                  <>
+                    <button
+                      value={reserva.id}
+                      onClick={(e) => openPopup(e)}
+                      className={`py-2 px-4 rounded-[20px] w-[50%] ml-5 mq900:ml-3 text-black ${
+                        reserva.estatus !== "Success" ? 'bg-gray-400' : 'bg-yellow-400'
+                      }`}
+                    >
+                      Calificar
+                    </button>
+                    {selectedReviewReservationId === reserva.id && (
+                      <div className="ventana-popup">
+                        <div className="contenido-popup">
+                          <ReviewForm idReserva={reserva.id} />
+                          <button onClick={closePopup}>Cerrar</button>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </a>

@@ -22,7 +22,7 @@ const ReviewForm = ({idReserva}) => {
         comentario: comment,
         valoracion: valoracion,
         id_alojamiento: idReserva,
-        fecha: dateNow
+        fecha: dateNow,
       });
   
       if (response.status !== 200) {
@@ -33,7 +33,7 @@ const ReviewForm = ({idReserva}) => {
      
     } catch (error) {
       console.error("Error del servidor:", error.response.data); // Imprime el error del servidor
-      setError('Error al enviar la revisión');
+      setError(error.response.data);
     }
   };
 
@@ -48,8 +48,6 @@ const ReviewForm = ({idReserva}) => {
     setValoracion(value);
     setError('');
   };
-
-  
 
   useEffect(() => {
     
@@ -124,6 +122,8 @@ const ReviewForm = ({idReserva}) => {
             {error && <p className="text-red-500 mt-2">{error}</p>}
           </div>
         </div>
+
+
         {showThanks && (
           <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
             <div className="bg-orange-300 p-4 rounded shadow text-white">

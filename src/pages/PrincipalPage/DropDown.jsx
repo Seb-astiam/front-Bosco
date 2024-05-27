@@ -10,20 +10,21 @@ function classNames(...classes) {
 export default function DropDown() {
   const [user, setUser] = useState({});
 
+  const usuario = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem("user"));
-    setUser(usuario);
-  }, []);
-  // console.log(usuario);
+    setUser(usuario?.picture);
+  }, [usuario]);
+
   const navigate = useNavigate();
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="h-8 w-8 relative flex rounded-full text-sm m-0 p-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <img
-            className="h-8 w-8 rounded-full"
-            src={user?.picture?.picture || defaultProfile}
-            alt=""
+            className="h-8 w-8 rounded-full bg-cover"
+            src={user || defaultProfile}
+            alt="foto"
           />
         </Menu.Button>
       </div>
@@ -39,7 +40,7 @@ export default function DropDown() {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {/* <Menu.Item>
+            <Menu.Item>
               {({ active }) => (
                 <a
                   href="/Profile/perfil"
@@ -48,11 +49,11 @@ export default function DropDown() {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Account settings
+                  Perfil
                 </a>
               )}
 
-            </Menu.Item> */}
+            </Menu.Item>
             {/* <Menu.Item>
               {({ active }) => (
                 <a

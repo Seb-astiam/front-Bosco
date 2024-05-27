@@ -12,7 +12,7 @@ import { Terms } from "./Components/Terms/Terms.jsx";
 import { Declaration } from "./Components/Declaration/declaration.jsx";
 import { Nav } from "./pages/PrincipalPage/Nav.jsx";
 import { useLocation } from "react-router-dom";
-import { Profile } from "./Components/Profile/Profile.jsx";
+import { Perfil } from "./Components/Perfil/Perfil.jsx";
 import { FormReserva } from "./Components/Register/formReserva/formReserva.jsx";
 import { HistorialReserva } from "./Components/HistorialReserva/HistorialReserva.jsx";
 import { SolicitudReserva } from "./Components/SolicitudReserva/SolicitudReserva.jsx";
@@ -32,8 +32,8 @@ import { useServices } from "./Hooks/useServices.jsx";
 const App = () => {
   useServices();
   const { pathname } = useLocation();
-  // const socket = io.connect("http://localhost:3001");
-  const socket = io.connect("https://back-bosco.up.railway.app");
+  const socket = io.connect("http://localhost:3001");
+  // const socket = io.connect("https://back-bosco.up.railway.app");
 
   const [notificacion, setNotificacion] = useState("");
 
@@ -77,7 +77,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <div className='w-full'>
       <span>{notificacion}</span>
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
@@ -94,7 +94,7 @@ const App = () => {
         <Route path="/Register" element={<Register />} />
         <Route
           path="/Profile/*"
-          element={userData ? <Profile /> : <Navigate to="/login" replace />}
+          element={userData ? <Perfil /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/formMascota"
@@ -129,7 +129,7 @@ const App = () => {
         <Route path="*" element={<Navigate to="/404" />} />
         <Route path="/404" element={<NotFound />} />
       </Routes>
-    </>
+    </div>
   );
 };
 export default App;

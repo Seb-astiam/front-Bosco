@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAlojamientoPrincipal } from "../../Hooks/useAlojamientoPrincipal";
 import { CardsPrincipal } from "./Cards y Card/CardsPrincipal";
 import Filtro2 from "./Filtro2";
+import { Router } from "react-router-dom";
 const PrincipalPage = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -24,6 +25,7 @@ const PrincipalPage = () => {
       <div className="flex flex-col justify-center items-center mq900:w-[113.5vw] w-full h-[100vh] mt-8 font-custom mq900:mt-4">
         <Filtro2></Filtro2>
         <CardsPrincipal />
+
       </div>
     </div>
   );
