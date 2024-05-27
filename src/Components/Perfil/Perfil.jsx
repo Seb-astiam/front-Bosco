@@ -1,4 +1,5 @@
 import { CiEdit } from "react-icons/ci";
+import { CantAlojamiento } from "./CantAlojamientos";
 
 export const Perfil = () => {
 
@@ -22,7 +23,11 @@ export const Perfil = () => {
                 </div>
             </div>
 
-            <div className={`${div} col-span-2`}>2</div>
+            <div className={`${div} col-span-2 flex items-center justify-start`}>
+                <CantAlojamiento email={usuario.email} />
+            </div>
+
+
             <div className={`${div} `}>3</div>
             <div className={`${div} col-span-2`}>4</div>
        
