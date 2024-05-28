@@ -43,7 +43,7 @@ const CantMascotas = ({ userId }) => {
 
   return (
     <div>
-      <h2>Mascotas</h2>
+      <h2 className="font-custom font-extralight text-black">Mascotas</h2>
       <Carousel
         responsive={responsive}
         infinite={true}

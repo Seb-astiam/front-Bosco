@@ -23,7 +23,7 @@ export default function DropDown() {
         <Menu.Button className="h-8 w-8 relative flex rounded-full text-sm m-0 p-0 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <img
             className="h-8 w-8 rounded-full bg-cover"
-            src={user || defaultProfile}
+            src={user ? user : defaultProfile}
             alt="foto"
           />
         </Menu.Button>

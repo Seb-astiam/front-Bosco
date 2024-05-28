@@ -8,7 +8,7 @@ export const Perfil = () => {
     "w-full bg-red-300 h-full  text-white font-monserrat text-4xl border border-solid border-black text-center";
 
   return (
-    <div className="w-full h-screen bg-slate-400 grid grid-cols-3 gap-3 p-3">
+    <div className="w-full h-screen  grid grid-cols-3 gap-3 p-3">
       <div className={`${div} flex items-center justify-center`}>
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">
@@ -26,7 +26,7 @@ export const Perfil = () => {
       </div>
 
             <div className={`${div} col-span-2 flex flex-col items-center justify-start`}>
-            <h2 className="font-custom font-extralight text-black">Alojamientos</h2>
+            {/* <h2 className="font-custom font-extralight text-black">Alojamientos</h2> */}
                 <CantAlojamiento email={usuario.email} />
             </div>
 
