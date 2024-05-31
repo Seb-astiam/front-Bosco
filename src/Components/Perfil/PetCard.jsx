@@ -2,8 +2,26 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PetDetail from "./PetDetail";
 const MySwal = withReactContent(Swal);
+import axios from "axios";
+import PetUpdate from "./PetUpdate";
 
-const PetCard = ({ pet }) => {
+const PetCard = ({ pet, getPets }) => {
+  const delPet = async (petId) => {
+    try {
+      const URL = "http://localhost:3001/mascota/";
+      await axios.delete(URL + petId);
+      getPets();
+      MySwal.fire({
+        title: "Mascota borrada exitosamente",
+        icon: "success",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleClick = () => {
     MySwal.fire({
       width: "600px",
@@ -17,13 +35,22 @@ const PetCard = ({ pet }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         MySwal.fire({
-          title: "Edite jefe",
-          text: "Aca va el form",
-          icon: "success",
+          showConfirmButton: false,
+          html: <PetUpdate pet={pet} getPets={getPets} />,
         });
       }
       if (result.isDenied) {
-        MySwal.fire("Borraste el bicho, pibe");
+        MySwal.fire({
+          title: "Quieres borrar tu mascota de la base de datos?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            delPet(pet.id);
+          }
+        });
       }
     });
   };

@@ -26,18 +26,19 @@ const responsive = {
 const CantMascotas = ({ userId }) => {
   const [pets, setPets] = useState([]);
 
-  useEffect(() => {
-    const getPets = async () => {
-      try {
-        const { data } = await axios(
-          `http://localhost:3001/allMascotas/${userId}`
-        );
+  const getPets = async () => {
+    try {
+      const { data } = await axios(
+        `http://localhost:3001/allMascotas/${userId}`
+      );
 
-        setPets((prev) => data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+      setPets((prev) => data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
     getPets();
   }, []);
 
@@ -51,11 +52,11 @@ const CantMascotas = ({ userId }) => {
         // autoPlaySpeed={1000}
       >
         {pets.map((pet) => (
-          <PetCard pet={pet} />
+          <PetCard pet={pet} getPets={getPets} />
         ))}
-        <div className={`aspect-video w-80 bg-cover `}>1</div>
+        {/* <div className={`aspect-video w-80 bg-cover `}>1</div>
         <div className={`aspect-video w-80 bg-cover `}>2</div>
-        <div className={`aspect-video w-80 bg-cover `}>3</div>
+        <div className={`aspect-video w-80 bg-cover `}>3</div> */}
       </Carousel>
     </div>
   );
