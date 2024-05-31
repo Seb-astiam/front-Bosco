@@ -22,6 +22,7 @@ const PetDetail = ({ pet }) => {
           <p className="font-custom font-light my-2">
             <strong>Edad: </strong>
             {age}
+            {age > 1 ? " años" : " año"}
           </p>
           <p className="font-custom font-light my-2">
             <strong>Temperamento: </strong>
