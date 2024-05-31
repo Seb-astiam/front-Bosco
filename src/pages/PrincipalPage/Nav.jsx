@@ -45,7 +45,7 @@ export const Nav = ({ pathname }) => {
             {path.pathname !== "/Principal" && (
               <NavLink
                 to="/Principal"
-                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap  hover:text-[#eb662b] hover:bg-transparent transition"
               >
                 Inicio
               </NavLink>
@@ -54,7 +54,7 @@ export const Nav = ({ pathname }) => {
             {path.pathname !== "/ProfileHousing" && (
               <NavLink
                 to="/ProfileHousing"
-                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+                className="w-[160px]   no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap  hover:text-[#eb662b] hover:bg-transparent transition"
               >
                 Añadir Alojamiento
               </NavLink>
@@ -63,7 +63,7 @@ export const Nav = ({ pathname }) => {
             {path.pathname !== "/formMascota" && (
               <NavLink
                 to="/formMascota"
-                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap hover:text-[#eb662b] hover:bg-transparent transition"
               >
                 Registro Mascota
               </NavLink>
@@ -72,7 +72,7 @@ export const Nav = ({ pathname }) => {
             {path.pathname !== "/historial-reservas" && (
               <NavLink
                 to="/historial-reservas"
-                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b] rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap hover:text-[#eb662b] hover:bg-transparent transition"
               >
                 Historial Reservas
               </NavLink>
@@ -81,7 +81,7 @@ export const Nav = ({ pathname }) => {
             {path.pathname !== "/solicitud-reserva" && (
               <NavLink
                 to="/solicitud-reserva"
-                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap z-[3] hover:text-[#eb662b] hover:bg-transparent transition"
+                className="w-[160px]  no-underline flex-1 relative text-mini-3 leading-[20px] font-custom font-bold text-white text-center cursor-pointer py-3 pr-[20px] pl-[21px] bg-[#eb662b]  rounded-[10px] flex flex-row items-start justify-start whitespace-nowrap hover:text-[#eb662b] hover:bg-transparent transition"
               >
                 Solicitudes
               </NavLink>
