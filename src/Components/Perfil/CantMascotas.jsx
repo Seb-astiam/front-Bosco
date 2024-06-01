@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import PetCard from "./PetCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
+import { IoAddCircleOutline } from "react-icons/io5";
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -54,6 +56,19 @@ const CantMascotas = ({ userId }) => {
         {pets.map((pet) => (
           <PetCard pet={pet} getPets={getPets} />
         ))}
+
+      <div className={`aspect-video w-72 `}>
+          <Link 
+              className="w-72 aspect-video border-2 border-black 
+              border-dashed bg-opacity-100 font-custom ml-5 flex 
+              items-center flex-col justify-center no-underline text-black
+              shadow-custom-shadow"
+              to="/ProfileHousing"
+          >
+              <IoAddCircleOutline className="w-10 h-10"/>
+              <h5>Añadir Mascota</h5>
+          </Link>
+      </div>
         {/* <div className={`aspect-video w-80 bg-cover `}>1</div>
         <div className={`aspect-video w-80 bg-cover `}>2</div>
         <div className={`aspect-video w-80 bg-cover `}>3</div> */}

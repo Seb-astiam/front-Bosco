@@ -1,9 +1,63 @@
-import { FaLocationDot } from "react-icons/fa6";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
+import store from '../../Redux/store';
+import { Provider } from 'react-redux'
+import ReactDOM from 'react-dom';
 
-export const HousingCard = ({alojamiento, openModal}) => {
+import { FaLocationDot } from "react-icons/fa6";
+import { HousingDetail } from "./HousingDetail";
+import { HousingUpdate } from "./HousingUpdate";
+
+export const HousingCard = ({alojamiento, getHousings}) => {
+    const delHousing = async () => {
+
+    }
+
+    const handleClick = () => {
+        MySwal.fire({
+            width: "700px",
+            html: <HousingDetail alojamiento={alojamiento} />,
+            showCloseButton: true,
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: "Editar",
+            denyButtonText: "Borrar",
+            cancelButtonText: "Cerrar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+              MySwal.fire({
+                showConfirmButton: false,
+                html: <div id="housing-update-container"></div>,
+                didOpen: () => {
+                    ReactDOM.render(
+                        <Provider store={store}>
+                            <HousingUpdate alojamiento={alojamiento} getHousings={getHousings} />
+                        </Provider>,
+                        document.getElementById('housing-update-container')
+                    );
+                },
+              });
+            }
+            if (result.isDenied) {
+              MySwal.fire({
+                title: "Quieres borrar tu alojamiento de la base de datos?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    delHousing(alojamiento.id);
+                }
+              });
+            }
+          });
+    }
+
     return (
         <div className="flex flex-col h-60 aspect-video border border-black border-solid ml-5 cursor-pointer shadow-custom-shadow"
-            onClick={openModal}
+            onClick={handleClick}
         >
             <img src={alojamiento.images[0]} className="w-full h-full"/>
 
