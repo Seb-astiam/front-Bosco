@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import PetCard from "./PetCard";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
+import { IoAddCircleOutline } from "react-icons/io5";
+
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -48,15 +51,25 @@ const CantMascotas = ({ userId }) => {
       <Carousel
         responsive={responsive}
         infinite={true}
+
         // autoPlay={true}
         // autoPlaySpeed={1000}
       >
         {pets.map((pet) => (
           <PetCard pet={pet} getPets={getPets} />
         ))}
-        {/* <div className={`aspect-video w-80 bg-cover `}>1</div>
-        <div className={`aspect-video w-80 bg-cover `}>2</div>
-        <div className={`aspect-video w-80 bg-cover `}>3</div> */}
+        <div className={`aspect-video w-72 mx-5  bg-[#dbdbdb8a]`}>
+          <Link
+            className="w-72 aspect-video border-2 border-gray-500 
+                            border-dashed bg-opacity-100 font-custom  flex 
+                            items-center flex-col justify-center no-underline text-gray-800
+                            shadow-custom-shadow"
+            to="/formMascota"
+          >
+            <IoAddCircleOutline className="w-14 h-14" />
+            <h4 className="m-0">Añadir Mascota</h4>
+          </Link>
+        </div>
       </Carousel>
     </div>
   );

@@ -25,6 +25,7 @@ const PetCard = ({ pet, getPets }) => {
   const handleClick = () => {
     MySwal.fire({
       width: "600px",
+
       html: <PetDetail pet={pet} />,
       showCloseButton: true,
       showCancelButton: true,
@@ -35,6 +36,7 @@ const PetCard = ({ pet, getPets }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         MySwal.fire({
+          width: "600px",
           showConfirmButton: false,
           html: <PetUpdate pet={pet} getPets={getPets} />,
         });

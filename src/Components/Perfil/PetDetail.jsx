@@ -12,13 +12,13 @@ const PetDetail = ({ pet }) => {
   } = pet;
   return (
     <div>
-      <h2 className="font-custom font-medium">{name}</h2>
+      <h2 className="font-custom font-bold">{name}</h2>
 
       <div className="flex flex-row justify-around items-start">
-        <div className=" shadow-sm shadow-outline">
-          <img className="w-64" src={image} alt={name} />
+        <div className=" shadow-sm shadow-outline rounded-xl">
+          <img className="w-64 rounded-xl shadow-lg" src={image} alt={name} />
         </div>
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start bg-orange-300 p-4 rounded-xl shadow-lg">
           <p className="font-custom font-light my-2">
             <strong>Edad: </strong>
             {age}
