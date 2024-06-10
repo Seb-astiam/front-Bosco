@@ -28,7 +28,6 @@ import PagoRechazado from "./pages/pagos/pagoRechazado.jsx";
 import PagoPendiente from "./pages/pagos/pagoPendiente.jsx";
 import { useServices } from "./Hooks/useServices.jsx";
 
-
 const App = () => {
   useServices();
   const { pathname } = useLocation();
@@ -77,7 +76,7 @@ const App = () => {
   };
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <span>{notificacion}</span>
       {pathname !== "/" && <Nav pathname={pathname} />}
       <Routes>
