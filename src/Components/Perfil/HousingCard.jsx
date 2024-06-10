@@ -3,7 +3,7 @@ import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
 import store from '../../Redux/store';
 import { Provider } from 'react-redux'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; 
 
 import { FaLocationDot } from "react-icons/fa6";
 import { HousingDetail } from "./HousingDetail";
@@ -30,11 +30,12 @@ export const HousingCard = ({alojamiento, getHousings}) => {
                 showConfirmButton: false,
                 html: <div id="housing-update-container"></div>,
                 didOpen: () => {
-                    ReactDOM.render(
+                    const container = document.getElementById('housing-update-container');
+                    const root = ReactDOM.createRoot(container);
+                    root.render(
                         <Provider store={store}>
                             <HousingUpdate alojamiento={alojamiento} getHousings={getHousings} />
-                        </Provider>,
-                        document.getElementById('housing-update-container')
+                        </Provider>
                     );
                 },
               });
