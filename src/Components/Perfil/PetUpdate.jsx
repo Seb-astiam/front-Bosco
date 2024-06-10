@@ -55,6 +55,7 @@ const PetUpdate = ({ pet, getPets }) => {
     const { name, value, files } = event.target;
     let newValues;
     if (name === "images") {
+      console.log(name);
       newValues = [
         ...petForm.images,
         //modificar 1 por la cantidad de imagenes que se cargaran

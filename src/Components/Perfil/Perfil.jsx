@@ -1,11 +1,29 @@
+import { useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import CantMascotas from "./CantMascotas";
 import { CantAlojamiento } from "./CantAlojamientos";
+import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import ImageUpdate from "./ImageUpdate";
+const MySwal = withReactContent(Swal);
 
 export const Perfil = () => {
   const usuario = JSON.parse(localStorage.getItem("user"));
   const div =
     "w-full bg-red-300 h-full  text-white font-monserrat text-4xl border border-solid border-black text-center";
+
+  const [profileImg, setProfileImg] = useState(usuario.picture);
+
+  const handlePictureClick = async (e) => {
+    const PUT_URL = `/user/picture/${usuario.email}`;
+
+    MySwal.fire({
+      html: <ImageUpdate />,
+      showCancelButton: false,
+      showConfirmButton: false,
+    });
+  };
 
   return (
     <div className="w-full h-screen bg-slate-400 grid grid-cols-3 gap-3 p-3">
@@ -13,10 +31,13 @@ export const Perfil = () => {
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">
             <img
-              src={usuario.picture}
+              src={profileImg}
               className="w-[150px] h-[150px] rounded-full"
             />
-            <button className="absolute bottom-0 right-0 rounded-full h-[40px] w-[40px] flex items-center justify-center bg-white border border-gray-300">
+            <button
+              className="absolute bottom-0 right-0 rounded-full h-[40px] w-[40px] flex items-center justify-center bg-white text-black border border-gray-300"
+              onClick={handlePictureClick}
+            >
               <CiEdit className="h-[20px] w-[20px]" />
             </button>
           </div>
