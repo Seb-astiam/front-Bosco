@@ -19,10 +19,13 @@ export const Perfil = () => {
     const PUT_URL = `/user/picture/${usuario.email}`;
 
     MySwal.fire({
+      width: "400px",
+      heightAuto: true,
       html: <ImageUpdate />,
       showCancelButton: false,
       showConfirmButton: false,
     });
+    setProfileImg(usuario.picture);
   };
 
   return (
